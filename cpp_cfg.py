@@ -17,18 +17,12 @@ class CPP_Cfg:
         self.range_y = []
     
 
-class Read_Cfg:
-    def __init__(self,fileName = '0-0'):
-        self.fileName = fileName
-    
-
-
 if __name__ == '__main__':
     cpp_cfg = CPP_Cfg()
     cpp_cfg.range_x = [0,100,100,0]
     cpp_cfg.range_y = [0,0,100,100]
     
-    conFileDir = 'D://py_code//coverageMotionPlanning//data//'
+    conFileDir = './/data//'
     conFileCfg = conFileDir + 'CPP_Cfg.txt'
     f_con = open(conFileCfg , 'w')
     
@@ -46,9 +40,6 @@ if __name__ == '__main__':
     f_con.write('\n')
     
     f_con.close()
-    
-    
-    degNameCfg = conFileDir + 'map_debug.txt'
-    
+       
     
     
