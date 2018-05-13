@@ -12,4 +12,8 @@ ISCIIA
 > - maybe the regex function can improve reading data process ,maybe?
 
 
+
+#test MarkDown picture
+<img src="https://raw.githubusercontent.com/Tesla2fox/ASCII/master/png/Bayonetta.png" width="400">
+
 ![Image text](https://raw.githubusercontent.com/Tesla2fox/ASCII/master/png/Bayonetta.png)
