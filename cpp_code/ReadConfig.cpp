@@ -6,7 +6,6 @@ namespace cfg
 	ReadConfig::~ReadConfig()
 	{
 	}
-
 	void ReadConfig::read()
 	{
 		sscfg::ConfigFile co_list = sscfg::ConfigFile::load(_m_fileName);
@@ -25,7 +24,6 @@ namespace cfg
 			_vRange_yPtr->push_back(range_y[i]);
 			this->_RangePtr->push_back(bex::DPoint(range_x[i], range_y[i]));
 		}
-
 		
 		cout << "read successs" << endl;
 	}

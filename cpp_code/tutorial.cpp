@@ -4,7 +4,7 @@
 
 int main(int argc, char * argv[])
 {
-	char * conFileName = "D:\\py_code\\coverageMotionPlanning\\data\\CPP_cfg.txt";
+	char * conFileName = "D:\\py_code\\\ASCII\\data\\CPP_cfg.txt";
 
 	if (argc > 1){
 		cout << argv[1] << endl;
@@ -13,15 +13,20 @@ int main(int argc, char * argv[])
 	cfg::ReadConfig readCfg(conFileName);
 	readCfg.read();
 
-	pl::Obmap obmap(readCfg._RangePtr);
+	pl::Obmap obmap(readCfg._RangePtr,3);
 	obmap.writeRange();
 	
+	obmap.map2tGrid();
+	obmap.map2sGrid();
+	obmap.writeGraph(pl::graphType::base);
+	obmap.writeGraph(pl::graphType::span);
+	obmap.spanningTree();
 
 	cout << "ggq' code" << endl;
-	if (argc <= 1){
-		size_t input_val;
-		std::cin >> input_val;
-	}
+	//if (argc <= 1){
+	//	size_t input_val;
+	//	std::cin >> input_val;
+	//}
 }
 
 

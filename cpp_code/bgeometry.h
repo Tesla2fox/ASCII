@@ -52,13 +52,14 @@ namespace bex {
 	bool DPointEqual(DPoint const &a, DPoint const &b);
 
 
+
+
+	////
+	//// ggq define
 	enum   vertType { ObVert, WayVert,EdgeObVert,ShoulderVert,NearVert };
 	class PointVert
 	{
 	public:
-		PointVert();
-		~PointVert();
-
 		DPoint pnt;
 		int type;
 		std::pair<size_t, size_t> PntIndex;

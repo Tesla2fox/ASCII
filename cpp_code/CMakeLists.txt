@@ -47,6 +47,7 @@ message(${PROJECT_BINARY_DIR})
 
 #生成DLL
 add_executable(coveragePathPlan ${file_list})
+add_executable(primTest prim.cpp)
 #add_executable(test_pathplan  ${PROJECT_LIB_DIR}/${file_list})
 
 #add_library(coveragePathPlan  SHARED ${file_list})
