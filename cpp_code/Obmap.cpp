@@ -106,12 +106,39 @@ namespace pl
 		typedef bt::adjacency_list < bt::vecS, bt::vecS, bt::undirectedS,
 			bt::property<bt::vertex_distance_t, int>, bt::property < bt::edge_weight_t, int > > SGraph;
 		typedef std::pair < int, int >SE;
-		const int num_nodes = 5;
+		const int num_nodes = bt::num_vertices(this->_sGraph);
+
 		SE edges[] = { SE(0, 2), SE(1, 3), SE(1, 4), SE(2, 1), SE(2, 3),
 			SE(3, 4), SE(4, 0)
 		};
 
 		int weights[] = { 1, 1, 2, 7, 3, 1, 1 };
+
+
+		std::pair<bex::EdgeIterator, bex::EdgeIterator> _b2e_ei = boost::edges(this->_sGraph);
+
+		vector<size_t> vSvd, vTvd;
+		auto edgeNum = bt::num_edges(_sGraph);
+		//auto edgesPtr = make_shared<SE>(new SE[edgeNum]);
+		SE * edgesPtr = new SE[edgeNum];
+		int * weightPtr = new int[edgeNum];
+		//auto edgesPtr = make_shared<std::array<SE,edgeNum>>();
+		size_t i = 0;
+		for (auto eit = _b2e_ei.first; eit != _b2e_ei.second; eit++)
+		{
+			bex::EdgeDescriptor ed = *eit;
+			bex::EdgeProperty &ep = _sGraph[ed];
+			bex::VertexDescriptor sVertd = boost::source(ed, _sGraph);
+			bex::VertexDescriptor tVertd = boost::target(ed, _sGraph);
+			vSvd.push_back(sVertd);
+			vTvd.push_back(tVertd);
+			edgesPtr[i] = SE(sVertd, tVertd);
+			weightPtr[i] = ep.weight;
+			i++;
+			//cout << "w" << endl;
+		}
+
+
 #if defined(BOOST_MSVC) && BOOST_MSVC <= 1300
 		Graph g(num_nodes);
 		property_map<Graph, edge_weight_t>::type weightmap = get(edge_weight, g);
@@ -121,7 +148,9 @@ namespace pl
 			weightmap[e] = weights[j];
 		}
 #else
-		SGraph g(edges, edges + sizeof(edges) / sizeof(SE), weights, num_nodes);
+//		SGraph g(edgesPtr, edgesPtr + sizeof(edgesPtr) / sizeof(SE), weightPtr, num_nodes);
+		SGraph g(edgesPtr, edgesPtr + edgeNum, weightPtr, num_nodes);
+
 #endif
 		std::vector < bt::graph_traits < SGraph >::vertex_descriptor >
 			p(num_vertices(g));

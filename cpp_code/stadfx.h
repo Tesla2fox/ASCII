@@ -16,6 +16,7 @@
 #include <assert.h>
 #include <limits>
 #include <float.h>
+#include <array>
 
 #define M_MAX std::numeric_limits<double>::max()
 #define M_INF std::numeric_limits<double>::infinity()

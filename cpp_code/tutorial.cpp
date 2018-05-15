@@ -23,10 +23,10 @@ int main(int argc, char * argv[])
 	obmap.spanningTree();
 
 	cout << "ggq' code" << endl;
-	//if (argc <= 1){
-	//	size_t input_val;
-	//	std::cin >> input_val;
-	//}
+	if (argc <= 1){
+		size_t input_val;
+		std::cin >> input_val;
+	}
 }
 
 
