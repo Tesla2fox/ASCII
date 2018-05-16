@@ -259,7 +259,7 @@ namespace pl
 			if (this->_tGraph[vd].Type == bex::vertType::WayVert)
 			{
 				auto localIndex = tgraph2map[vd];
-				auto vlocalIndex = getSearchNeighbor(localIndex);
+				auto vlocalIndex = getSearchNeighbor(localIndex, graphType::base);
 				std::vector<int> vvd;
 				for (auto &it : vlocalIndex)
 				{
@@ -369,7 +369,7 @@ namespace pl
 			if (sGraph[vd].Type == bex::vertType::WayVert)
 			{
 				auto localIndex = sgraph2map[vd];
-				auto vlocalIndex = getSearchNeighbor(localIndex);
+				auto vlocalIndex = getSearchNeighbor(localIndex,graphType::span);
 				std::vector<int> vvd;
 				for (auto &it : vlocalIndex)
 				{
@@ -451,6 +451,20 @@ namespace pl
 		doc << border;
 
 
+		for (auto &it : this->m_vDRing)
+		{
+			svg::Polygon ob(svg::Stroke(1, svg::Color::Green));
+
+			for (size_t i = 0; i < it.size(); i++)
+			{
+				ob << svg::Point(it[i].x(), it[i].y());
+			}
+			doc << ob;
+		}
+
+
+		
+
 		auto InitVp = graph[0];
 		double init_x = InitVp.pnt.x();
 		double init_y = InitVp.pnt.y();
@@ -463,8 +477,8 @@ namespace pl
 			bex::VertexProperty &vp = graph[vd];
 			double px = vp.pnt.x();
 			double py = vp.pnt.y();
-			std::cout << "px" << px << std::endl;
-			std::cout << "py" << py << std::endl;
+			//std::cout << "px" << px << std::endl;
+			//std::cout << "py" << py << std::endl;
 
 			//deg::conf_debug << "px" << px << std::endl;
 			//deg::conf_debug << "py" << py << std::endl;
@@ -477,7 +491,7 @@ namespace pl
 			{
 			case bex::vertType::ObVert:
 			{
-				doc << svg::Circle(pnt, 5, svg::Fill(), svg::Stroke(1, svg::Color(200, 250, 150)));
+				doc << svg::Circle(pnt, gridStep, svg::Fill(svg::Color::Fuchsia), svg::Stroke(0.1, svg::Color(200, 250, 150)));
 				break;
 			}
 			case bex::vertType::WayVert:
@@ -575,7 +589,8 @@ namespace pl
 			{
 			case bex::vertType::ObVert:
 			{
-				doc << svg::Circle(pnt, 5, svg::Fill(), svg::Stroke(1, svg::Color(200, 250, 150)));
+				doc << svg::Rectangle(pnt, _gridStep, _gridStep, svg::Fill(svg::Color::Fuchsia), svg::Stroke(0.1, svg::Color::Cyan));
+				doc << svg::Circle(pntc, _gridStep, svg::Fill(svg::Color::Fuchsia), svg::Stroke(0.1, svg::Color::Cyan));
 				break;
 			}
 			case bex::vertType::WayVert:
@@ -603,15 +618,63 @@ namespace pl
 		doc.save();
 		return false;
 	}
-	std::vector<GridIndex> Obmap::getSearchNeighbor(GridIndex const & mindex)
+	GridIndex Obmap::pnt2Index(bex::DPoint const & pnt, int const & type)
+	{
+		GridIndex rindex;
+		rindex.first = -1;
+		rindex.second = -1;
+
+		GridIndex initIndex;
+		initIndex.first = 0;
+		initIndex.second = 0;
+
+		double _i_x = this->_tGrid[initIndex].pnt.x();
+		double _i_y = this->_tGrid[initIndex].pnt.y();
+		if (pnt.y()<_i_y)
+		{
+			return rindex;
+		}
+		if (pnt.x()<_i_x)
+		{
+			return rindex;
+		}
+		auto bais_x = pnt.x() - _i_x;
+		auto bais_y = pnt.y() - _i_y;
+		double step;
+		step = this->_gridStep;
+		bais_x = bais_x - step / 2;
+		bais_y = bais_y - step / 2;
+		auto p_col = ceil(bais_x / step);
+		auto p_row = ceil(bais_y / step);
+
+		if (p_col>m_MaxCol)
+		{
+			return rindex;
+		}
+		if (p_row>this->m_MaxRow)
+		{
+			return rindex;
+		}
+		rindex.first = p_col;
+		rindex.second = p_row;
+		return rindex;
+	}
+	std::vector<GridIndex> Obmap::getSearchNeighbor(GridIndex const & mindex, size_t const &gridType)
 	{
 		///return std::vector<GridIndex>();
 		//
-		auto &grid = this->_tGrid;
+		GridMap *gridPtr;
+		if (gridType == graphType::base)
+		{
+			gridPtr = &this->_tGrid;
+		}
+		else
+		{
+			gridPtr = &this->_sGrid;
+		}
+		auto &grid = (*gridPtr);
 
 		std::vector<GridIndex> vIndex;
-
-
 		//size_t dirIndex = 0;
 		for (auto i = mindex.first - 1; i <= (mindex.first + 1); i++)
 		{
