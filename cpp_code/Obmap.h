@@ -2,6 +2,7 @@
 #include "stadfx.h"
 #include "bgeometry.h"
 #include "bgraph.h"
+#include "simple_svg.hpp"
 
 namespace pl
 {
@@ -46,6 +47,8 @@ namespace pl
 		bool map2tGrid();
 		bool map2sGrid();
 
+		bool saveGraphSvg(size_t const & type);
+		bool saveSvg();
 
 	private:
 
@@ -56,6 +59,9 @@ namespace pl
 
 		bex::Graph _sGraph;
 		GridMap _sGrid;
+
+
+		vector < bt::graph_traits <bex::Graph>::vertex_descriptor > vtree;
 		//
 		DRingPtr const _m_rangePtr;
 		bex::DRing & _m_range;

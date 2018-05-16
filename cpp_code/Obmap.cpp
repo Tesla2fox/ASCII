@@ -166,11 +166,13 @@ namespace pl
 #endif
 
 		for (std::size_t i = 0; i != p.size(); ++i)
+		{
+			vtree.push_back(p[i]);
 			if (p[i] != i)
 				std::cout << "parent[" << i << "] = " << p[i] << std::endl;
 			else
 				std::cout << "parent[" << i << "] = no parent" << std::endl;
-
+		}
 	}
 	//
 	void Obmap::addObRing(std::vector<double> const & vx, std::vector<double> const & vy)
@@ -312,7 +314,7 @@ namespace pl
 			pntUnit.pnt.x(gridStep*i + pntUnit.pnt.x());
 			for (size_t j = 0; j < m_sMaxRow; j++)
 			{
-				pntUnit.pnt.y(gridStep*j + this->mWsPoint1.y());
+				pntUnit.pnt.y(gridStep*j + this->mWsPoint1.y()+ _gridStep / 2);
 				pntUnit.type = bex::vertType::WayVert;
 
 				for (auto &it : this->m_vDRing)
@@ -396,6 +398,209 @@ namespace pl
 		}
 		auto num_edges = boost::num_edges(sGraph);
 		cout << "num_edges = " << num_edges << endl;
+		return false;
+	}
+	bool Obmap::saveGraphSvg(size_t const & type)
+	{
+		{
+		size_t *maxColPtr;
+		size_t *maxRowPtr;
+		double const *gridStepPtr;
+		bex::Graph *graphPtr;
+		string fileName;
+		double gridStep;
+		if (type == graphType::base)
+		{
+			maxColPtr = &m_MaxCol;
+			maxRowPtr = &m_MaxRow;
+			//gridStepPtr = &_gridStep;
+			gridStep = _gridStep;
+			graphPtr = &this->_tGraph;
+			fileName = "base.svg";
+		}
+		else
+		{
+			maxColPtr = &m_sMaxCol;
+			maxRowPtr = &m_sMaxRow;
+			//gridStepPtr = &_sgridStep;
+			graphPtr = &this->_sGraph;
+			fileName = "span.svg";
+			gridStep = _gridStep * 2;
+		}
+
+		auto &maxCol = (*maxColPtr);
+		auto &maxRow = (*maxRowPtr);
+		auto &graph = (*graphPtr);
+
+		std::cout << "maxCol = " << maxCol << std::endl;
+		std::cout << "maxRow = " << maxRow << std::endl;
+
+
+		svg::Dimensions dimensions(this->mWsPoint3.x(), this->mWsPoint3.y());
+
+		auto wtf = dimensions.height;
+		std::cout << "height" << wtf << " width " << dimensions.width << std::endl;
+		//deg::conf_debug << "height" << wtf << " width " << dimensions.width << std::endl;
+
+
+		svg::Document doc(fileName, svg::Layout(dimensions, svg::Layout::BottomLeft));
+
+		svg::Polygon border(svg::Stroke(2, svg::Color::Red));
+		border << svg::Point(0, 0) << svg::Point(dimensions.width, 0)
+			<< svg::Point(dimensions.width, dimensions.height) << svg::Point(0, dimensions.height);
+		doc << border;
+
+
+		auto InitVp = graph[0];
+		double init_x = InitVp.pnt.x();
+		double init_y = InitVp.pnt.y();
+
+		std::pair<bex::VertexIterator, bex::VertexIterator> _b2e_vi = boost::vertices(graph);
+		size_t  i = 0;
+		for (bex::VertexIterator vit = _b2e_vi.first; vit != _b2e_vi.second; vit++)
+		{
+			bex::VertexDescriptor vd = *vit;
+			bex::VertexProperty &vp = graph[vd];
+			double px = vp.pnt.x();
+			double py = vp.pnt.y();
+			std::cout << "px" << px << std::endl;
+			std::cout << "py" << py << std::endl;
+
+			//deg::conf_debug << "px" << px << std::endl;
+			//deg::conf_debug << "py" << py << std::endl;
+
+			svg::Point pnt(px, py);
+			svg::Fill fill();
+			svg::Stroke stroke(1, svg::Color::Cyan);
+
+			switch (vp.Type)
+			{
+			case bex::vertType::ObVert:
+			{
+				doc << svg::Circle(pnt, 5, svg::Fill(), svg::Stroke(1, svg::Color(200, 250, 150)));
+				break;
+			}
+			case bex::vertType::WayVert:
+			{
+				doc << svg::Circle(pnt, gridStep, svg::Fill(), svg::Stroke(0.1, svg::Color::Cyan));
+				break;
+			}
+			case bex::vertType::EdgeObVert:
+			{
+				doc << svg::Circle(pnt, 5, svg::Color::Red);
+				break;
+			}
+			case bex::vertType::ShoulderVert:
+			{
+				doc << svg::Circle(pnt, 5, svg::Color::Brown);
+				break;
+			}
+			default:
+				break;
+			}
+		}
+		std::pair<bex::EdgeIterator, bex::EdgeIterator> _b2e_ei = boost::edges(graph);
+
+		for (auto eit = _b2e_ei.first; eit != _b2e_ei.second; eit++)
+		{
+			bex::EdgeDescriptor ed = *eit;
+			bex::EdgeProperty &ep = graph[ed];
+			bex::VertexDescriptor sVertd = boost::source(ed, graph);
+			bex::VertexDescriptor tVertd = boost::target(ed, graph);
+
+			bex::VertexProperty &sVert = graph[sVertd];
+			bex::VertexProperty &tVert = graph[tVertd];
+
+			svg::Polyline polyline_a(svg::Stroke(.2, svg::Color::Blue));
+
+			double spx = sVert.pnt.x() ;
+			double spy = sVert.pnt.y() ;
+			//std::cout << "px" << px << std::endl;
+			//std::cout << "py" << py << std::endl;
+			svg::Point spnt(spx, spy);
+
+			double tpx = tVert.pnt.x() ;
+			double tpy = tVert.pnt.y() ;
+			//std::cout << "px" << px << std::endl;
+			//std::cout << "py" << py << std::endl;
+			svg::Point tpnt(tpx, tpy);
+			polyline_a << spnt << tpnt;
+			doc << polyline_a;
+		}
+
+		doc.save();
+	}
+
+		return false;
+	}
+	bool Obmap::saveSvg()
+	{
+
+		svg::Dimensions dimensions(this->mWsPoint3.x(), this->mWsPoint3.y());
+
+		auto wtf = dimensions.height;
+		std::cout << "height" << wtf << " width " << dimensions.width << std::endl;
+		//deg::conf_debug << "height" << wtf << " width " << dimensions.width << std::endl;
+
+
+		svg::Document doc("b2.svg", svg::Layout(dimensions, svg::Layout::BottomLeft));
+
+		//不画出界限
+		//svg::Polygon border(svg::Stroke(2, svg::Color::Red));
+		//border << svg::Point(0, 0) << svg::Point(dimensions.width, 0)
+		//	<< svg::Point(dimensions.width, dimensions.height) << svg::Point(0, dimensions.height);
+		//doc << border;
+
+
+		std::pair<bex::VertexIterator, bex::VertexIterator> _b2e_vi = boost::vertices(this->_tGraph);
+		size_t  i = 0;
+		for (bex::VertexIterator vit = _b2e_vi.first; vit != _b2e_vi.second; vit++)
+		{
+			bex::VertexDescriptor vd = *vit;
+			bex::VertexProperty &vp = this->_tGraph[vd];
+			double px = vp.pnt.x();
+			double py = vp.pnt.y();
+//			std::cout << "px" << px << std::endl;
+//			std::cout << "py" << py << std::endl;
+
+			//deg::conf_debug << "px" << px << std::endl;
+			//deg::conf_debug << "py" << py << std::endl;
+
+			svg::Point pntc(px, py);
+			svg::Point pnt(px - _gridStep / 2, py + _gridStep / 2);
+			svg::Fill fill();
+			svg::Stroke stroke(1, svg::Color::Cyan);
+
+			switch (vp.Type)
+			{
+			case bex::vertType::ObVert:
+			{
+				doc << svg::Circle(pnt, 5, svg::Fill(), svg::Stroke(1, svg::Color(200, 250, 150)));
+				break;
+			}
+			case bex::vertType::WayVert:
+			{
+				doc << svg::Rectangle(pnt, _gridStep,_gridStep, svg::Fill(), svg::Stroke(0.1, svg::Color::Cyan));
+				doc << svg::Circle(pntc, _gridStep, svg::Fill(), svg::Stroke(0.1, svg::Color::Cyan));
+				break;
+			}
+			case bex::vertType::EdgeObVert:
+			{
+				doc << svg::Circle(pnt, 5, svg::Color::Red);
+				break;
+			}
+			case bex::vertType::ShoulderVert:
+			{
+				doc << svg::Circle(pnt, 5, svg::Color::Brown);
+				break;
+			}
+			default:
+				break;
+			}
+		}
+
+
+		doc.save();
 		return false;
 	}
 	std::vector<GridIndex> Obmap::getSearchNeighbor(GridIndex const & mindex)

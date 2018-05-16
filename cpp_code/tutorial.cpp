@@ -21,6 +21,9 @@ int main(int argc, char * argv[])
 	obmap.writeGraph(pl::graphType::base);
 	obmap.writeGraph(pl::graphType::span);
 	obmap.spanningTree();
+	obmap.saveGraphSvg(pl::graphType::base);
+	obmap.saveGraphSvg(pl::graphType::span);
+	obmap.saveSvg();
 
 	cout << "ggq' code" << endl;
 	if (argc <= 1){

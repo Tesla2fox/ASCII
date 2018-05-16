@@ -21,6 +21,8 @@ set(file_list
 	ReadConfig.h
 	ReadConfig.cpp
 	ssconfig.hpp
+	#
+	simple_svg.hpp
 )
 
 IF(WIN32)
