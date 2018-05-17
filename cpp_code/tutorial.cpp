@@ -36,12 +36,15 @@ int main(int argc, char * argv[])
 	obmap.saveSvg();
 
 	pl::Splan  splan(obmap);
-	splan.setStartPnt(bex::DPoint(20, 30));
+	splan.setStartPnt(bex::DPoint(20,0));
 	splan.pathPlanning();
 	//splan.drawGraph(pl::graphType::base,true);
-	splan.drawGraph(pl::graphType::tree, true);
-	splan.drawGraph(pl::graphType::span,false);
-	splan.drawTree();
+	splan.drawGraph(pl::graphType::tree, false);
+
+//	splan.drawGraph(pl::graphType::span,false);
+//	splan.drawTree();
+	splan.drawPath();
+	
 
 	splan.savePic();
 

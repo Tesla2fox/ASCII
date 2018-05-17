@@ -620,6 +620,18 @@ namespace pl
 	}
 	GridIndex Obmap::pnt2Index(bex::DPoint const & pnt, int const & type)
 	{
+		GridMap * gridPtr;
+		double gridStep;
+		if (type == pl::graphType::base)
+		{
+			gridPtr = &this->_tGrid;
+			gridStep = _gridStep;
+		}
+		else
+		{
+			gridPtr = &this->_sGrid;
+			gridStep = _gridStep * 2;
+		}
 		GridIndex rindex;
 		rindex.first = -1;
 		rindex.second = -1;
@@ -628,24 +640,25 @@ namespace pl
 		initIndex.first = 0;
 		initIndex.second = 0;
 
-		double _i_x = this->_tGrid[initIndex].pnt.x();
-		double _i_y = this->_tGrid[initIndex].pnt.y();
-		if (pnt.y()<_i_y)
+		double _min_x = (*gridPtr)[initIndex].pnt.x() - gridStep/2;
+		double _min_y = (*gridPtr)[initIndex].pnt.y() - gridStep/2;
+
+		double _i_x = (*gridPtr)[initIndex].pnt.x();
+		double _i_y = (*gridPtr)[initIndex].pnt.y();
+
+		
+		if (pnt.y()<_min_y)
 		{
 			return rindex;
 		}
-		if (pnt.x()<_i_x)
+		if (pnt.x()<_min_x)
 		{
 			return rindex;
 		}
-		auto bais_x = pnt.x() - _i_x;
-		auto bais_y = pnt.y() - _i_y;
-		double step;
-		step = this->_gridStep;
-		bais_x = bais_x - step / 2;
-		bais_y = bais_y - step / 2;
-		auto p_col = ceil(bais_x / step);
-		auto p_row = ceil(bais_y / step);
+		auto bais_x = pnt.x() - _min_x;
+		auto bais_y = pnt.y() - _min_y;
+		auto p_col = floor(bais_x / gridStep);
+		auto p_row = floor(bais_y / gridStep);
 
 		if (p_col>m_MaxCol)
 		{

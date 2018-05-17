@@ -6,6 +6,7 @@
 
 namespace pl
 {
+	enum DirType{left,bottom,right,top,center};
 	class Splan
 	{
 	public:
@@ -24,6 +25,7 @@ namespace pl
 		void pathPlanning();
 		void drawGraph(size_t const &type,bool const &b_edge);
 		void drawTree();
+		void drawPath();
 		void savePic() { doc.save(); }
 
 		
@@ -68,6 +70,16 @@ namespace pl
 
 		//get four neighbour grid indexs;
 		vector<GridIndex> getVerticalNeighbour(GridIndex const &cen_index);
+
+		//get four neighbour grid indexs with directions
+		vector<pair<GridIndex, size_t>> getVerticalNeighbourWithDir(GridIndex const &cen_index);
+
+		size_t getDir(bex::VertexDescriptor const & cen_index, bex::VertexDescriptor const & n_index);
+
+		bool inSameMegaBox(bex::VertexDescriptor const &vd0, bex::VertexDescriptor const &vd1);
+		//
+		bex::DLineString _path;
+		vector<bex::VertexDescriptor> _pathIndex;
 	};
 
 }

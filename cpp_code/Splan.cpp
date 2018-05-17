@@ -3,8 +3,11 @@
 namespace pl{
 	void pl::Splan::pathPlanning()
 	{
+		_path.clear();
+		GridIndex  cenGridIndex = _mainMap.pnt2Index(_startPnt, graphType::base);
 		spanningTreePrim();
 		getNewGraph();
+		inSameMegaBox(7, 8);
 		searchPath();
 	}
 
@@ -155,6 +158,22 @@ void Splan::drawTree()
 	}
 }
 
+void Splan::drawPath()
+{
+	svg::Polyline polyline_Path(svg::Stroke(.5, svg::Color::Purple));
+	for (size_t i = 0; i < _path.size(); i++)
+	{
+		svg::Point spnt(_path[i].x(), _path[i].y());
+		polyline_Path << spnt;
+	}
+	doc << polyline_Path;
+	double gridStep = _mainMap.getGridStep();
+	svg::Point pntc(_startPnt.x(), _startPnt.y());
+	doc << svg::Circle(pntc, gridStep, svg::Fill(svg::Color::Transparent), svg::Stroke(0.1, svg::Color::Cyan));
+
+	//doc << svg::Text(svg::Point(_startPnt.x(), _startPnt.y()), "Simple SVG", svg::Color::Silver, svg::Font(0.1, "Verdana"));
+}
+
 void pl::Splan::spanningTreePrim()
 {
 
@@ -246,6 +265,8 @@ void Splan::getNewGraph()
 		bex::VertexDescriptor vd = *vit;
 		bex::VertexProperty vp = _ob_tGraph[vd];
 		vp.EdgeState = false;
+		vp.NeighbourState = false;
+		vp.QueueState = false;
 		boost::add_vertex(vp, _m_tGraph);
 	}
 
@@ -290,7 +311,78 @@ void Splan::getNewGraph()
 
 void Splan::searchPath()
 {
-	GridIndex  cenGridIndex =  _mainMap.pnt2Index(_startPnt, 0);
+	GridIndex  cenGridIndex =  _mainMap.pnt2Index(_startPnt, graphType::base);
+	bex::VertexDescriptor cenVd = this->_ob_tmap2graph[cenGridIndex];
+	bex::VertexDescriptor canVd(cenVd);
+	size_t cenDir = DirType::center;
+	size_t canDir = DirType::center;
+
+	size_t i = 0;
+	do
+	{
+#ifdef _DEBUG
+		cout << "i = " << i++ << endl;
+#endif // _DEBUG
+		cenVd = canVd;
+		cenDir = canDir;
+		//canDir = cenDir;
+		_pathIndex.push_back(cenVd);
+		auto neighborsIter = boost::adjacent_vertices(cenVd, _m_tGraph);
+		bex::VertexProperty &cenVp = _m_tGraph[cenVd];
+		cenVp.NeighbourState = true;
+		this->_path.push_back(cenVp.pnt);
+		vector<bex::VertexDescriptor> vNeighbors;
+		for (auto ni = neighborsIter.first; ni != neighborsIter.second; ++ni)
+		{
+			if (!_m_tGraph[*ni].NeighbourState)
+			{
+				vNeighbors.push_back(*ni);
+			}
+		}
+		canVd = cenVd;
+		vector<size_t> vCanVd;
+		bool chsSameMega = false;
+		//
+		for (auto &it : vNeighbors)
+		{
+			auto &vp = _m_tGraph[it];
+			//has not been covered
+			if (vp.NeighbourState == false)
+			{
+				if (inSameMegaBox(it, cenVd))
+				{
+					canVd = it;
+					chsSameMega = true;
+					break;
+				}
+				else
+				{
+					vCanVd.push_back(it);
+				}
+			}
+		}
+		//no vertex in the same mega box
+		if (!chsSameMega)
+		{
+			if (!vCanVd.empty())
+			{
+				if (vCanVd.size() == 1)
+				{
+					canVd = vCanVd.back();
+				}
+				else
+				{
+					vector<size_t> vDir;
+					for (auto &it : vCanVd)
+					{
+						if (cenDir == getDir(cenVd, it))
+							canVd = it;
+					}
+				}
+			}
+		}
+		canDir = getDir(cenVd, canVd);
+	} while (canVd != cenVd);
 
 }
 
@@ -313,7 +405,6 @@ vector<GridIndex> Splan::getVerticalNeighbour(GridIndex const & cen_index)
 	auto &grid = this->_ob_tGrid;
 
 	vector<GridIndex> vIndex;
-
 	auto &i = cen_index.first;
 	auto &j = cen_index.second;
 	auto neighbour = [=](GridIndex &ind, vector<GridIndex>  &vInd) {
@@ -322,9 +413,10 @@ vector<GridIndex> Splan::getVerticalNeighbour(GridIndex const & cen_index)
 			if (grid.at(ind).type == bex::vertType::WayVert)
 			{
 				vInd.push_back(ind);
+				return true;
 			}
 		}
-		return;
+		return false;
 	};
 	
 	//left
@@ -336,6 +428,83 @@ vector<GridIndex> Splan::getVerticalNeighbour(GridIndex const & cen_index)
 	//botton
 	neighbour(GridIndex(i, j - 1), vIndex);
 	return vIndex;
+}
+
+vector<pair<GridIndex, size_t>> Splan::getVerticalNeighbourWithDir(GridIndex const & cen_index)
+{
+	auto &grid = this->_ob_tGrid;
+
+	vector<pair<GridIndex, size_t>> res;
+	vector<GridIndex> vIndex;
+	vector<size_t> vDir;
+	
+	auto &i = cen_index.first;
+	auto &j = cen_index.second;
+	auto neighbour = [=](GridIndex &ind, vector<GridIndex>  &vInd) {
+		if (grid.count(ind))
+		{
+			if (grid.at(ind).type == bex::vertType::WayVert)
+			{
+				vInd.push_back(ind);
+				return true;
+			}
+		}
+		return false;
+	};
+
+	//left
+	if(neighbour(GridIndex(i - 1, j), vIndex)) vDir.push_back(DirType::left);
+	//top 
+	if(neighbour(GridIndex(i, j + 1), vIndex)) vDir.push_back(DirType::top);
+	//right
+	if(neighbour(GridIndex(i + 1, j), vIndex)) vDir.push_back(DirType::right);
+	//botton
+	if(neighbour(GridIndex(i, j - 1), vIndex)) vDir.push_back(DirType::bottom);
+	
+	for (size_t i = 0; i < vDir.size(); i++)
+	{
+		res.push_back(pair<GridIndex, size_t>(vIndex[i], vDir[i]));
+	}
+	return res;
+}
+
+size_t Splan::getDir(bex::VertexDescriptor const & cen_index, bex::VertexDescriptor const & n_index)
+{
+	GridIndex cenGridInd = _ob_tgraph2map[cen_index];
+	GridIndex nGridInd = _ob_tgraph2map[n_index];
+	// x equal 
+	if (cenGridInd.first == nGridInd.first)
+	{
+		if (cenGridInd.second == (nGridInd.second - 1)) {
+			return DirType::bottom;
+		}		
+		if (cenGridInd.second == (nGridInd.second + 1)) {
+			return DirType::top;
+		}
+	}
+	if (cenGridInd.second == nGridInd.second)
+	{
+		if (cenGridInd.first == (nGridInd.first - 1)) {
+			return DirType::left;
+		}
+		if (cenGridInd.first == (nGridInd.first + 1)) {
+			return DirType::right;
+		}
+	}
+	return DirType::center;
+}
+
+bool Splan::inSameMegaBox(bex::VertexDescriptor const & vd0, bex::VertexDescriptor const & vd1)
+{
+	GridIndex index0 = _mainMap.pnt2Index(_m_tGraph[vd0].pnt, graphType::span);
+	//cout << " x0 =" << _m_tGraph[vd0].pnt.x() << "	y0 = " << _m_tGraph[vd0].pnt.y() << endl;
+	GridIndex index1 = _mainMap.pnt2Index(_m_tGraph[vd1].pnt, graphType::span);
+	//cout << " x1 =" << _m_tGraph[vd1].pnt.x() << "	y1 = " << _m_tGraph[vd1].pnt.y() << endl;
+	if ((index0.first == index1.first) && (index0.second == index1.second))
+	{
+		return true;
+	}
+	return false;
 }
 
 }
