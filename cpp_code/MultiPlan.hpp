@@ -18,15 +18,15 @@ namespace pl
 			_ob_tmap2graph(ob_map.tmap2graph)
 			,_vStartPnt(_vRobPnt),_robNum(_vRobPnt.size())
 		{			
-			_colorMap.insert(pair<size_t, svg::Color>(0, svg::Color::Green));
-			_colorMap.insert(pair<size_t, svg::Color>(1, svg::Color::Blue));
-			_colorMap.insert(pair<size_t, svg::Color>(2, svg::Color::Red));
-			_colorMap.insert(pair<size_t, svg::Color>(3, svg::Color::Yellow));
+			_colorMap.insert(pair<size_t, int>(0, svg::Color::Green));
+			_colorMap.insert(pair<size_t, int>(1, svg::Color::Blue));
+			_colorMap.insert(pair<size_t, int>(2, svg::Color::Red));
+			_colorMap.insert(pair<size_t, int>(3, svg::Color::Yellow));
 		}
 
 		void drawGraph(size_t const &type, bool const &b_edge);
 		void drawStartLocation();
-
+		void drawRobSet();
 		void savePic() { doc.save(); }
 
 
@@ -55,13 +55,30 @@ namespace pl
 		//
 		const vector<bex::DPoint> _vStartPnt;
 		const size_t _robNum;
+
+		//
+		//shared_ptr<vector<vector<size_t>>> _vRobSetPtr = nullptr;
 		
-		map<size_t, svg::Color> _colorMap;
+		shared_ptr<vector<set<size_t>>> _vRobSetPtr = nullptr;
+		shared_ptr<vector<set<size_t>>> _vRobNeiSetPtr = nullptr;
+		map<size_t, int> _colorMap;
 		//
 		svg::Document doc;
 
 		void auction();
 
+		bool getMinLeaf(set<size_t> const & robSet, bex::VertexDescriptor &vd) const;
+
+
+		bool getMinLeaf(size_t const &robID, bex::VertexDescriptor &min_MegaBoxVd);
+
+		bool getAllLeaf(set<size_t> const & robSet, vector<bex::VertexDescriptor> &vVd) const;
+
+		//
+		// return min bid rob
+		size_t minBidRob(size_t const &megaBoxID, size_t const &robAucNeer);
+
+		void updateSet(size_t const &succBidID, bex::VertexDescriptor const& MegaBoxVd);
 	};
 	//	enum DirType{left,bottom,right,top,center};
 	//class Splan

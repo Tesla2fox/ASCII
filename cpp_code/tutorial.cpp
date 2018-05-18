@@ -58,6 +58,7 @@ int main(int argc, char * argv[])
 	multi_plan.drawGraph(pl::graphType::span, false);
 	multi_plan.pathPlanning();
 	multi_plan.drawStartLocation();
+	multi_plan.drawRobSet();
 	multi_plan.savePic();
 
 	cout << "ggq' code" << endl;
