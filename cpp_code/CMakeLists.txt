@@ -26,6 +26,8 @@ set(file_list
 	#plan
 	Splan.hpp
 	Splan.cpp
+	MultiPlan.hpp
+	MultiPlan.cpp
 )
 
 IF(WIN32)
