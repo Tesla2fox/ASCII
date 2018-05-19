@@ -56,6 +56,7 @@ message(${PROJECT_BINARY_DIR})
 add_executable(coveragePathPlan ${file_list})
 add_executable(primTest prim.cpp)
 add_executable(svgTest tutorial_svg.cpp simple_svg.hpp)
+add_executable(componentTest component.cpp)
 #add_executable(test_pathplan  ${PROJECT_LIB_DIR}/${file_list})
 
 #add_library(coveragePathPlan  SHARED ${file_list})
@@ -69,7 +70,7 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/exc)
 #set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/exc)
 
 #设置输出名称
-set_target_properties(coveragePathPlan PROPERTIES OUTPUT_NAME "libAnyPlanning")
+set_target_properties(coveragePathPlan PROPERTIES OUTPUT_NAME "coveragePathPlan")
 
 
 # SHARE or STATIC

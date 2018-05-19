@@ -70,6 +70,7 @@ namespace pl
 		const double &getGridStep() { return _gridStep; }
 		bex::DPoint &getWsPoint3() { return mWsPoint3; }
 
+		bool allConnected(vector<bex::VertexDescriptor> const &v_vd);
 
 
 	private:
@@ -93,8 +94,6 @@ namespace pl
 		const double _gridStep;
 
 
-
-
 		//write txt
 		std::ofstream c_deg;
 
@@ -116,5 +115,9 @@ namespace pl
 		//获取8个邻居节点
 		std::vector<GridIndex> getSearchNeighbor(GridIndex const &mindex,size_t const &gridType);
 
+		//获取4个邻居节点
+		std::vector<GridIndex> getSearchVerticalNeighbor(GridIndex const &cen_index, size_t const &gridType);
+
+		bool IsConnected(bex::VertexDescriptor const &vd0, bex::VertexDescriptor const &vd1, size_t const &gridType);
 	};
 }

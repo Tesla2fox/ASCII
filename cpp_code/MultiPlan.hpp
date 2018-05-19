@@ -22,11 +22,14 @@ namespace pl
 			_colorMap.insert(pair<size_t, int>(1, svg::Color::Blue));
 			_colorMap.insert(pair<size_t, int>(2, svg::Color::Red));
 			_colorMap.insert(pair<size_t, int>(3, svg::Color::Yellow));
+
+			c_deg.open("D:\\py_code\\ASCII\\data\\planDebug.txt", std::ios::trunc);
+
 		}
 
 		void drawGraph(size_t const &type, bool const &b_edge);
 		void drawStartLocation();
-		void drawRobSet();
+		void drawRobSet(bool const &neibool);
 		void savePic() { doc.save(); }
 
 
@@ -56,11 +59,22 @@ namespace pl
 		const vector<bex::DPoint> _vStartPnt;
 		const size_t _robNum;
 
+		///
+
+		//write txt
+		std::ofstream c_deg;
+		//
 		//
 		//shared_ptr<vector<vector<size_t>>> _vRobSetPtr = nullptr;
 		
-		shared_ptr<vector<set<size_t>>> _vRobSetPtr = nullptr;
-		shared_ptr<vector<set<size_t>>> _vRobNeiSetPtr = nullptr;
+		//
+		shared_ptr<vector<map<size_t,size_t>>> _vRobSetPtr = nullptr;
+		shared_ptr<vector<map<size_t,size_t>>> _vRobNeiSetPtr = nullptr;
+		shared_ptr<set<size_t>> _notBidSetPtr = nullptr;
+		using TreeEdge = pair<size_t, size_t>;
+//		shared_ptr<vector<set<pair<size_t, size_t>>>> _vRobNeiSetPtr = nullptr;
+//		vector<vector<pair<size_t,size_t>>> _vRobSpanTree;
+
 		map<size_t, int> _colorMap;
 		//
 		svg::Document doc;
@@ -72,13 +86,17 @@ namespace pl
 
 		bool getMinLeaf(size_t const &robID, bex::VertexDescriptor &min_MegaBoxVd);
 
+		double calFitNess(size_t const &robID, bex::VertexDescriptor const  &megaBoxVd);
+
 		bool getAllLeaf(set<size_t> const & robSet, vector<bex::VertexDescriptor> &vVd) const;
 
 		//
 		// return min bid rob
-		size_t minBidRob(size_t const &megaBoxID, size_t const &robAucNeer);
+		size_t minBidRob(size_t const &robAucNeer, bex::VertexDescriptor const &megaBoxID);
 
-		void updateSet(size_t const &succBidID, bex::VertexDescriptor const& MegaBoxVd);
+		void updateSet(size_t const &succBidID, bex::VertexDescriptor const& megaBoxVd);
+		void updateSetWithErase(size_t const &succBidID, bex::VertexDescriptor const& megaBoxVd);
+
 	};
 	//	enum DirType{left,bottom,right,top,center};
 	//class Splan

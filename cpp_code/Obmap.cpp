@@ -259,7 +259,9 @@ namespace pl
 			if (this->_tGraph[vd].Type == bex::vertType::WayVert)
 			{
 				auto localIndex = tgraph2map[vd];
-				auto vlocalIndex = getSearchNeighbor(localIndex, graphType::base);
+//				auto vlocalIndex = getSearchNeighbor(localIndex, graphType::base);
+				auto vlocalIndex = getSearchVerticalNeighbor(localIndex, graphType::base);
+
 				std::vector<int> vvd;
 				for (auto &it : vlocalIndex)
 				{
@@ -369,7 +371,8 @@ namespace pl
 			if (sGraph[vd].Type == bex::vertType::WayVert)
 			{
 				auto localIndex = sgraph2map[vd];
-				auto vlocalIndex = getSearchNeighbor(localIndex,graphType::span);
+				//auto vlocalIndex = getSearchNeighbor(localIndex,graphType::span);
+				auto vlocalIndex = getSearchVerticalNeighbor(localIndex, graphType::span);
 				std::vector<int> vvd;
 				for (auto &it : vlocalIndex)
 				{
@@ -672,6 +675,25 @@ namespace pl
 		rindex.second = p_row;
 		return rindex;
 	}
+	bool Obmap::allConnected(vector<bex::VertexDescriptor> const & v_vd) 
+	{
+		using CGraph = boost::adjacency_list<bt::vecS, bt::vecS, bt::undirectedS>;
+		CGraph cg;
+		for (size_t i = 0; i < v_vd.size(); i++)
+		{
+			for (size_t j = i; j < v_vd.size(); j++)
+			{
+				if (IsConnected(v_vd[i], v_vd[j],pl::graphType::span))
+				{
+					bt::add_edge(i, j, cg);
+				}
+			}
+		}
+		vector<int> component(bt::num_vertices(cg));
+		int num = bt::connected_components(cg, &component[0]);
+		if (num == 1) return true;
+		return false;
+	}
 	std::vector<GridIndex> Obmap::getSearchNeighbor(GridIndex const & mindex, size_t const &gridType)
 	{
 		///return std::vector<GridIndex>();
@@ -710,5 +732,79 @@ namespace pl
 			}
 		}
 		return vIndex;
+	}
+	std::vector<GridIndex> Obmap::getSearchVerticalNeighbor(GridIndex const & cen_index, size_t const & gridType)
+	{
+		GridMap *gridPtr;
+		if (gridType == graphType::base)
+		{
+			gridPtr = &this->_tGrid;
+		}
+		else
+		{
+			gridPtr = &this->_sGrid;
+		}
+		auto &grid = (*gridPtr);
+
+		vector<pair<GridIndex, size_t>> res;
+		vector<GridIndex> vIndex;
+
+		auto &i = cen_index.first;
+		auto &j = cen_index.second;
+		auto neighbour = [=](GridIndex &ind, vector<GridIndex>  &vInd) {
+			if (grid.count(ind))
+			{
+				if (grid.at(ind).type == bex::vertType::WayVert)
+				{
+					vInd.push_back(ind);
+					return true;
+				}
+			}
+			return false;
+		};
+
+		//left
+		neighbour(GridIndex(i - 1, j), vIndex);
+		//top 
+		neighbour(GridIndex(i, j + 1), vIndex);
+		//right
+		neighbour(GridIndex(i + 1, j), vIndex);
+		//botton
+		neighbour(GridIndex(i, j - 1), vIndex);
+
+		return vIndex;
+	}
+	bool Obmap::IsConnected(bex::VertexDescriptor const & vd0, bex::VertexDescriptor const & vd1, size_t const & gridType)
+	{
+
+		const GridMap *gridPtr;
+//		map<std::pair<int, int>, int>  map2graphPtr;
+//		const map<int, std::pair<int, int>>  graph2mapPtr;
+		GridIndex gridInd0;
+		GridIndex gridInd1;
+		if (gridType == graphType::base)
+		{
+			gridPtr = &this->_tGrid;
+			gridInd0  = sgraph2map[vd0];
+			gridInd1  = sgraph2map[vd1];
+		}
+		else
+		{
+			gridPtr = &this->_sGrid;
+			gridInd0 = tgraph2map[vd0];
+			gridInd1 = tgraph2map[vd1];
+		}
+		auto &grid = (*gridPtr);	
+		if (gridInd0.first == gridInd1.first)
+		{
+			if (gridInd0.second == (gridInd1.second - 1)) return true;
+			if (gridInd0.second == (gridInd1.second + 1)) return true;
+		}
+		if (gridInd0.second == gridInd1.second)
+		{
+			if (gridInd0.first == (gridInd1.first - 1)) return true;
+			if (gridInd0.first == (gridInd1.first + 1)) return true;
+		}
+		return false;
 	}
 }
