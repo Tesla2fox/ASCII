@@ -694,6 +694,78 @@ namespace pl
 		if (num == 1) return true;
 		return false;
 	}
+	vector<bex::VertexDescriptor> Obmap::getTgraphVd(bex::VertexDescriptor const & svd)
+	{
+		GridIndex sgridInd = this->sgraph2map[svd];
+		
+		GridIndex tgridInd(sgridInd.first * 2, sgridInd.second * 2);
+		vector<bex::VertexDescriptor> res;
+
+		bex::VertexDescriptor vd0 = this->tmap2graph[tgridInd];
+		bex::VertexDescriptor vd1 = this->tmap2graph[GridIndex(tgridInd.first + 1, tgridInd.second)];
+		bex::VertexDescriptor vd2 = this->tmap2graph[GridIndex(tgridInd.first, tgridInd.second + 1)];
+		bex::VertexDescriptor vd3 = this->tmap2graph[GridIndex(tgridInd.first + 1, tgridInd.second + 1)];
+		res.push_back(vd0);
+		res.push_back(vd1);		
+		res.push_back(vd2);		
+		res.push_back(vd3);
+		return res;
+	}
+	std::vector<bex::VertexDescriptor> Obmap::getSearchVerticalNeighbor(bex::VertexDescriptor const & cvd, size_t const & gridType)
+	{
+		GridMap *gridPtr;
+		GridIndex cen_index;
+		if (gridType == graphType::base)
+		{
+			gridPtr = &this->_tGrid;
+			cen_index = this->tgraph2map[cvd];
+		}
+		else
+		{
+			gridPtr = &this->_sGrid;
+			cen_index = this->sgraph2map[cvd];
+		}
+		auto &grid = (*gridPtr);
+
+		//vector<pair<GridIndex, size_t>> res;
+		vector<GridIndex> vIndex;
+		
+		auto &i = cen_index.first;
+		auto &j = cen_index.second;
+		auto neighbour = [=](GridIndex &ind, vector<GridIndex>  &vInd) {
+			if (grid.count(ind))
+			{
+				if (grid.at(ind).type == bex::vertType::WayVert)
+				{
+					vInd.push_back(ind);
+					return true;
+				}
+			}
+			return false;
+		};
+
+		//left
+		neighbour(GridIndex(i - 1, j), vIndex);
+		//top 
+		neighbour(GridIndex(i, j + 1), vIndex);
+		//right
+		neighbour(GridIndex(i + 1, j), vIndex);
+		//botton
+		neighbour(GridIndex(i, j - 1), vIndex);
+
+		vector<bex::VertexDescriptor> res;
+		for (auto &it : vIndex) {
+			if (gridType == graphType::base)
+			{
+				res.push_back(tmap2graph[it]);				
+			}
+			else
+			{
+				res.push_back(smap2graph[it]);
+			}
+		}
+		return res;
+	}
 	std::vector<GridIndex> Obmap::getSearchNeighbor(GridIndex const & mindex, size_t const &gridType)
 	{
 		///return std::vector<GridIndex>();

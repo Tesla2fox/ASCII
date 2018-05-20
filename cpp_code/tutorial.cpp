@@ -55,10 +55,12 @@ int main(int argc, char * argv[])
 	vRobPnt.push_back(bex::DPoint(40, 0));
 	pl::MultiPlan multi_plan(obmap, vRobPnt);
 	multi_plan.drawGraph(pl::graphType::base, false);
-	multi_plan.drawGraph(pl::graphType::span, false);
+//	multi_plan.drawGraph(pl::graphType::span, false);
 	multi_plan.pathPlanning();
 	multi_plan.drawStartLocation();
-	multi_plan.drawRobSet(false);
+	//multi_plan.drawRobGraph();
+	multi_plan.drawPath();
+	//multi_plan.drawRobSet(false);
 	multi_plan.savePic();
 
 	cout << "ggq' code" << endl;

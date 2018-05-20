@@ -72,6 +72,11 @@ namespace pl
 
 		bool allConnected(vector<bex::VertexDescriptor> const &v_vd);
 
+		vector<bex::VertexDescriptor> getTgraphVd(bex::VertexDescriptor const &svd);
+
+
+		//获取4个邻居节点
+		std::vector<bex::VertexDescriptor> getSearchVerticalNeighbor(bex::VertexDescriptor const &cvd, size_t const &gridType);
 
 	private:
 

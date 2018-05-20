@@ -28,8 +28,10 @@ namespace pl
 		}
 
 		void drawGraph(size_t const &type, bool const &b_edge);
+		void drawRobGraph();
 		void drawStartLocation();
 		void drawRobSet(bool const &neibool);
+		void drawPath();
 		void savePic() { doc.save(); }
 
 
@@ -59,6 +61,15 @@ namespace pl
 		const vector<bex::DPoint> _vStartPnt;
 		const size_t _robNum;
 
+		vector<bex::DLineString> _vTreeLineStr;
+		vector<vector<bex::DSegment>> _vTreeSgs;
+		vector<bex::Graph> _m_vGraph;
+		vector<map<size_t, size_t>> _vT2local;
+		vector<map<size_t, size_t>> _vlocal2T;
+
+		vector<bex::DLineString> _vpath;
+		vector<vector<bex::VertexDescriptor>> _vpathIndex;
+		
 		///
 
 		//write txt
@@ -80,11 +91,24 @@ namespace pl
 		svg::Document doc;
 
 		void auction();
+		void cenAuction();
+		void  getSpanningTreeSgs();
+		void getNewGraph();
+		void searchPath();
+
+
+		bool treeIntersection(bex::DSegment const sg,size_t const robID) const;
+
+		bool inSameMegaBox(bex::VertexDescriptor const &vd0, bex::VertexDescriptor const &vd1,size_t const &robID);
+
+		size_t getDir(bex::VertexDescriptor const & cen_index, bex::VertexDescriptor const & n_index,size_t const &robID);
 
 		bool getMinLeaf(set<size_t> const & robSet, bex::VertexDescriptor &vd) const;
 
 
 		bool getMinLeaf(size_t const &robID, bex::VertexDescriptor &min_MegaBoxVd);
+
+		bool getAuctionInd(bex::VertexDescriptor &min_MegaBoxVd);
 
 		double calFitNess(size_t const &robID, bex::VertexDescriptor const  &megaBoxVd);
 
