@@ -35,7 +35,8 @@ namespace pl
 		void savePic() { doc.save(); }
 
 
-		void pathPlanning();
+		void cenPathPlanning();
+		void disPathPlanning();
 	private:
 
 		//obMap

@@ -185,6 +185,23 @@ namespace pl
 		m_vDRing.push_back(ring);
 
 	}
+	void Obmap::addObPnt(bex::DPoint const & pnt)
+	{
+		GridIndex sInd = this->pnt2Index(pnt, graphType::span);
+		if (sInd.first == -1)
+			return;
+		auto vInd = this->getTgraphGridInd(sInd);
+		
+		this->_sObSet.insert(sInd);
+		for (auto &it : vInd)
+		{
+			_tObSet.insert(it);
+		}
+	}
+	void Obmap::addObRingSet(bex::DRing const & obring)
+	{
+
+	}
 	bool Obmap::map2tGrid()
 	{
 		this->_tGrid.clear();
@@ -207,14 +224,18 @@ namespace pl
 				pntUnit.pnt.y(this->_gridStep*j + this->mWsPoint1.y());
 				pntUnit.type = bex::vertType::WayVert;
 
-				for (auto &it : this->m_vDRing)
+				//for (auto &it : this->m_vDRing)
+				//{
+				//	auto _BWithIn = bg::within(pntUnit.pnt, it);
+				//	if (_BWithIn)
+				//	{
+				//		pntUnit.type = bex::vertType::ObVert;
+				//		goto insertPnt;
+				//	}
+				//}
+				if (_tObSet.count(pair<size_t, size_t>(i, j)) == 1)
 				{
-					auto _BWithIn = bg::within(pntUnit.pnt, it);
-					if (_BWithIn)
-					{
-						pntUnit.type = bex::vertType::ObVert;
-						goto insertPnt;
-					}
+					pntUnit.type = bex::vertType::ObVert;
 				}
 				//for (auto &it : this->vSegment)
 				//{
@@ -325,9 +346,21 @@ namespace pl
 					if (_BWithIn)
 					{
 						pntUnit.type = bex::vertType::ObVert;
+						pair<size_t, size_t> sInd(i, j);
+						auto vInd = this->getTgraphGridInd(sInd);
+						this->_sObSet.insert(sInd);
+						for (auto &it : vInd)
+						{
+							_tObSet.insert(it);
+						}
 						goto insertPnt;
 					}
 				}
+				if (_sObSet.count(pair<size_t, size_t>(i, j)) == 1)
+				{
+					pntUnit.type = bex::vertType::ObVert;
+				}
+
 				//for (auto &it : this->vSegment)
 				//{
 				//	double dis = bg::distance(pntUnit.pnt, it);
@@ -711,6 +744,19 @@ namespace pl
 		res.push_back(vd3);
 		return res;
 	}
+
+	vector<GridIndex> Obmap::getTgraphGridInd(GridIndex const & cenInd)
+	{
+		GridIndex sgridInd = cenInd;
+		GridIndex tgridInd(sgridInd.first * 2, sgridInd.second * 2);
+		vector<GridIndex> res;
+		res.push_back(tgridInd);
+		res.push_back(GridIndex(tgridInd.first + 1, tgridInd.second));
+		res.push_back(GridIndex(tgridInd.first, tgridInd.second + 1));
+		res.push_back(GridIndex(tgridInd.first + 1, tgridInd.second + 1));
+		return res;
+	}
+
 	std::vector<bex::VertexDescriptor> Obmap::getSearchVerticalNeighbor(bex::VertexDescriptor const & cvd, size_t const & gridType)
 	{
 		GridMap *gridPtr;

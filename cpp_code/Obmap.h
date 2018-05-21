@@ -43,6 +43,9 @@ namespace pl
 		//
 		void addObRing(bex::DRing const & obring) { m_vDRing.push_back(obring); }
 		void addObRing(std::vector<double> const &vx, std::vector<double> const &vy);
+		void addObGrid(GridIndex const &obGrid);
+		void addObPnt(bex::DPoint const &pnt);
+		void addObRingSet(bex::DRing const &obring);
 
 		bool map2tGrid();
 		bool map2sGrid();
@@ -73,11 +76,13 @@ namespace pl
 		bool allConnected(vector<bex::VertexDescriptor> const &v_vd);
 
 		vector<bex::VertexDescriptor> getTgraphVd(bex::VertexDescriptor const &svd);
+		vector<GridIndex> getTgraphGridInd(GridIndex const & cenInd);
 
 
 		//获取4个邻居节点
 		std::vector<bex::VertexDescriptor> getSearchVerticalNeighbor(bex::VertexDescriptor const &cvd, size_t const &gridType);
 
+		set<GridIndex> getsObSet() { return _sObSet; }
 	private:
 
 		//tgrid and the tgraph means the based grid
@@ -88,6 +93,8 @@ namespace pl
 		bex::Graph _sGraph;
 		GridMap _sGrid;
 
+		set<GridIndex> _sObSet;
+		set<GridIndex> _tObSet;
 
 		vector < bt::graph_traits <bex::Graph>::vertex_descriptor > vtree;
 		//

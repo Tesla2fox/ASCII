@@ -335,16 +335,28 @@ namespace pl {
 		}
 
 	}
-	void MultiPlan::pathPlanning()
+	void MultiPlan::cenPathPlanning()
 	{
-//		cenAuction();
-		auction();
+	    cenAuction();
+		//auction();
 		this->_vTreeSgs.clear();
 		this->_vTreeSgs.resize(3);
 		getSpanningTreeSgs();
 		getNewGraph();
 		searchPath();
 		
+	}
+
+	void MultiPlan::disPathPlanning()
+	{
+		//		cenAuction();
+		auction();
+		this->_vTreeSgs.clear();
+		this->_vTreeSgs.resize(3);
+		getSpanningTreeSgs();
+		getNewGraph();
+		searchPath();
+
 	}
 
 	void MultiPlan::auction()
@@ -358,6 +370,10 @@ namespace pl {
 
 		vector<bool> allAucEd(bt::num_vertices(_ob_sGraph), false);
 
+		auto sObSet = _mainMap.getsObSet();
+		for (auto &it : sObSet) {
+			allAucEd[_ob_smap2graph[it]] = true;
+		}
 		auto aucCompleted = [](vector<bool> const &vb) {
 			auto iter = std::find(vb.begin(), vb.end(), false);
 			if (iter == vb.end()) return true;
@@ -423,7 +439,7 @@ namespace pl {
 			allAucEd[aucInd] = true;
 			circleTime++;
 			cout << "circleTime  =" << circleTime << endl;
-			if (circleTime > 320)
+			if (circleTime > 350)
 			{
 				break;
 			}
@@ -447,6 +463,12 @@ namespace pl {
 		vector<map<size_t, size_t>> &_vRobNeiSet(*_vRobNeiSetPtr);
 
 		vector<bool> allAucEd(bt::num_vertices(_ob_sGraph), false);
+
+		auto sObSet = _mainMap.getsObSet();
+		for (auto &it : sObSet) {
+			allAucEd[_ob_smap2graph[it]] = true;
+		}
+
 
 		auto aucCompleted = [](vector<bool> const &vb) {
 			auto iter = std::find(vb.begin(), vb.end(), false);
