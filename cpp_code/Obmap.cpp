@@ -35,6 +35,7 @@ namespace pl
 			graphPtr = &_tGraph;
 			vStr.push_back("grid_x");
 			vStr.push_back("grid_y");
+			vStr.push_back("obType");
 			vStr.push_back("svd");
 			vStr.push_back("tvd");
 		}
@@ -43,13 +44,14 @@ namespace pl
 			graphPtr = &_sGraph;
 			vStr.push_back("s_grid_x");
 			vStr.push_back("s_grid_y");
+			vStr.push_back("s_obType");
 			vStr.push_back("s_svd");
 			vStr.push_back("s_tvd");
 		}
 
 		std::pair<bex::VertexIterator,bex::VertexIterator> _b2e_vi = boost::vertices(*graphPtr);
 
-		std::vector<double> vx, vy;
+		std::vector<double> vx, vy,vob;
 		for (bex::VertexIterator vit = _b2e_vi.first; vit != _b2e_vi.second; vit++)
 		{
 			bex::VertexDescriptor vd =*vit;
@@ -57,6 +59,7 @@ namespace pl
 			auto const & pnt = vp.pnt;
 			vx.push_back(pnt.x());
 			vy.push_back(pnt.y());
+			vob.push_back(vp.Type);
 		}
 		c_deg << vStr[vstrIndex++];
 		for (auto & it:vx)
@@ -72,10 +75,16 @@ namespace pl
 		}
 		c_deg << endl;
 
+		c_deg << vStr[vstrIndex++];
+		for (auto & it : vob)
+		{
+			c_deg << " " << it;
+		}
+		c_deg << endl;
+
 		std::pair<bex::EdgeIterator, bex::EdgeIterator> _b2e_ei = boost::edges(*graphPtr);
 		
 		vector<size_t> vSvd,vTvd;
-
 		for (auto eit = _b2e_ei.first; eit != _b2e_ei.second; eit++)
 		{
 			bex::EdgeDescriptor ed = *eit;

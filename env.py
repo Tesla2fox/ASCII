@@ -14,8 +14,9 @@ import copy
 #import Read_Cfg from read_cfg.py
 #import read_cfg
 from IPython.display import Image
+from xhtml2pdf import pisa   
 
-#py.sign_in('tesla_fox', 'HOTRQ3nIOdYUUszDIfgN')
+py.sign_in('tesla_fox', 'HOTRQ3nIOdYUUszDIfgN')
 
 
 class Pnt:
@@ -61,7 +62,22 @@ class Line:
         dic['y1'] =self.y1
         dic['line'] = dict(color = 'rgb(128, 0, 128)')
         return dic
-
+class Rect:
+    def __init__(self,pnt =Pnt(),width =0,height =0):
+        self.x0 = pnt.x
+        self.y0 = pnt.y
+        self.x1 = self.x0 + width
+        self.y1 = self.y0 + height
+    def rect2dict(self):
+        dic = dict()
+        dic['type']='rect'
+        dic['x0'] = self.x0
+        dic['y0'] = self.y0
+        dic['x1'] = self.x1
+        dic['y1'] = self.y1
+        dic['line'] = dict(color = 'rgb(128, 0, 128)')
+        return dic
+    
     
         
         
@@ -74,6 +90,7 @@ class Env:
         self.svd = list()
         self.tvd = list()
         self.gridStep = 0
+        self.vob = list()
     #画图函数
     def drawFunc(self):
         rangeTrace = go.Scatter(x = self.range_x,
@@ -92,13 +109,17 @@ class Env:
                                 mode= 'lines+markers',
                                 name = 'range',
                                 line = dict(shape ='v'))
-        layout = dict(title = 'coverage motion planning')
+#        layout = dict(title = 'coverage motion planning')
+        layout = dict()
+
         shapeLst = list()
         print(self.gridStep)
         for i in range(len(self.grid_x)):
             pnt = Pnt(self.grid_x[i],self.grid_y[i])
             circ = Circle(pnt,self.gridStep/2)
             circDic = circ.circle2dict()
+            if(self.vob[i]==0):
+                circDic['fillcolor'] = 'rgb(55, 128, 191)'
             shapeLst.append(copy.deepcopy(circDic))
         for i in range(len(self.svd)):
             pnt0 = Pnt(self.grid_x[svd[i]],self.grid_y[svd[i]])
@@ -110,6 +131,22 @@ class Env:
         layout['shapes'] = shapeLst
         layout['xaxis'] = {'range':[0,self.range_x]}
         layout['yaxis'] = {'range':[0,self.range_y]}
+        layout['xaxis'] = dict(
+        autorange=True,
+        showgrid=False,
+        zeroline=False,
+        showline=False,
+        autotick=True,
+        ticks='',
+        showticklabels=False)
+        layout['yaxis'] = dict(
+        autorange=True,
+        showgrid=False,
+        zeroline=False,
+        showline=False,
+        autotick=True,
+        ticks='',
+        showticklabels=False)
         layout['autosize'] = False
         layout['height'] = 800
         layout['width']= 800
@@ -117,7 +154,7 @@ class Env:
         data = []
         data.append(rangeTrace)
         fig = dict(data = data ,layout = layout)
-        plotly.offline.plot(fig,filename = 'environment.png')
+        plotly.offline.plot(fig,filename = 'environment')
 #        py.image.save_as(fig,filename ='env.jpeg')
         Image('./env.png')
         print('draw success')
@@ -125,7 +162,7 @@ class Env:
 
     
 if __name__ == '__main__':
-    
+   
     conFileDir = './/data//'    
     degNameCfg = conFileDir + 'map_debug.txt'
     readCfg = Read_Cfg(degNameCfg)
@@ -136,10 +173,12 @@ if __name__ == '__main__':
     grid_y = list()
     svd = []
     tvd = []
+    vob = []
     readMark = readCfg.get('range_x',lstx)
     readMark = readCfg.get('range_y',lsty)
     readMark = readCfg.get('grid_x',grid_x)
     readMark = readCfg.get('grid_y',grid_y)
+    readCfg.get('obType',vob)
     readCfg.get('svd',svd)
     readCfg.get('tvd',tvd)
     for i  in range(len(svd)):
@@ -154,6 +193,7 @@ if __name__ == '__main__':
     env.svd = svd
     env.tvd = tvd
     env.gridStep = gridStep
+    env.vob = vob
     env.drawGrid()
 #
 #    env.drawFunc()
