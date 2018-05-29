@@ -293,6 +293,33 @@ namespace pl {
 	{
 		for (size_t p = 0; p < _robNum; p++)
 		{
+			auto &path = this->_vpath[p];
+			vector<double> vx, vy;
+			for (size_t i = 0; i < path.size(); i++)
+			{
+				vx.push_back(path[i].x());
+				vy.push_back(path[i].y());
+			}
+			auto str_ind = std::to_string(p);
+			string path_x_str = "path_x_" + str_ind;
+			string path_y_str = "path_y_" + str_ind;
+			
+			c_deg << path_x_str;
+			for (auto & it : vx)
+			{
+				c_deg << " " << it;
+			}
+			c_deg << endl;
+
+			c_deg << path_y_str;
+			for (auto & it : vy)
+			{
+				c_deg << " " << it;
+			}
+			c_deg << endl;
+		}
+		for (size_t p = 0; p < _robNum; p++)
+		{
 			auto &_path = this->_vpath[p];
 			switch (p)
 			{
@@ -335,16 +362,74 @@ namespace pl {
 		}
 
 	}
+	void MultiPlan::writePath()
+	{
+
+	}
+	void MultiPlan::writeSgsTree()
+	{
+
+		for (size_t p = 0; p < _robNum; p++)
+		{
+			auto &TreeSgs = this->_vTreeSgs[p];
+			
+			vector<double> tvx, tvy, svx, svy;
+			for (size_t i = 0; i < TreeSgs.size(); i++)
+			{
+				tvx.push_back(TreeSgs[i].first.x());
+				svx.push_back(TreeSgs[i].second.x());
+				tvy.push_back(TreeSgs[i].first.y());
+				svy.push_back(TreeSgs[i].second.y());
+			}
+			
+
+			auto str_ind = std::to_string(p);
+			string tvx_str = "tvx_" + str_ind;
+			string tvy_str = "tvy_" + str_ind;
+			string svx_str = "svx_" + str_ind;
+			string svy_str = "svy_" + str_ind;
+
+			c_deg << tvx_str;
+			for (auto & it : tvx)
+			{
+				c_deg << " " << it;
+			}
+			c_deg << endl;
+
+			c_deg << tvy_str;
+			for (auto & it : tvy)
+			{
+				c_deg << " " << it;
+			}
+			c_deg << endl;
+
+			c_deg << svx_str;
+			for (auto & it : svx)
+			{
+				c_deg << " " << it;
+			}
+			c_deg << endl;
+
+			c_deg << svy_str;
+			for (auto & it : svy)
+			{
+				c_deg << " " << it;
+			}
+			c_deg << endl;
+
+
+		}
+
+	}
 	void MultiPlan::cenPathPlanning()
 	{
 	    cenAuction();
 		//auction();
 		this->_vTreeSgs.clear();
-		this->_vTreeSgs.resize(3);
+		this->_vTreeSgs.resize(this->_robNum);
 		getSpanningTreeSgs();
 		getNewGraph();
-		searchPath();
-		
+		searchPath();		
 	}
 
 	void MultiPlan::disPathPlanning()
@@ -412,7 +497,7 @@ namespace pl {
 			if (aucNeer == _robNum) aucNeer = _robNum - 1;
 			//size_t aucNeer = 1;
 
-			c_deg << "aucNeer  = " << aucNeer << endl;
+//			c_deg << "aucNeer  = " << aucNeer << endl;
 			bex::VertexDescriptor aucInd;
 			auto &robSet = _vRobSet[aucNeer];
 
@@ -508,7 +593,7 @@ namespace pl {
 			if (aucNeer == _robNum) aucNeer = _robNum - 1;
 			//size_t aucNeer = 1;
 
-			c_deg << "aucNeer  = " << aucNeer << endl;
+		//	c_deg << "aucNeer  = " << aucNeer << endl;
 			bex::VertexDescriptor aucInd;
 			auto &robSet = _vRobSet[aucNeer];
 

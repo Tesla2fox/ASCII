@@ -34,6 +34,8 @@ namespace pl
 		void drawPath();
 		void savePic() { doc.save(); }
 
+		void writePath();
+		void writeSgsTree();
 
 		void cenPathPlanning();
 		void disPathPlanning();

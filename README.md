@@ -13,6 +13,7 @@ ISCIIA
 
 #notices
 >- 地图从8方向修改为4方向地图了
+>- spanning map 和 base map 不是严格的整数倍关系
 
 
 

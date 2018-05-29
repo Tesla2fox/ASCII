@@ -7,16 +7,15 @@ int main(int argc, char * argv[])
 {
 	char * conFileName = "D:\\py_code\\\ASCII\\data\\CPP_cfg.txt";
 
-	if (argc > 1){
+	if (argc > 1) {
 		cout << argv[1] << endl;
 		conFileName = argv[1];
 	}
 	cfg::ReadConfig readCfg(conFileName);
 	readCfg.read();
 
-	pl::Obmap obmap(readCfg._RangePtr,3);
-	obmap.writeRange();
-
+	pl::Obmap 	demonMap(readCfg._RangePtr, 7.5);
+	demonMap.writeRange();
 
 	bex::DRing obRing;
 	obRing.push_back(bex::DPoint(20, 30));
@@ -24,6 +23,55 @@ int main(int argc, char * argv[])
 	obRing.push_back(bex::DPoint(50, 60));
 	obRing.push_back(bex::DPoint(20, 60));
 	obRing.push_back(bex::DPoint(20, 30));
+
+	demonMap.addObRing(obRing);
+
+	demonMap.addObPnt(bex::DPoint(0, 60));
+	demonMap.addObPnt(bex::DPoint(80, 80));
+
+	demonMap.addObPnt(bex::DPoint(80, 0));
+	demonMap.addObPnt(bex::DPoint(60, 0));
+	demonMap.addObPnt(bex::DPoint(90, 0));
+	demonMap.addObPnt(bex::DPoint(90, 15));
+	demonMap.addObPnt(bex::DPoint(80, 15));
+
+
+	demonMap.addObPnt(bex::DPoint(0, 100));
+	demonMap.addObPnt(bex::DPoint(10, 100));
+	demonMap.addObPnt(bex::DPoint(25, 100));
+
+
+	demonMap.map2sGrid();
+	demonMap.map2tGrid();
+
+	demonMap.writeGraph(pl::graphType::base);
+	demonMap.writeGraph(pl::graphType::span);
+	//	obmap.spanningTree();
+	demonMap.saveGraphSvg(pl::graphType::base);
+	demonMap.saveGraphSvg(pl::graphType::span);
+	demonMap.saveSvg();
+
+	vector<bex::DPoint> demonPnt;
+	demonPnt.push_back(bex::DPoint(20, 0));
+	pl::MultiPlan demonPlan(demonMap, demonPnt);
+	demonPlan.cenPathPlanning();
+	demonPlan.drawGraph(pl::graphType::base, false);
+	demonPlan.drawGraph(pl::graphType::span, false);
+	demonPlan.drawRobSet(false);
+	// demonPlan.cenPathPlanning();
+	//	multi_plan.disPathPlanning();
+	demonPlan.drawStartLocation();
+
+	demonPlan.drawPath();
+	demonPlan.savePic();
+	demonPlan.writeSgsTree();
+
+	return 1;
+
+	pl::Obmap obmap(readCfg._RangePtr, 3);
+	obmap.writeRange();
+
+
 	obmap.addObRing(obRing);
 
 	obmap.addObPnt(bex::DPoint(20, 60));
@@ -50,23 +98,19 @@ int main(int argc, char * argv[])
 
 	obmap.writeGraph(pl::graphType::base);
 	obmap.writeGraph(pl::graphType::span);
-//	obmap.spanningTree();
+	//	obmap.spanningTree();
 	obmap.saveGraphSvg(pl::graphType::base);
 	obmap.saveGraphSvg(pl::graphType::span);
 	obmap.saveSvg();
 
-//	pl::Splan  splan(obmap);
-//	splan.setStartPnt(bex::DPoint(20,0));
-//	splan.pathPlanning();
-	//splan.drawGraph(pl::graphType::base,true);
-//	splan.drawGraph(pl::graphType::tree, false);
 
-//	splan.drawGraph(pl::graphType::span,false);
-//	splan.drawTree();
-//	splan.drawPath();
-	
 
-//	splan.savePic();
+	//	splan.drawGraph(pl::graphType::span,false);
+	//	splan.drawTree();
+	//	splan.drawPath();
+
+
+	//	splan.savePic();
 
 	vector<bex::DPoint> vRobPnt;
 	vRobPnt.push_back(bex::DPoint(20, 0));
@@ -74,10 +118,10 @@ int main(int argc, char * argv[])
 	vRobPnt.push_back(bex::DPoint(40, 0));
 	pl::MultiPlan multi_plan(obmap, vRobPnt);
 	multi_plan.drawGraph(pl::graphType::base, false);
-//	multi_plan.drawGraph(pl::graphType::span, false);
-//	multi_plan.pathPlanning();
+	//	multi_plan.drawGraph(pl::graphType::span, false);
+	//	multi_plan.pathPlanning();
 	multi_plan.cenPathPlanning();
-//	multi_plan.disPathPlanning();
+	//	multi_plan.disPathPlanning();
 	multi_plan.drawStartLocation();
 	//multi_plan.drawRobGraph();
 	multi_plan.drawPath();
@@ -85,7 +129,7 @@ int main(int argc, char * argv[])
 	multi_plan.savePic();
 
 	cout << "ggq' code" << endl;
-	if (argc <= 1){
+	if (argc <= 1) {
 		size_t input_val;
 		std::cin >> input_val;
 	}
