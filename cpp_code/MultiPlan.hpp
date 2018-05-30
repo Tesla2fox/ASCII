@@ -25,6 +25,14 @@ namespace pl
 
 			c_deg.open("D:\\py_code\\ASCII\\data\\planDebug.txt", std::ios::trunc);
 
+			vector<double> vx, vy;
+			for (auto &it : this->_vStartPnt)
+			{
+				vx.push_back(it.x());
+				vy.push_back(it.y());
+			}
+			this->writeDebug("start_x", vx);
+			this->writeDebug("start_y", vy);
 		}
 
 		void drawGraph(size_t const &type, bool const &b_edge);
@@ -77,6 +85,7 @@ namespace pl
 
 		//write txt
 		std::ofstream c_deg;
+		void writeDebug(string const &str, vector<double> const &v_val);
 		//
 		//
 		//shared_ptr<vector<vector<size_t>>> _vRobSetPtr = nullptr;

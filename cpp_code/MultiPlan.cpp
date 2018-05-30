@@ -237,7 +237,7 @@ namespace pl {
 				doc << PloyTreeEdge;
 
 				svg::Point pnt(px - gridStep / 2, py + gridStep / 2);
-				if (false) {
+				if (true) {
 					switch (robID)
 					{
 					case 0:
@@ -256,7 +256,7 @@ namespace pl {
 						break;
 					}
 					default:
-						doc << svg::Rectangle(pnt, gridStep, gridStep, svg::Fill(), svg::Stroke(0.1, svg::Color::Yellow));
+						doc << svg::Rectangle(pnt, gridStep, gridStep, svg::Fill(svg::Color::Yellow), svg::Stroke(0.1, svg::Color::Yellow));
 						break;
 					}
 				}
@@ -357,6 +357,17 @@ namespace pl {
 				break;
 			}
 			default:
+			{
+				svg::Polyline polyline_Path(svg::Stroke(.5, svg::Color::Aqua));
+				for (size_t i = 0; i < _path.size(); i++)
+				{
+					svg::Point spnt(_path[i].x(), _path[i].y());
+					polyline_Path << spnt;
+				}
+				doc << polyline_Path;
+				break;
+			}
+
 				break;
 			}
 		}
@@ -437,11 +448,21 @@ namespace pl {
 		//		cenAuction();
 		auction();
 		this->_vTreeSgs.clear();
-		this->_vTreeSgs.resize(3);
+		this->_vTreeSgs.resize(_robNum);
 		getSpanningTreeSgs();
 		getNewGraph();
 		searchPath();
 
+	}
+
+	void MultiPlan::writeDebug(string const & str, vector<double> const & v_val)
+	{
+		c_deg << str;
+		for (auto & it : v_val)
+		{
+			c_deg << " " << it;
+		}
+		c_deg << endl;
 	}
 
 	void MultiPlan::auction()
@@ -524,6 +545,18 @@ namespace pl {
 			allAucEd[aucInd] = true;
 			circleTime++;
 			cout << "circleTime  =" << circleTime << endl;
+			if (circleTime == 400)
+			{
+				cout << "bug" << endl;
+				drawGraph(pl::graphType::base, false);
+				drawGraph(pl::graphType::span, false);
+				drawRobSet(false);
+				// demonPlan.cenPathPlanning();
+				//	multi_plan.disPathPlanning();
+				drawStartLocation();
+				savePic();
+				//break;
+			}
 			if (circleTime > 350)
 			{
 				break;
@@ -967,13 +1000,18 @@ namespace pl {
 			}
 		}
 		if (UnCoverResVd != -1) min_MegaBoxVd = UnCoverResVd;
-		else min_MegaBoxVd = coverResVd;
+		else
+		{
+			if (coverResVd != -1)
+				min_MegaBoxVd = coverResVd;
+			else
+				cout << "bug" << endl;
+		}
 		return allCovered;
 	}
 
 	bool MultiPlan::getAuctionInd(bex::VertexDescriptor & min_MegaBoxVd)
 	{
-
 		
 		double UnCoverMinFit = 99999;
 		double coverMinFit = 999999;
@@ -1089,7 +1127,7 @@ namespace pl {
 					{
 						minBid = 0;
 						successBidID = i;
-						_notBidSetPtr->insert(megaBoxID);
+						//_notBidSetPtr->insert(megaBoxID);
 					}
 				}
 			}
@@ -1154,7 +1192,7 @@ namespace pl {
 					}
 				}
 				//
-				_notBidSetPtr->insert(megaBoxVd);
+				//_notBidSetPtr->insert(megaBoxVd);
 				break;
 			}
 		}

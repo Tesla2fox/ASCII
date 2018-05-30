@@ -264,8 +264,8 @@ class Env:
         data.append(startTrace)
         data.append(terminalTrace)
         fig = dict(data = data ,layout = layout)
-#        plotly.offline.plot(fig,filename = 'environment')
-        py.image.save_as(fig,filename ='stc_demon.jpeg')
+        plotly.offline.plot(fig,filename = 'environment')
+#        py.image.save_as(fig,filename ='stc_demon.jpeg')
         Image('./env.png')
         print('draw success')
 
@@ -273,7 +273,7 @@ if __name__ == '__main__':
     conFileDir = './/data//'    
     degNameCfg = conFileDir + 'map_debug.txt'
     readCfg = Read_Cfg(degNameCfg)
-    gridStep = 7.5
+    gridStep = 10
     
     lstx = list()
     lsty = []

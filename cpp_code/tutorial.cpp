@@ -64,7 +64,7 @@ int main(int argc, char * argv[])
 	demonPnt.push_back(bex::DPoint(200, 30));
 	demonPnt.push_back(bex::DPoint(150, 170));
 	demonPnt.push_back(bex::DPoint(10, 310));
-//	demonPnt.push_back(bex::DPoint(300, 250));
+	demonPnt.push_back(bex::DPoint(310, 300));
 
 //	demonPnt.push_back(bex::DPoint(20, 0));
 
