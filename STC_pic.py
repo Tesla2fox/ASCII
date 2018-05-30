@@ -73,6 +73,11 @@ class Rect:
         dic['y1'] = self.y1
         dic['line'] = dict(color = 'rgb(128, 0, 128)')
         return dic
+
+def frange(start,stop, step=1.0):
+    while start < stop:
+        yield start
+        start +=step
         
 class Env:
     def __init__(self):
@@ -82,7 +87,7 @@ class Env:
         self.grid_y = list()
         self.svd = list()
         self.tvd = list()
-        self.gridStep = 0
+        self.gridStep = 7.5
         self.vob = list()
         self.path_x = list()
         self.path_y = list()
@@ -99,6 +104,7 @@ class Env:
         self.svx_0 = list()
         self.svy_0 = list()
         
+        self.shapeLst = list()
     #画图函数
     def drawFunc(self):
         rangeTrace = go.Scatter(x = self.range_x,
@@ -113,19 +119,87 @@ class Env:
         plotly.offline.plot(fig,filename = 'environment')
     def addline(self):
 #        在环境中增加虚线
+        lineXmax = max(self.s_grid_x)+self.gridStep
+        lineYmax = max(self.s_grid_y)+self.gridStep
+        lineXmin = min(self.s_grid_x)-self.gridStep
+        lineYmin = min(self.s_grid_y)-self.gridStep
+
+        
+        for xx in frange(self.s_grid_x[0],max(self.s_grid_x)+1.0,self.gridStep*2):
+            pnt0 = Pnt(xx,lineYmin)
+            pnt1 = Pnt(xx,lineYmax)
+            line = Line(pnt0,pnt1)
+            lineDic = line.line2dict()
+            lineDic['line']['dash'] = 'dot'
+            self.shapeLst.append(copy.deepcopy(lineDic))
+
+        for yy in frange(self.s_grid_y[0],max(self.s_grid_y)+1.0,self.gridStep*2):
+            pnt0 = Pnt(lineXmin,yy)
+            pnt1 = Pnt(lineXmax,yy)
+            line = Line(pnt0,pnt1)
+            lineDic = line.line2dict()
+            lineDic['line']['dash'] = 'dot'
+            self.shapeLst.append(copy.deepcopy(lineDic))
+            
         return 1
+    def addGraph(self):
+        
+        mark_x = []
+        mark_y = []
+        for i in range(len(self.svx_0)):
+            pnt0 = Pnt(self.svx_0[i],self.svy_0[i])
+            pnt1 = Pnt(self.tvx_0[i],self.tvy_0[i])
+            mark_x.append(self.svx_0[i])
+            mark_x.append(self.tvx_0[i])
+            mark_y.append(self.svy_0[i])
+            mark_y.append(self.tvy_0[i])            
+            line = Line(pnt0,pnt1)
+            lineDic = line.line2dict()
+            lineDic['line']['color'] = 'red'
+            lineDic['line']['width'] = 3
+            self.shapeLst.append(copy.deepcopy(lineDic))
+        
+        makeTrace = go.Scatter(mode = 'markers',x = mark_x,
+                               y = mark_y,
+                               marker = dict(
+                                       color = 'black',
+                                       size = 10)
+                               ,name = 'spanning-tree'
+                               )
+        return makeTrace
+            
+
+        
     def drawGrid(self):
+        layout = dict()
+        self.shapeLst = list()
+        self.addline()
+        markTrace   = self.addGraph()
         rangeTrace = go.Scatter(x = self.path_x,
                                 y = self.path_y,
                                 mode= 'lines',
-                                name = 'range',
-                                line = dict(shape ='spline'))
+                                line = dict(shape ='spline'),
+                                name = 'path')
+
+        startTrace = go.Scatter(mode = 'markers',x = self.path_x[0:1],
+                               y = self.path_y[0:1],
+                               marker = dict(
+                                       color = 'blue',
+                                       size = 15,
+                                       symbol = 'x-dot')
+                               ,name = 'start')
+        terminalTrace = go.Scatter(mode = 'markers',x = self.path_x[-1:],
+                               y = self.path_y[-1:],
+                               marker = dict(
+                                       color = 'red',
+                                       size = 15,
+                                       symbol = 'cross-dot')
+                               ,name = 'terminal'
+                               )
+        
         
         
 #        layout = dict(title = 'coverage motion planning')
-        layout = dict()
-
-        shapeLst = list()
         print(self.gridStep)
 #        for i in range(len(self.grid_x)):
 #            pnt = Pnt(self.grid_x[i] - self.gridStep/2,self.grid_y[i] - self.gridStep/2)
@@ -141,12 +215,12 @@ class Env:
             pnt = Pnt(self.s_grid_x[i] - self.gridStep,self.s_grid_y[i] - self.gridStep)
             rect  = Rect(pnt,self.gridStep*2,self.gridStep*2)
             rectDic = rect.rect2dict()            
-            shapeLst.append(copy.deepcopy(rectDic))
             rectDic['line']['color'] = 'rgba(50, 171, 96, 1)'
             rectDic['line']['width'] = 3
             if(self.s_vob[i]==0):
-                rectDic['fillcolor'] = 'rgb(152 245 255)'
-            shapeLst.append(copy.deepcopy(rectDic))
+                rectDic['fillcolor'] = 'rgba(152 245 255,0.6)'
+            self.shapeLst.append(copy.deepcopy(rectDic))
+        
         
         
         
@@ -160,7 +234,7 @@ class Env:
 #            lineDic = line.line2dict()
 #            shapeLst.append(copy.deepcopy(lineDic))
 #        print(shapeLst)
-        layout['shapes'] = shapeLst
+        layout['shapes'] = self.shapeLst
         layout['xaxis'] = {'range':[0,self.range_x]}
         layout['yaxis'] = {'range':[0,self.range_y]}
         layout['xaxis'] = dict(
@@ -172,6 +246,7 @@ class Env:
         ticks='',
         showticklabels=False)
         layout['yaxis'] = dict(
+        scaleanchor = "x",
         autorange=True,
         showgrid=False,
         zeroline=False,
@@ -180,14 +255,17 @@ class Env:
         ticks='',
         showticklabels=False)
         layout['autosize'] = False
-        layout['height'] = 1200
+        layout['height'] = 1000
         layout['width']= 1000
 #        print(layout)
         data = []
         data.append(rangeTrace)
+        data.append(markTrace)
+        data.append(startTrace)
+        data.append(terminalTrace)
         fig = dict(data = data ,layout = layout)
-        plotly.offline.plot(fig,filename = 'environment')
-#        py.image.save_as(fig,filename ='env.jpeg')
+#        plotly.offline.plot(fig,filename = 'environment')
+        py.image.save_as(fig,filename ='stc_demon.jpeg')
         Image('./env.png')
         print('draw success')
 
@@ -196,6 +274,9 @@ if __name__ == '__main__':
     degNameCfg = conFileDir + 'map_debug.txt'
     readCfg = Read_Cfg(degNameCfg)
     gridStep = 7.5
+    
+    lstx = list()
+    lsty = []
     grid_x = list()
     grid_y = list()
     svd = []
@@ -267,6 +348,11 @@ if __name__ == '__main__':
     env.path_x = path_x_0
     env.path_y = path_y_0
     
+    
+    env.tvx_0 = tvx_0
+    env.tvy_0 = tvy_0
+    env.svx_0 = svx_0
+    env.svy_0 = svy_0
     
     
     

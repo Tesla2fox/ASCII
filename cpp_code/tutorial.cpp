@@ -14,7 +14,7 @@ int main(int argc, char * argv[])
 	cfg::ReadConfig readCfg(conFileName);
 	readCfg.read();
 
-	pl::Obmap 	demonMap(readCfg._RangePtr, 7.5);
+	pl::Obmap 	demonMap(readCfg._RangePtr, 10);
 	demonMap.writeRange();
 
 	bex::DRing obRing;
@@ -40,6 +40,14 @@ int main(int argc, char * argv[])
 	demonMap.addObPnt(bex::DPoint(10, 100));
 	demonMap.addObPnt(bex::DPoint(25, 100));
 
+	std::default_random_engine engP(1);
+	std::uniform_real_distribution<double> dis(0, 315);
+	for (size_t i = 0; i < 35; i++)
+	{
+		double px = dis(engP);
+		double py = dis(engP);
+		demonMap.addObPnt(bex::DPoint(px, py));
+	}
 
 	demonMap.map2sGrid();
 	demonMap.map2tGrid();
@@ -53,8 +61,16 @@ int main(int argc, char * argv[])
 
 	vector<bex::DPoint> demonPnt;
 	demonPnt.push_back(bex::DPoint(20, 0));
+	demonPnt.push_back(bex::DPoint(200, 30));
+	demonPnt.push_back(bex::DPoint(150, 170));
+	demonPnt.push_back(bex::DPoint(10, 310));
+//	demonPnt.push_back(bex::DPoint(300, 250));
+
+//	demonPnt.push_back(bex::DPoint(20, 0));
+
 	pl::MultiPlan demonPlan(demonMap, demonPnt);
-	demonPlan.cenPathPlanning();
+	//demonPlan.cenPathPlanning();
+	demonPlan.disPathPlanning();
 	demonPlan.drawGraph(pl::graphType::base, false);
 	demonPlan.drawGraph(pl::graphType::span, false);
 	demonPlan.drawRobSet(false);
