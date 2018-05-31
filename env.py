@@ -10,7 +10,7 @@ import plotly.graph_objs as go
 import plotly
 from read_cfg import Read_Cfg
 import copy
-
+import random
 
 
 py.sign_in('tesla_fox', 'HOTRQ3nIOdYUUszDIfgN')
@@ -22,6 +22,8 @@ class Pnt:
     def pnt2dict(self):
         dic = dict(x = x,y= y)
         return dic
+    def display(self):
+        print('x = ',self.x,'y = ',self.y)
 class Circle:
     def __init__(self,pnt = Pnt(),rad = 0):
         self.x = pnt.x
@@ -78,6 +80,12 @@ def frange(start,stop, step=1.0):
     while start < stop:
         yield start
         start +=step
+def randColor():
+    strcolor = 'rgba('
+    strcolor = strcolor + str(random.randint(1,255))+','
+    strcolor = strcolor + str(random.randint(1,255))+','
+    strcolor = strcolor + str(random.randint(1,255))+',1)'
+    return strcolor
         
 class Env:
     def __init__(self):
@@ -175,36 +183,107 @@ class Env:
             lsty = self.grid_y
             vob = self.vob
             gridstep = self.gridStep
+            #case 3
+            g_color = 'rgba(50, 171, 96, 0.6)'
+            #case 1
+#            g_color = 'rgba(50, 171, 96, 1)'
         else:
             lstx = self.s_grid_x
             lsty = self.s_grid_y
             vob = self.s_vob
-            gridstep = self.gridStep *2        
+            gridstep = self.gridStep *2
+            g_color = 'purple'
+        print(gridstep)
         for i in range(len(lstx)):
-            pnt = Pnt(lstx[i] - gridStep,lsty[i] - gridStep)
-            rect  = Rect(pnt,gridStep*2,gridStep*2)
+            pnt = Pnt(lstx[i] - (gridstep/2),lsty[i] - (gridstep/2))
+#            pnt.display()
+            rect  = Rect(pnt,gridstep,gridstep)
             rectDic = rect.rect2dict()            
-            rectDic['line']['color'] = 'rgba(50, 171, 96, 1)'
+            rectDic['line']['color'] = g_color
             rectDic['line']['width'] = 1
             if(vob[i]==0):
                 rectDic['fillcolor'] = 'rgba(152 245 255,0.6)'
             self.shapeLst.append(copy.deepcopy(rectDic))
     def addRobotStartPnt(self):
-            robotCfg =  './/data//' + 'planDebug.txt'
-            robCfg = Read_Cfg(robotCfg)
-            lstx = []
-            lsty = []
-            robCfg.get('start_x',lstx)
-            robCfg.get('start_y',lsty)
-            for i in range(len(lstx)):
-                rangeLst = go.Scatter(x = [lstx[i]],
-                                    y = [lsty[i]],
-                                    mode ='markers',
-                                    marker = dict(symbol = 'cross-dot'),
-                                    name = 'robot-' + str(i))
-                self.drawData.append(rangeLst)
+        robotCfg =  './/data//' + 'planDebug.txt'
+        robCfg = Read_Cfg(robotCfg)
+        lstx = []
+        lsty = []
+        robCfg.get('start_x',lstx)
+        robCfg.get('start_y',lsty)
+        for i in range(len(lstx)):
+            rangeLst = go.Scatter(x = [lstx[i]],
+                                y = [lsty[i]],
+                                mode ='markers',
+                                marker = dict(symbol = 'cross-dot',
+                                              size = 15),
+                                name = 'Robot-' + str(i+1))
+            self.drawData.append(rangeLst)
+    def addSpanningTree(self):
+        robotCfg =  './/data//' + 'planDebug.txt'
+        robCfg = Read_Cfg(robotCfg)
+        lstx = []
+        lsty = []
+        robCfg.get('start_x',lstx)
+        robCfg.get('start_y',lsty)
+        robNum = len(lstx)
+        for i in range(robNum):
+            _tvx = []
+            _tvy = []
+            _svx = []
+            _svy = []
+            robCfg.get('tvx_'+str(i),_tvx)
+#            print(_tvx)
+            robCfg.get('tvy_'+str(i),_tvy)
+            robCfg.get('svx_'+str(i),_svx)
+            robCfg.get('svy_'+str(i),_svy)
+            mark_x = []
+            mark_y = []            
+            for p in range(len(_tvx)):
+                pnt0 = Pnt(_tvx[p],_tvy[p])
+                pnt1 = Pnt(_svx[p],_svy[p])
+                mark_x.append(_tvx[p])
+                mark_x.append(_svx[p])
+                mark_y.append(_tvy[p])
+                mark_y.append(_svy[p])
+                line = Line(pnt0,pnt1)
+                lineDic = line.line2dict()
+                print(randColor())
+                lineDic['line']['color'] = 'rgba(15,15,15,0.5)'
+                lineDic['line']['width'] = 3
+                
+                self.shapeLst.append(copy.deepcopy(lineDic))
+            markTrace = go.Scatter(mode ='markers',
+                                   x= mark_x,
+                                   y= mark_y,
+                                   marker =dict(size =15),
+                                   name = 'Spanning-Tree_'+str(i+1))
+            self.drawData.append(markTrace)
+        return 1
+    def addPath(self):
+        robotCfg =  './/data//' + 'planDebug.txt'
+        robCfg = Read_Cfg(robotCfg)
+        lstx = []
+        lsty = []
+        robCfg.get('start_x',lstx)
+        robCfg.get('start_y',lsty)
+        robNum = len(lstx)
+        for i in range(robNum):
+            _path_x = []
+            _path_y = []
+            robCfg.get('path_x_'+str(i),_path_x)
+            robCfg.get('path_y_'+str(i),_path_y)
+            pathTrace = go.Scatter(x = _path_x,
+                                y = _path_y,
+                                mode= 'lines',
+                                line = dict(shape = 'spline',
+#                                            dash = 'dot',
+                                            width = 4),
+                                name = 'Path_'+str(i+1))
+            self.drawData.append(pathTrace)
+        
             
-    def drawPic(self):
+    def drawPic(self,name ='env',fileType = True):
         
         layout = dict()
         layout['shapes'] = self.shapeLst
@@ -227,11 +306,23 @@ class Env:
         autotick=True,
         ticks='',
         showticklabels=False)
+        layout['font'] = dict(
+            family='sans-serif',
+            size=25,
+            color='#000'
+        )
         layout['autosize'] = False
-        layout['height'] = 2000
-        layout['width']= 2000        
+        layout['height'] = 1000
+        layout['width']= 1000   
+        print(layout)
         fig = dict(data = self.drawData ,layout = layout)
-        plotly.offline.plot(fig,filename = 'environment')
+        if(fileType):
+            plotly.offline.plot(fig,filename = name)
+        else:
+            py.image.save_as(fig,filename = name+'.jpeg')
+    
+
+        
  
     def drawGrid(self):
         layout = dict()
@@ -404,10 +495,20 @@ if __name__ == '__main__':
     
     env.gridStep = gridStep
     env.vob = vob
-    print(env.vob)
+#    case 1
+#    env.addGrid()
+#    env.addRobotStartPnt()
+#    env.drawPic(name = 'c_env',fileType = False)
+#     case 2
+#    env.addSpanningTree()
+#    env.drawPic(name = 'c_spanning-tree',fileType = False)
+#     case 3
     env.addGrid()
+    env.addPath()
     env.addRobotStartPnt()
-    env.drawPic()
+    env.drawPic('c_path',fileType = False)
+
+    
 #    env.drawGrid()
 #    env.drawFunc()
 

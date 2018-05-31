@@ -5,7 +5,7 @@
 #include "MultiPlan.hpp"
 int main(int argc, char * argv[])
 {
-	char * conFileName = "D:\\py_code\\\ASCII\\data\\CPP_cfg.txt";
+	char * conFileName = "D:\\py_code\\\ASCII\\data\\CPP_Cfg_1.txt";
 
 	if (argc > 1) {
 		cout << argv[1] << endl;
@@ -14,39 +14,12 @@ int main(int argc, char * argv[])
 	cfg::ReadConfig readCfg(conFileName);
 	readCfg.read();
 
-	pl::Obmap 	demonMap(readCfg._RangePtr, 10);
+	pl::Obmap 	demonMap(readCfg._RangePtr, readCfg._gridStep);
 	demonMap.writeRange();
 
-	bex::DRing obRing;
-	obRing.push_back(bex::DPoint(20, 30));
-	obRing.push_back(bex::DPoint(50, 30));
-	obRing.push_back(bex::DPoint(50, 60));
-	obRing.push_back(bex::DPoint(20, 60));
-	obRing.push_back(bex::DPoint(20, 30));
-
-	demonMap.addObRing(obRing);
-
-	demonMap.addObPnt(bex::DPoint(0, 60));
-	demonMap.addObPnt(bex::DPoint(80, 80));
-
-	demonMap.addObPnt(bex::DPoint(80, 0));
-	demonMap.addObPnt(bex::DPoint(60, 0));
-	demonMap.addObPnt(bex::DPoint(90, 0));
-	demonMap.addObPnt(bex::DPoint(90, 15));
-	demonMap.addObPnt(bex::DPoint(80, 15));
-
-
-	demonMap.addObPnt(bex::DPoint(0, 100));
-	demonMap.addObPnt(bex::DPoint(10, 100));
-	demonMap.addObPnt(bex::DPoint(25, 100));
-
-	std::default_random_engine engP(1);
-	std::uniform_real_distribution<double> dis(0, 315);
-	for (size_t i = 0; i < 35; i++)
+	for (size_t i = 0; i < readCfg._vObPntPtr->size(); i++)
 	{
-		double px = dis(engP);
-		double py = dis(engP);
-		demonMap.addObPnt(bex::DPoint(px, py));
+		demonMap.addObPnt(readCfg._vObPntPtr->at(i));
 	}
 
 	demonMap.map2sGrid();
@@ -59,16 +32,7 @@ int main(int argc, char * argv[])
 	demonMap.saveGraphSvg(pl::graphType::span);
 	demonMap.saveSvg();
 
-	vector<bex::DPoint> demonPnt;
-	demonPnt.push_back(bex::DPoint(20, 0));
-	demonPnt.push_back(bex::DPoint(200, 30));
-	demonPnt.push_back(bex::DPoint(150, 170));
-	demonPnt.push_back(bex::DPoint(10, 310));
-	demonPnt.push_back(bex::DPoint(310, 300));
-
-//	demonPnt.push_back(bex::DPoint(20, 0));
-
-	pl::MultiPlan demonPlan(demonMap, demonPnt);
+	pl::MultiPlan demonPlan(demonMap, *readCfg._vStartPntPtr);
 	//demonPlan.cenPathPlanning();
 	demonPlan.disPathPlanning();
 	demonPlan.drawGraph(pl::graphType::base, false);
@@ -77,7 +41,6 @@ int main(int argc, char * argv[])
 	// demonPlan.cenPathPlanning();
 	//	multi_plan.disPathPlanning();
 	demonPlan.drawStartLocation();
-
 	demonPlan.drawPath();
 	demonPlan.savePic();
 	demonPlan.writeSgsTree();
@@ -86,9 +49,6 @@ int main(int argc, char * argv[])
 
 	pl::Obmap obmap(readCfg._RangePtr, 3);
 	obmap.writeRange();
-
-
-	obmap.addObRing(obRing);
 
 	obmap.addObPnt(bex::DPoint(20, 60));
 	obmap.addObPnt(bex::DPoint(25, 60));

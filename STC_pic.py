@@ -164,8 +164,7 @@ class Env:
                                marker = dict(
                                        color = 'black',
                                        size = 10)
-                               ,name = 'spanning-tree'
-                               )
+                               ,name = 'spanning-tree')
         return makeTrace
             
 

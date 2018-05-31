@@ -23,6 +23,9 @@ namespace cfg
 		shared_ptr<vector<double>> _vRange_xPtr = nullptr;
 		shared_ptr<vector<double>> _vRange_yPtr = nullptr;
 		shared_ptr<bex::DRing> _RangePtr = nullptr;
+		shared_ptr<vector<bex::DPoint>> _vStartPntPtr = nullptr;
+		shared_ptr<vector<bex::DPoint>> _vObPntPtr = nullptr;
+		double _gridStep;
 	private:
 		const char *_m_fileName;
 

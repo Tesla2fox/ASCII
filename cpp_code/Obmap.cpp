@@ -200,7 +200,6 @@ namespace pl
 		if (sInd.first == -1)
 			return;
 		auto vInd = this->getTgraphGridInd(sInd);
-		
 		this->_sObSet.insert(sInd);
 		for (auto &it : vInd)
 		{
