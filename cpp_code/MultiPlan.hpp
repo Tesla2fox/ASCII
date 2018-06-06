@@ -123,6 +123,7 @@ namespace pl
 		bool getAuctionInd(bex::VertexDescriptor &min_MegaBoxVd);
 
 		double calFitNess(size_t const &robID, bex::VertexDescriptor const  &megaBoxVd);
+		double calPriority(size_t const &robID, bex::VertexDescriptor const &megaBoxVd);
 
 		bool getAllLeaf(set<size_t> const & robSet, vector<bex::VertexDescriptor> &vVd) const;
 

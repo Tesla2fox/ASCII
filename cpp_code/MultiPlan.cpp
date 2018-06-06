@@ -545,7 +545,7 @@ namespace pl {
 			allAucEd[aucInd] = true;
 			circleTime++;
 			cout << "circleTime  =" << circleTime << endl;
-			if (circleTime == 400)
+			if (circleTime == 192)
 			{
 				cout << "bug" << endl;
 				drawGraph(pl::graphType::base, false);
@@ -964,7 +964,7 @@ namespace pl {
 		auto &robSet = (*_vRobSetPtr)[robID];
 		auto &robNeiSet = (*_vRobNeiSetPtr)[robID];
 
-
+		vector<pair<size_t,size_t>> robOpNeiSet;
 		for (auto it = robNeiSet.begin(); it != robNeiSet.end(); it++)
 		{
 			bool inOtherSet = false;
@@ -974,6 +974,7 @@ namespace pl {
 				if (_vRobSetPtr->at(i).count(it->first) == 1)
 				{
 					inOtherSet = true;
+					robOpNeiSet.push_back(pair<size_t,size_t>(it->first,_vRobSetPtr->at(i).size()));
 					break;
 				}
 			}
@@ -988,24 +989,60 @@ namespace pl {
 					allCovered = false;
 				}
 			}
+		}
+		if (UnCoverResVd != -1) { min_MegaBoxVd = UnCoverResVd; return allCovered;}
+
+
+		//end the rule 1
+		auto cmpOp = [](pair<size_t,size_t> &ind0,pair<size_t,size_t> &ind1)
+		{
+			cout << "wtf" << endl;
+			if(ind0.second<ind1.second)
+			{
+				return false;
+			}
+			return true;
+		};
+
+
+		cout << "robOpSet  = " << robOpNeiSet.size() << endl;
+		std::sort(robOpNeiSet.begin(), robOpNeiSet.end(), cmpOp);
+
+		size_t maxCardi = robOpNeiSet.back().second;
+		vector<size_t> vCandVd;
+		vCandVd.push_back(robOpNeiSet.back().first);
+		for (size_t i = 1; i < robOpNeiSet.size(); i++)
+		{
+			//vCandVd.back()
+			if (robOpNeiSet[robOpNeiSet.size() - i - 1].second == maxCardi)
+			{
+				vCandVd.push_back(robOpNeiSet[robOpNeiSet.size() - i - 1].second);
+			}
 			else
 			{
-				if (_notBidSetPtr->count(it->first) == 1) continue;
-				double dis = bg::distance(graph[it->first].pnt, graph[it->second].pnt);
-				if (dis < coverMinFit)
-				{
-					coverMinFit = dis;
-					coverResVd = it->first;
-				}
+				break;
 			}
 		}
-		if (UnCoverResVd != -1) min_MegaBoxVd = UnCoverResVd;
+		if (vCandVd.size()==1)
+		{
+			min_MegaBoxVd = vCandVd.front();
+			//rule 2 end
+		}
 		else
 		{
-			if (coverResVd != -1)
-				min_MegaBoxVd = coverResVd;
-			else
-				cout << "bug" << endl;
+			double minPri = 9999999999;
+			double minPriInd = vCandVd.front();
+			for (size_t i = 0; i < vCandVd.size(); i++)
+			{
+				double pri = calPriority(robID, vCandVd[i]);
+				if (pri < minPri)
+				{
+					minPriInd = vCandVd[i];
+					minPri = pri;
+				}
+			}
+			min_MegaBoxVd = minPriInd;
+			//rule 3 end
 		}
 		return allCovered;
 	}
@@ -1077,6 +1114,19 @@ namespace pl {
 				double dis = bg::distance(graph[it->first].pnt, graph[megaBoxVd].pnt);
 				fitNess += dis;
 			}
+		}
+		return fitNess;
+	}
+
+	double MultiPlan::calPriority(size_t const & robID, bex::VertexDescriptor const & megaBoxVd)
+	{
+		auto &robSet = (*_vRobSetPtr)[robID];
+		auto &graph = _ob_sGraph;
+		double fitNess = 0;
+		for (auto it = robSet.begin(); it != robSet.end(); it++)
+		{
+			double dis = bg::distance(graph[it->first].pnt, graph[megaBoxVd].pnt);
+			fitNess += dis;
 		}
 		return fitNess;
 	}

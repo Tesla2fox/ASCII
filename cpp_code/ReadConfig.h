@@ -28,6 +28,5 @@ namespace cfg
 		double _gridStep;
 	private:
 		const char *_m_fileName;
-
 	};
 }
