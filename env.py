@@ -248,7 +248,7 @@ class Env:
                 mark_y.append(_svy[p])
                 line = Line(pnt0,pnt1)
                 lineDic = line.line2dict()
-                print(randColor())
+#                print(randColor())
                 lineDic['line']['color'] = 'rgba(15,15,15,0.5)'
                 lineDic['line']['width'] = 3
                 
@@ -314,7 +314,7 @@ class Env:
         layout['autosize'] = False
         layout['height'] = 1000
         layout['width']= 1000   
-        print(layout)
+#        print(layout)
         fig = dict(data = self.drawData ,layout = layout)
         if(fileType):
             plotly.offline.plot(fig,filename = name)
@@ -500,13 +500,14 @@ if __name__ == '__main__':
 #    env.addRobotStartPnt()
 #    env.drawPic(name = 'c_env',fileType = False)
 #     case 2
-#    env.addSpanningTree()
-#    env.drawPic(name = 'c_spanning-tree',fileType = False)
-#     case 3
     env.addGrid()
-    env.addPath()
-    env.addRobotStartPnt()
-    env.drawPic('c_path',fileType = False)
+    env.addSpanningTree()    
+    env.drawPic(name = 'c_spanning-tree',fileType = True)
+#     case 3
+#    env.addGrid()
+#    env.addPath()
+#    env.addRobotStartPnt()
+#    env.drawPic('c_path',fileType = True)
 
     
 #    env.drawGrid()

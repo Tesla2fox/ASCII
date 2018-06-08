@@ -201,10 +201,12 @@ namespace pl {
 	void MultiPlan::drawStartLocation()
 	{
 		double gridStep = _mainMap.getGridStep();
+		size_t iS = 0;
 		for (auto &it : this->_vStartPnt)
 		{
-			svg::Point pntc(it.x(), it.y());
+			svg::Point pntc(it.x()/*- gridStep/2*/ , it.y()/*- gridStep/2*/);
 			doc << svg::Circle(pntc, gridStep, svg::Fill(svg::Color::Transparent), svg::Stroke(0.1, svg::Color::Purple));
+			doc << svg::Text(pntc, std::to_string(iS++), svg::Color::Silver, svg::Font(3));
 		}
 	}
 	void MultiPlan::drawRobSet(bool const &neibool)
@@ -471,6 +473,7 @@ namespace pl {
 		_vRobSetPtr = make_shared<vector<map<size_t, size_t>>>(_robNum);
 		_vRobNeiSetPtr = make_shared<vector<map<size_t, size_t>>>(_robNum);
 		_notBidSetPtr = make_shared<set<size_t>>();
+		_vRobSleepPtr = make_shared<vector<bool>>(_robNum, false);
 		vector<map<size_t, size_t>> &_vRobSet(*_vRobSetPtr);
 		vector<map<size_t, size_t>> &_vRobNeiSet(*_vRobNeiSetPtr);
 
@@ -492,6 +495,8 @@ namespace pl {
 
 			//vector<pair<size_t, size_t>> &robSpanTree = _vRobSpanTree[i];
 			GridIndex robGridInd = _mainMap.pnt2Index(_vStartPnt[i], pl::graphType::span);
+			//c_deg<<"start"
+			c_deg << "index 0 - " << robGridInd.first << " index 1 - " << robGridInd.second << endl;
 			bex::VertexDescriptor robVd = _ob_smap2graph[robGridInd];
 			_vRobSet[i].insert(pair<size_t, size_t>(robVd, robVd));
 			auto neighborsIter = bt::adjacent_vertices(robVd, _ob_sGraph);
@@ -509,7 +514,10 @@ namespace pl {
 		std::default_random_engine eng;
 		eng.seed(2);
 		std::uniform_int_distribution<int> dis(0, _robNum - 1);
+		cout << "_robNum = " << _robNum << endl;
 		//return;
+		clock_t start, finish;
+		start = clock();
 		do
 		{
 
@@ -517,17 +525,36 @@ namespace pl {
 
 			if (aucNeer == _robNum) aucNeer = _robNum - 1;
 			//size_t aucNeer = 1;
+			if ((circleTime > 3660)&&(aucNeer== 54))
+			{
+				cout << "me" << endl;
+			}
+			//if (circleTime == 2825 )
+			//{
+			//					cout << "me" << endl;
+			//}
+
 
 //			c_deg << "aucNeer  = " << aucNeer << endl;
 			bex::VertexDescriptor aucInd;
 			auto &robSet = _vRobSet[aucNeer];
 
+			
+			//cout << "0-0" << endl;
+
 			bool allCovered = getMinLeaf(aucNeer, aucInd);
 			//bool allCovered = getAuctionInd(aucInd);
-
 			
-			size_t successBidRobID = minBidRob(aucNeer, aucInd);
+			//cout << "bug 0-0 " << endl;
+			if (_vRobSleepPtr->at(aucNeer))
+			{ 
+//				cout << "sleep in " << aucNeer << endl;
+				continue;
+			}
 
+			size_t successBidRobID = minBidRob(aucNeer, aucInd);
+			
+			
 			if (allCovered)
 			{
 				updateSetWithErase(successBidRobID, aucInd);
@@ -544,8 +571,8 @@ namespace pl {
 
 			allAucEd[aucInd] = true;
 			circleTime++;
-			cout << "circleTime  =" << circleTime << endl;
-			if (circleTime == 192)
+			//cout << "circleTime  =" << circleTime << endl;
+			if (circleTime == 19700)
 			{
 				cout << "bug" << endl;
 				drawGraph(pl::graphType::base, false);
@@ -555,19 +582,47 @@ namespace pl {
 				//	multi_plan.disPathPlanning();
 				drawStartLocation();
 				savePic();
-				//break;
-			}
-			if (circleTime > 350)
-			{
 				break;
 			}
+			if (circleTime > 80000)
+			{
+				cout<<"times is "<<351<<endl;
+				break;
+			}
+			if (!(circleTime % 20))
+			{
+				c_deg << circleTime << "fitnees = " << calSolutionFitNess() << endl;
+			}
+			//for (size_t i = 0; i < _robNum; i++)
+			//{
+			//	cout << "	" << _vRobSleepPtr->at(i);
+			//}
+			//cout << endl;
+			//if (aucCompleted(*_vRobSleepPtr))
+			//{
+			//	c_deg << "bug is here" << endl;
+			//	break;
+			//}
 		} while (!aucCompleted(allAucEd));
 
+		finish = clock();
+		double totaltime = (double)(finish - start) / CLOCKS_PER_SEC;
+		c_deg << "total time = " << totaltime << endl;
+
+		vector<size_t> vSize;
+		size_t allNumSize = 0;
 		for (size_t i = 0; i < _robNum; i++)
 		{
-			cout << "rob" << i << "	set size = " << _vRobSetPtr->at(i).size() << endl;
+			c_deg << "rob" << i << "	set size = " << _vRobSetPtr->at(i).size() << endl;
+			//c_deg << "rob" << i << "	set size = " << _vRobSetPtr->at(i).size() << endl;
+			vSize.push_back(_vRobSetPtr->at(i).size());
+			allNumSize += _vRobSetPtr->at(i).size();
 		}
+		auto maxSize = *std::max_element(vSize.begin(), vSize.end());
+		auto minSize = *std::min_element(vSize.begin(), vSize.end());
 
+		c_deg << "max  = " << maxSize << " min = " << minSize << endl;
+		c_deg << "allNumSize = " << allNumSize << endl;
 		cout << "auction end" << endl;
 	}
 
@@ -843,7 +898,7 @@ namespace pl {
 				{
 					if (!vCanVd.empty())
 					{
-						if (vCanVd.size() == 1)
+						if ((vCanVd.size() == 1) ||(cenDir == DirType::center))
 						{
 							canVd = vCanVd.back();
 						}
@@ -861,7 +916,7 @@ namespace pl {
 				canDir = getDir(cenVd, canVd,p);
 			} while (canVd != cenVd);
 		}
-		cout << "wtf" << endl;
+		//cout << "wtf" << endl;
 	}
 
 	bool MultiPlan::treeIntersection(bex::DSegment const sg, size_t const robID) const
@@ -964,7 +1019,13 @@ namespace pl {
 		auto &robSet = (*_vRobSetPtr)[robID];
 		auto &robNeiSet = (*_vRobNeiSetPtr)[robID];
 
+ 		if (robNeiSet.empty())
+		{
+			(*_vRobSleepPtr)[robID] = true;
+			return false;
+		}
 		vector<pair<size_t,size_t>> robOpNeiSet;
+		vector<size_t> robOpCandi;
 		for (auto it = robNeiSet.begin(); it != robNeiSet.end(); it++)
 		{
 			bool inOtherSet = false;
@@ -974,6 +1035,10 @@ namespace pl {
 				if (_vRobSetPtr->at(i).count(it->first) == 1)
 				{
 					inOtherSet = true;
+					if (_notBidSetPtr->count(it->first) == 1)
+						break;
+					robOpCandi.push_back(_vRobSetPtr->at(i).size());
+//					cout << "index = " << i << endl;
 					robOpNeiSet.push_back(pair<size_t,size_t>(it->first,_vRobSetPtr->at(i).size()));
 					break;
 				}
@@ -992,59 +1057,112 @@ namespace pl {
 		}
 		if (UnCoverResVd != -1) { min_MegaBoxVd = UnCoverResVd; return allCovered;}
 
-
+		
 		//end the rule 1
-		auto cmpOp = [](pair<size_t,size_t> &ind0,pair<size_t,size_t> &ind1)
+		auto cmpOp = [](pair<size_t,size_t> ind0,pair<size_t,size_t> ind1)
 		{
-			cout << "wtf" << endl;
-			if(ind0.second<ind1.second)
+			if(ind0.second < ind1.second)
 			{
-				return false;
+				return true;
 			}
-			return true;
+			return false;
 		};
 
-
-		cout << "robOpSet  = " << robOpNeiSet.size() << endl;
 		std::sort(robOpNeiSet.begin(), robOpNeiSet.end(), cmpOp);
+		//for (size_t i = 0; i < robOpNeiSet.size(); i++)
+		//{
+		//	cout<<i << "	robOpNeiSet[i].first = " << robOpNeiSet[i].first << "	robOpNeiSet[i].second =  " << robOpNeiSet[i].second << endl;
+		//}
 
-		size_t maxCardi = robOpNeiSet.back().second;
-		vector<size_t> vCandVd;
-		vCandVd.push_back(robOpNeiSet.back().first);
-		for (size_t i = 1; i < robOpNeiSet.size(); i++)
+		auto maxCandi = robOpNeiSet.back().second;
+		if (robSet.size() >= (maxCandi - 1))
 		{
-			//vCandVd.back()
-			if (robOpNeiSet[robOpNeiSet.size() - i - 1].second == maxCardi)
-			{
-				vCandVd.push_back(robOpNeiSet[robOpNeiSet.size() - i - 1].second);
-			}
-			else
-			{
-				break;
-			}
-		}
-		if (vCandVd.size()==1)
-		{
-			min_MegaBoxVd = vCandVd.front();
-			//rule 2 end
+			(*_vRobSleepPtr)[robID] = true;
+			return allCovered;
 		}
 		else
 		{
-			double minPri = 9999999999;
-			double minPriInd = vCandVd.front();
-			for (size_t i = 0; i < vCandVd.size(); i++)
-			{
-				double pri = calPriority(robID, vCandVd[i]);
-				if (pri < minPri)
-				{
-					minPriInd = vCandVd[i];
-					minPri = pri;
-				}
-			}
-			min_MegaBoxVd = minPriInd;
-			//rule 3 end
+			(*_vRobSleepPtr)[robID] = false;
 		}
+
+		auto size = robOpNeiSet.size();
+
+		for (size_t i = 0; i < robOpNeiSet.size(); i++)
+		{
+			if (calPriority(robID, robOpNeiSet.at(size - 1 - i).first) != std::numeric_limits<double>::max())
+			{
+				min_MegaBoxVd = robOpNeiSet.at(size - 1 - i).first;
+				return allCovered;
+			}
+		}
+		_vRobSleepPtr->at(robID) = true;
 		return allCovered;
+//		cout << "robOpSet  = " << robOpNeiSet.size() << endl;
+//		auto maxCandi = *std::max_element(robOpCandi.begin(), robOpCandi.end());
+//
+//		vector<size_t> vCandVd;
+//
+//		size_t index = 0;
+//		for (auto it = robNeiSet.begin(); it != robNeiSet.end(); it++)
+//		{
+//			if (_notBidSetPtr->count(it->first) == 1) continue;
+//			if (robOpCandi[index++] == maxCandi)
+//			{
+//				vCandVd.push_back(it->first);
+//			}
+//		}
+//
+//		if (vCandVd.empty())
+//		{
+//			cout<<"bug empty"<<endl;
+//		}
+//
+//
+////		auto maxEle = std::max_element(robOpNeiSet.begin(), robOpNeiSet.begin() + 2, cmpOp);
+//		//std::stable_sort(robOpNeiSet.begin(), robOpNeiSet.end(), cmpOp);
+//
+//		//size_t maxCardi = robOpNeiSet.back().second;
+//		//vCandVd.push_back(robOpNeiSet.back().first);
+//		//for (size_t i = 1; i < robOpNeiSet.size(); i++)
+//		//{
+//		//	//vCandVd.back()
+//		//	if (robOpNeiSet[robOpNeiSet.size() - i - 1].second == maxCardi)
+//		//	{
+//		//		vCandVd.push_back(robOpNeiSet[robOpNeiSet.size() - i - 1].second);
+//		//	}
+//		//	else
+//		//	{
+//		//		break;
+//		//	}
+//		//}
+//		if (vCandVd.size()==1)
+//		{
+//			min_MegaBoxVd = vCandVd.front();
+//			//rule 2 end
+//		}
+//		else
+//		{
+//			double minPri = std::numeric_limits<double>::max();
+//			double minPriInd = vCandVd.front();
+//			for (size_t i = 0; i < vCandVd.size(); i++)
+//			{
+//				double pri = calPriority(robID, vCandVd[i]);
+//				if (pri < minPri)
+//				{
+//					minPriInd = vCandVd[i];
+//					minPri = pri;
+//				}
+//			}
+//			min_MegaBoxVd = minPriInd;
+//			if (minPri == std::numeric_limits<double>::max())
+//			{
+//				_vRobSleepPtr->at(robID) = true;
+//
+//				c_deg << "rule 3 bug" << endl;
+//			}
+//			//rule 3 end
+//		}
+//		return allCovered;
 	}
 
 	bool MultiPlan::getAuctionInd(bex::VertexDescriptor & min_MegaBoxVd)
@@ -1120,15 +1238,37 @@ namespace pl {
 
 	double MultiPlan::calPriority(size_t const & robID, bex::VertexDescriptor const & megaBoxVd)
 	{
-		auto &robSet = (*_vRobSetPtr)[robID];
-		auto &graph = _ob_sGraph;
-		double fitNess = 0;
-		for (auto it = robSet.begin(); it != robSet.end(); it++)
+		size_t neiID;
+		for (size_t i = 0; i < _robNum; i++)
 		{
-			double dis = bg::distance(graph[it->first].pnt, graph[megaBoxVd].pnt);
-			fitNess += dis;
+			if (_vRobSetPtr->at(i).count(megaBoxVd) == 1)
+			{
+				neiID = i;
+				break;
+			}
+
 		}
-		return fitNess;
+		auto &robNeiSet = (*_vRobSetPtr)[neiID];
+		vector<bex::VertexDescriptor> v_vd;
+
+		for (auto it = robNeiSet.begin(); it != robNeiSet.end(); it++)
+		{
+			if (megaBoxVd == it->first) continue;
+			v_vd.push_back(it->first);
+		}
+		//all connect can bid
+		if (_mainMap.allConnected(v_vd)) {
+			auto &robSet = (*_vRobSetPtr)[robID];
+			auto &graph = _ob_sGraph;
+			double fitNess = 0;
+			for (auto it = robSet.begin(); it != robSet.end(); it++)
+			{
+				double dis = bg::distance(graph[it->first].pnt, graph[megaBoxVd].pnt);
+				fitNess += dis;
+			}
+			return fitNess;
+		}
+		return std::numeric_limits<double>::max();
 	}
 
 	size_t MultiPlan::minBidRob(size_t const & robAucNeer, bex::VertexDescriptor const & megaBoxID)
@@ -1268,6 +1408,20 @@ namespace pl {
 		
 
 
+	}
+
+	double MultiPlan::calSolutionFitNess()
+	{
+		double vertNum = _mainMap.vertNum() - _mainMap.obNum();
+		double averVertNum = vertNum / _robNum;
+		double fitNess = 0;
+		
+		for (size_t i = 0; i < _robNum; i++)
+		{
+			auto  val = (_vRobSetPtr->at(i).size() - averVertNum)*(_vRobSetPtr->at(i).size() - averVertNum);
+			fitNess += val;
+		}
+		return fitNess;
 	}
 
 	//size_t MultiPlan::minBidRob(size_t const & megaBoxID, size_t const & robAucNeer)

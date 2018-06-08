@@ -16,9 +16,9 @@ namespace pl
 		Obmap(DRingPtr const & ringPtr, double const &step) :
 			_m_rangePtr(ringPtr), _m_range(*ringPtr), _gridStep(step)
 		{
-#ifdef _DEBUG
+//#ifdef _DEBUG
 			c_deg.open("D:\\py_code\\ASCII\\data\\map_debug.txt", std::ios::trunc);
-#endif // _DEBUG
+//#endif // _DEBUG
 			vector<double> vx, vy;
 			for (size_t i = 0; i < _m_range.size(); i++)
 			{
@@ -46,7 +46,9 @@ namespace pl
 		void addObGrid(GridIndex const &obGrid);
 		void addObPnt(bex::DPoint const &pnt);
 		void addObRingSet(bex::DRing const &obring);
-
+		size_t obNum() { return _sObSet.size(); }
+		size_t vertNum() { return boost::num_vertices(_sGraph); }
+		bool reasonable();
 		bool map2tGrid();
 		bool map2sGrid();
 

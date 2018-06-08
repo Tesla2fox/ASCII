@@ -5,7 +5,11 @@
 #include "MultiPlan.hpp"
 int main(int argc, char * argv[])
 {
-	char * conFileName = "D:\\py_code\\\ASCII\\data\\CPP_Cfg_1.txt";
+	//char * conFileName = "D:\\py_code\\\ASCII\\data\\5_15_15CPP_Cfg.txt";
+	//char * conFileName = "D:\\py_code\\\ASCII\\data\\20_50_50CPP_Cfg.txt";
+	char * conFileName = "D:\\py_code\\\ASCII\\data\\5_15_15_-1CPP_Cfg.txt";
+	//char * conFileName = "D:\\py_code\\\ASCII\\data\\80_50_50_-1CPP_Cfg.txt";
+
 
 	if (argc > 1) {
 		cout << argv[1] << endl;
@@ -16,15 +20,21 @@ int main(int argc, char * argv[])
 
 	pl::Obmap 	demonMap(readCfg._RangePtr, readCfg._gridStep);
 	demonMap.writeRange();
-
+	std::cout << "obNum = " << readCfg._vObPntPtr->size();
 	for (size_t i = 0; i < readCfg._vObPntPtr->size(); i++)
 	{
 		demonMap.addObPnt(readCfg._vObPntPtr->at(i));
 	}
+	cout << "Ob" << demonMap.obNum() << endl;
 
 	demonMap.map2sGrid();
 	demonMap.map2tGrid();
 
+	if (!demonMap.reasonable())
+	{
+		cout << "wtf" << endl;
+		return 1;
+	}
 	demonMap.writeGraph(pl::graphType::base);
 	demonMap.writeGraph(pl::graphType::span);
 	//	obmap.spanningTree();

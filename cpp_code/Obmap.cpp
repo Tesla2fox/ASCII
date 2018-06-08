@@ -197,6 +197,8 @@ namespace pl
 	void Obmap::addObPnt(bex::DPoint const & pnt)
 	{
 		GridIndex sInd = this->pnt2Index(pnt, graphType::span);
+		if ((sInd.first == 10) && (sInd.second == 1))
+			cout << "bug" << endl;
 		if (sInd.first == -1)
 			return;
 		auto vInd = this->getTgraphGridInd(sInd);
@@ -210,6 +212,17 @@ namespace pl
 	{
 
 	}
+	bool Obmap::reasonable()
+	{
+		cout << "sMax  =" << this->m_sMaxRow << endl;
+		cout << "sMax  =" << this->m_sMaxCol << endl;
+		cout << "Max  =" << this->m_MaxRow << endl;
+		cout << "Max  =" << this->m_MaxCol << endl;
+
+		if ((m_MaxRow == (this->m_sMaxRow * 2)) && (m_MaxCol == (this->m_sMaxCol * 2)))
+			return true;
+		return false;
+	}
 	bool Obmap::map2tGrid()
 	{
 		this->_tGrid.clear();
@@ -217,8 +230,8 @@ namespace pl
 		auto bais_y = this->mWsPoint3.y() - this->mWsPoint1.y();
 
 		//the max col and the max row
-		this->m_MaxCol = ceil(bais_x / this->_gridStep);
-		this->m_MaxRow = ceil(bais_y / this->_gridStep);
+		this->m_MaxCol = floor(bais_x / this->_gridStep);
+		this->m_MaxRow = floor(bais_y / this->_gridStep);
 
 		
 		bex::PointVert pntUnit;
@@ -319,6 +332,8 @@ namespace pl
 		}
 		auto num_edges = boost::num_edges(this->_tGraph);
 		cout << "num_edges = " << num_edges << endl;
+		auto num_vertex = boost::num_vertices(_tGraph);
+		cout << "num_vertex = " << num_vertex << endl;
 		return false;
 	}
 	bool Obmap::map2sGrid()
@@ -331,8 +346,8 @@ namespace pl
 		auto bais_y = this->mWsPoint3.y() - this->mWsPoint1.y();
 
 		//the max col and the max row
-		this->m_sMaxCol = ceil(bais_x / this->_gridStep/2);
-		this->m_sMaxRow = ceil(bais_y / this->_gridStep/2);
+		this->m_sMaxCol = floor(bais_x / this->_gridStep/2);
+		this->m_sMaxRow = floor(bais_y / this->_gridStep/2);
 
 
 		auto gridStep = _gridStep * 2;
@@ -442,6 +457,8 @@ namespace pl
 		}
 		auto num_edges = boost::num_edges(sGraph);
 		cout << "num_edges = " << num_edges << endl;
+		auto num_vertex = boost::num_vertices(sGraph);
+		cout << "num_vertex = " << num_vertex << endl;
 		return false;
 	}
 	bool Obmap::saveGraphSvg(size_t const & type)
@@ -684,8 +701,8 @@ namespace pl
 		initIndex.first = 0;
 		initIndex.second = 0;
 
-		double _min_x = (*gridPtr)[initIndex].pnt.x() - gridStep/2;
-		double _min_y = (*gridPtr)[initIndex].pnt.y() - gridStep/2;
+		double _min_x = (*gridPtr)[initIndex].pnt.x() - _gridStep/2;
+		double _min_y = (*gridPtr)[initIndex].pnt.y() - _gridStep/2;
 
 		double _i_x = (*gridPtr)[initIndex].pnt.x();
 		double _i_y = (*gridPtr)[initIndex].pnt.y();
@@ -722,18 +739,24 @@ namespace pl
 		CGraph cg;
 		for (size_t i = 0; i < v_vd.size(); i++)
 		{
-			for (size_t j = i; j < v_vd.size(); j++)
+			for (size_t j =  0; j < v_vd.size(); j++)
 			{
 				if (IsConnected(v_vd[i], v_vd[j],pl::graphType::span))
 				{
 					bt::add_edge(i, j, cg);
+		//			cout << "t = " << i << " s = " << j << endl;
 				}
 			}
 		}
 		vector<int> component(bt::num_vertices(cg));
 		int num = bt::connected_components(cg, &component[0]);
+		//cout << "num = " << num << endl;
+		//for (size_t i = 0; i != component.size(); ++i)
+		//	cout << "Vertex " << i << " is in component " << component[i] << endl;
 		if (num == 1) return true;
 		return false;
+
+
 	}
 	vector<bex::VertexDescriptor> Obmap::getTgraphVd(bex::VertexDescriptor const & svd)
 	{
@@ -911,14 +934,14 @@ namespace pl
 		if (gridType == graphType::base)
 		{
 			gridPtr = &this->_tGrid;
-			gridInd0  = sgraph2map[vd0];
-			gridInd1  = sgraph2map[vd1];
+			gridInd0  = tgraph2map[vd0];
+			gridInd1  = tgraph2map[vd1];
 		}
 		else
 		{
 			gridPtr = &this->_sGrid;
-			gridInd0 = tgraph2map[vd0];
-			gridInd1 = tgraph2map[vd1];
+			gridInd0 = sgraph2map[vd0];
+			gridInd1 = sgraph2map[vd1];
 		}
 		auto &grid = (*gridPtr);	
 		if (gridInd0.first == gridInd1.first)

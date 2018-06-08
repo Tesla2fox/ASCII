@@ -83,6 +83,7 @@ namespace pl
 		
 		///
 
+		
 		//write txt
 		std::ofstream c_deg;
 		void writeDebug(string const &str, vector<double> const &v_val);
@@ -93,7 +94,10 @@ namespace pl
 		//
 		shared_ptr<vector<map<size_t,size_t>>> _vRobSetPtr = nullptr;
 		shared_ptr<vector<map<size_t,size_t>>> _vRobNeiSetPtr = nullptr;
+		shared_ptr<vector<bool>> _vRobSleepPtr = nullptr;
 		shared_ptr<set<size_t>> _notBidSetPtr = nullptr;
+		//shared_ptr<map<size_t,size_t>> _notBidPtr
+		//		shared_ptr < vector<map<size_t, size_t>> = nullptr;
 		using TreeEdge = pair<size_t, size_t>;
 //		shared_ptr<vector<set<pair<size_t, size_t>>>> _vRobNeiSetPtr = nullptr;
 //		vector<vector<pair<size_t,size_t>>> _vRobSpanTree;
@@ -133,6 +137,9 @@ namespace pl
 
 		void updateSet(size_t const &succBidID, bex::VertexDescriptor const& megaBoxVd);
 		void updateSetWithErase(size_t const &succBidID, bex::VertexDescriptor const& megaBoxVd);
+
+
+		double calSolutionFitNess();
 
 	};
 	//	enum DirType{left,bottom,right,top,center};
