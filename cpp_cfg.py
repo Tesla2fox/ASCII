@@ -20,12 +20,12 @@ class CPP_Cfg:
         self.range_y = []
     
 
-random.seed(10)
+#random.seed(10)
 
 if __name__ == '__main__':
     cpp_cfg = CPP_Cfg()
-    cpp_cfg.range_x = [0,1005,1005,0]
-    cpp_cfg.range_y = [0,0,1005,1005]
+    cpp_cfg.range_x = [0,305,305,0]
+    cpp_cfg.range_y = [0,0,305,305]
     max_range_x = max(cpp_cfg.range_x)
     max_range_y = max(cpp_cfg.range_y)
 
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     
     print(max_range_x_grid)
     print(max_range_y_grid)
-    robNum = 80
+    robNum = 10
     start_x = []
     start_y = []
 
@@ -78,6 +78,26 @@ if __name__ == '__main__':
     print(s_1)
         
     
+    ob_x = []
+    ob_y = []
+    
+    obNum = -1
+    while  len(ob_x)<=obNum:
+        u_obx = randint(0,max_range_x-5)
+        u_oby = randint(0,max_range_y-5)
+        ob_ind0  = math.floor((u_obx+5)/20)
+        ob_ind1  = math.floor((u_oby+5)/20)
+        print(ob_ind0,ob_ind1)
+        reasonable = True
+        for i in range(len(s_0)):
+            if((s_0[i] == ob_ind0)and(s_1[i] == ob_ind1)):
+                reasonable = False
+                print('wwwwwwwwww')
+                break
+        if reasonable:
+            ob_x.append(u_obx)
+            ob_y.append(u_oby)
+    print(len(ob_x))
     
 
 #    print(s_0)
@@ -114,26 +134,7 @@ if __name__ == '__main__':
         f_con.write(' '+ str(pnty))
     f_con.write('\n')
         
-    ob_x = []
-    ob_y = []
-    
-    obNum = -1
-    while  len(ob_x)<=obNum:
-        u_obx = randint(0,max_range_x-5)
-        u_oby = randint(0,max_range_y-5)
-        ob_ind0  = math.floor((u_obx+5)/20)
-        ob_ind1  = math.floor((u_oby+5)/20)
-        print(ob_ind0,ob_ind1)
-        reasonable = True
-        for i in range(len(s_0)):
-            if((s_0[i] == ob_ind0)and(s_1[i] == ob_ind1)):
-                reasonable = False
-                print('wwwwwwwwww')
-                break
-        if reasonable:
-            ob_x.append(u_obx)
-            ob_y.append(u_oby)
-    print(len(ob_x))
+
 #    print(ob_y)
     
 #            print(u_obx)

@@ -75,6 +75,7 @@ namespace pl {
 					}
 				}
 				else {
+					doc << svg::Text(pntc, std::to_string(vd), svg::Color::Brown, svg::Font(3));
 					switch (vp.Type)
 					{
 					case bex::vertType::ObVert:
@@ -239,6 +240,8 @@ namespace pl {
 				doc << PloyTreeEdge;
 
 				svg::Point pnt(px - gridStep / 2, py + gridStep / 2);
+				doc << svg::Text(pnt, std::to_string(robID), svg::Color::Blue, svg::Font(3));
+
 				if (true) {
 					switch (robID)
 					{
@@ -485,7 +488,8 @@ namespace pl {
 		}
 		auto aucCompleted = [](vector<bool> const &vb) {
 			auto iter = std::find(vb.begin(), vb.end(), false);
-			if (iter == vb.end()) return true;
+			if (iter == vb.end()) 
+ 				return true;
 			return false;
 		};
 
@@ -545,6 +549,13 @@ namespace pl {
 			bool allCovered = getMinLeaf(aucNeer, aucInd);
 			//bool allCovered = getAuctionInd(aucInd);
 			
+			c_deg << " times  = " << circleTime;
+			for (size_t i = 0; i < _robNum; i++)
+			{
+				c_deg << "	" << _vRobSleepPtr->at(i);
+			}
+			c_deg << endl;
+
 			//cout << "bug 0-0 " << endl;
 			if (_vRobSleepPtr->at(aucNeer))
 			{ 
@@ -593,17 +604,15 @@ namespace pl {
 			{
 				c_deg << circleTime << "fitnees = " << calSolutionFitNess() << endl;
 			}
-			//for (size_t i = 0; i < _robNum; i++)
-			//{
-			//	cout << "	" << _vRobSleepPtr->at(i);
-			//}
-			//cout << endl;
+			if (circleTime == 220)
+				cout << "bug" << endl;
+
 			//if (aucCompleted(*_vRobSleepPtr))
 			//{
 			//	c_deg << "bug is here" << endl;
 			//	break;
 			//}
-		} while (!aucCompleted(allAucEd));
+		} while (!aucCompleted(*_vRobSleepPtr));
 
 		finish = clock();
 		double totaltime = (double)(finish - start) / CLOCKS_PER_SEC;
@@ -1376,6 +1385,7 @@ namespace pl {
 					{
 						if (eraseRobSet.count(*ni) == 1)
 						{
+							cout << "it  = " << it << " *ni  = " << *ni << endl;
 							eraseRobSet.insert(TreeEdge(it, *ni));
 							break;
 						}

@@ -7,9 +7,11 @@ int main(int argc, char * argv[])
 {
 	//char * conFileName = "D:\\py_code\\\ASCII\\data\\5_15_15CPP_Cfg.txt";
 	//char * conFileName = "D:\\py_code\\\ASCII\\data\\20_50_50CPP_Cfg.txt";
-	char * conFileName = "D:\\py_code\\\ASCII\\data\\5_15_15_-1CPP_Cfg.txt";
-	//char * conFileName = "D:\\py_code\\\ASCII\\data\\80_50_50_-1CPP_Cfg.txt";
+	//char * conFileName = "D:\\py_code\\\ASCII\\data\\5_15_15_-1CPP_Cfg.txt";
+	char * conFileName = "D:\\py_code\\\ASCII\\data\\80_50_50_-1CPP_Cfg.txt";
+	//char * conFileName = "D:\\py_code\\\ASCII\\data\\10_15_15_-1CPP_Cfg.txt";
 
+	//char * conFileName
 
 	if (argc > 1) {
 		cout << argv[1] << endl;
@@ -45,9 +47,9 @@ int main(int argc, char * argv[])
 	pl::MultiPlan demonPlan(demonMap, *readCfg._vStartPntPtr);
 	//demonPlan.cenPathPlanning();
 	demonPlan.disPathPlanning();
+	demonPlan.drawRobSet(false);
 	demonPlan.drawGraph(pl::graphType::base, false);
 	demonPlan.drawGraph(pl::graphType::span, false);
-	demonPlan.drawRobSet(false);
 	// demonPlan.cenPathPlanning();
 	//	multi_plan.disPathPlanning();
 	demonPlan.drawStartLocation();
