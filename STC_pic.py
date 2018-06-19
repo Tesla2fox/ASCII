@@ -12,7 +12,6 @@ from read_cfg import Read_Cfg
 import copy
 
 
-
 py.sign_in('tesla_fox', 'HOTRQ3nIOdYUUszDIfgN')
 
 class Pnt:
@@ -262,10 +261,15 @@ class Env:
         data.append(markTrace)
         data.append(startTrace)
         data.append(terminalTrace)
+        layout['font'] = dict(
+            family='sans-serif',
+            size=25,
+            color='#000'
+        )
         fig = dict(data = data ,layout = layout)
         plotly.offline.plot(fig,filename = 'environment')
-#        py.image.save_as(fig,filename ='stc_demon.jpeg')
-        Image('./env.png')
+        py.image.save_as(fig,filename ='stc_demon.jpeg')
+#        Image('./env.png')
         print('draw success')
 
 if __name__ == '__main__':

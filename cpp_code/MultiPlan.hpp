@@ -47,6 +47,14 @@ namespace pl
 
 		void cenPathPlanning();
 		void disPathPlanning();
+		void setRandomSeed(const size_t &val) { randomSeed = val; }
+		vector<size_t> getSetNum() {
+			vector<size_t> _vRobSetNum;
+			for (size_t i = 0; i < _robNum; i++)
+				_vRobSetNum.push_back(_vRobSetPtr->at(i).size());
+			return _vRobSetNum;
+		}
+		
 	private:
 
 		//obMap
@@ -59,6 +67,7 @@ namespace pl
 		bex::Graph &_ob_sGraph;
 		GridMap &_ob_sGrid;
 
+		size_t randomSeed = 0;
 		//
 		std::map<std::pair<int, int>, int> &_ob_tmap2graph;
 		std::map<int, std::pair<int, int>> &_ob_tgraph2map;
@@ -92,12 +101,15 @@ namespace pl
 		//shared_ptr<vector<vector<size_t>>> _vRobSetPtr = nullptr;
 		
 		//
-		shared_ptr<vector<map<size_t,size_t>>> _vRobSetPtr = nullptr;
+		//shared_ptr<vector<map<size_t,size_t>>> _vRobSetPtr = nullptr;
 		shared_ptr<vector<map<size_t,size_t>>> _vRobNeiSetPtr = nullptr;
+		shared_ptr<vector<set<size_t>>>_vRobNghSetPtr = nullptr;
 		shared_ptr<vector<bool>> _vRobSleepPtr = nullptr;
+
+		shared_ptr<vector<set<size_t>>> _vRobSetPtr = nullptr;
 		shared_ptr<set<size_t>> _notBidSetPtr = nullptr;
 		//shared_ptr<map<size_t,size_t>> _notBidPtr
-		//		shared_ptr < vector<map<size_t, size_t>> = nullptr;
+		//shared_ptr < vector<map<size_t, size_t>> = nullptr;
 		using TreeEdge = pair<size_t, size_t>;
 //		shared_ptr<vector<set<pair<size_t, size_t>>>> _vRobNeiSetPtr = nullptr;
 //		vector<vector<pair<size_t,size_t>>> _vRobSpanTree;

@@ -1,0 +1,8 @@
+time 2018-06-08 16:11:55
+range_x  0 305 305 0
+range_y  0 0 305 305
+gridStep 10
+start_x  0 130 60 260 260
+start_y  0 150 140 150 80
+obPnt_x 
+obPnt_y 

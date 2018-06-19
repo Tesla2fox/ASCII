@@ -1,0 +1,2602 @@
+start_x 90 290 250 270 70
+start_y 290 110 220 70 50
+total time = 0.008
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 37
+rob3	set size = 40
+rob4	set size = 41
+max  = 41 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.305
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 37
+rob3	set size = 40
+rob4	set size = 41
+max  = 41 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.022
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.003
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 39
+rob3	set size = 41
+rob4	set size = 36
+max  = 41 min = 36
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.012
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 40
+rob3	set size = 35
+rob4	set size = 41
+max  = 41 min = 35
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.007
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.019
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.019
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.009
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.018
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.329
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 38
+rob3	set size = 38
+rob4	set size = 42
+max  = 42 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.02
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.003
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.008
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.018
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.026
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.021
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.007
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 39
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.011
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 38
+rob3	set size = 40
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.009
+rob0	set size = 39
+rob1	set size = 44
+rob2	set size = 24
+rob3	set size = 44
+rob4	set size = 44
+max  = 44 min = 24
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.003
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.008
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.021
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.008
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.006
+rob0	set size = 39
+rob1	set size = 45
+rob2	set size = 24
+rob3	set size = 44
+rob4	set size = 43
+max  = 45 min = 24
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.03
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.009
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 40
+rob3	set size = 35
+rob4	set size = 41
+max  = 41 min = 35
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 37
+rob2	set size = 36
+rob3	set size = 41
+rob4	set size = 42
+max  = 42 min = 36
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.016
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 40
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.026
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.003
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.023
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.008
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 41
+rob2	set size = 40
+rob3	set size = 41
+rob4	set size = 34
+max  = 41 min = 34
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.009
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 37
+rob3	set size = 40
+rob4	set size = 40
+max  = 40 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.005
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 39
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.008
+rob0	set size = 39
+rob1	set size = 37
+rob2	set size = 37
+rob3	set size = 41
+rob4	set size = 41
+max  = 41 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.009
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 38
+rob3	set size = 40
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.025
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.016
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 37
+rob4	set size = 40
+max  = 40 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.003
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 38
+rob3	set size = 40
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.017
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.037
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.023
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.02
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.003
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.016
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.018
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.321
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 37
+rob3	set size = 40
+rob4	set size = 41
+max  = 41 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.245
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.004
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.017
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.019
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 40
+rob3	set size = 36
+rob4	set size = 40
+max  = 40 min = 36
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.02
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.021
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.02
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.004
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.023
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.025
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.019
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 39
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.011
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.019
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 37
+rob3	set size = 40
+rob4	set size = 40
+max  = 40 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.006
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.017
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 40
+rob3	set size = 35
+rob4	set size = 41
+max  = 41 min = 35
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.015
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.016
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 37
+rob4	set size = 40
+max  = 40 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 39
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.011
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.018
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.008
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 43
+rob3	set size = 39
+rob4	set size = 34
+max  = 43 min = 34
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.005
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 39
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.017
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 40
+rob3	set size = 35
+rob4	set size = 41
+max  = 41 min = 35
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.273
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 37
+rob3	set size = 40
+rob4	set size = 41
+max  = 41 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.273
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 37
+rob3	set size = 40
+rob4	set size = 41
+max  = 41 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.005
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.011
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 37
+rob4	set size = 40
+max  = 40 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.118
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 39
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.031
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.274
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 37
+rob3	set size = 40
+rob4	set size = 41
+max  = 41 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.02
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 37
+rob4	set size = 40
+max  = 40 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.015
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.017
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.23
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 38
+rob3	set size = 38
+rob4	set size = 42
+max  = 42 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.002
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.02
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.297
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 37
+rob3	set size = 40
+rob4	set size = 41
+max  = 41 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.25
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.008
+rob0	set size = 39
+rob1	set size = 37
+rob2	set size = 37
+rob3	set size = 41
+rob4	set size = 41
+max  = 41 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.25
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 38
+rob3	set size = 38
+rob4	set size = 42
+max  = 42 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.021
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 37
+rob4	set size = 41
+max  = 41 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.021
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.011
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 41
+rob3	set size = 41
+rob4	set size = 34
+max  = 41 min = 34
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.013
+rob0	set size = 39
+rob1	set size = 41
+rob2	set size = 41
+rob3	set size = 40
+rob4	set size = 34
+max  = 41 min = 34
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.027
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 40
+rob3	set size = 36
+rob4	set size = 40
+max  = 40 min = 36
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 37
+rob4	set size = 40
+max  = 40 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.218
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.017
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 37
+rob4	set size = 40
+max  = 40 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.005
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 37
+rob4	set size = 40
+max  = 40 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.018
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 39
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.006
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.005
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.02
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.016
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.005
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.003
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 39
+rob4	set size = 39
+max  = 39 min = 39
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.023
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.012
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.005
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.024
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.137
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 39
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.013
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 37
+rob4	set size = 40
+max  = 40 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.019
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.018
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.015
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 37
+rob4	set size = 40
+max  = 40 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.191
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.005
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.009
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.021
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.019
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.016
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.022
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.007
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.009
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.015
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.018
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 40
+rob3	set size = 35
+rob4	set size = 41
+max  = 41 min = 35
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.016
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.009
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.019
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.009
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.004
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.007
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.013
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.012
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.209
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.118
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 39
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.023
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.009
+rob0	set size = 39
+rob1	set size = 37
+rob2	set size = 37
+rob3	set size = 41
+rob4	set size = 41
+max  = 41 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.005
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.004
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 40
+rob3	set size = 37
+rob4	set size = 39
+max  = 40 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.009
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.172
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 39
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.008
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.02
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.015
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.016
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.022
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.02
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.005
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 39
+rob4	set size = 39
+max  = 39 min = 39
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.023
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.011
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.027
+rob0	set size = 39
+rob1	set size = 41
+rob2	set size = 41
+rob3	set size = 33
+rob4	set size = 41
+max  = 41 min = 33
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.022
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.006
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 39
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.014
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.016
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.022
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.018
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.339
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.014
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 37
+rob4	set size = 40
+max  = 40 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.009
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 39
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.309
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 37
+rob3	set size = 40
+rob4	set size = 41
+max  = 41 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.006
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.017
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.005
+rob0	set size = 39
+rob1	set size = 41
+rob2	set size = 39
+rob3	set size = 40
+rob4	set size = 36
+max  = 41 min = 36
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.009
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 40
+rob3	set size = 37
+rob4	set size = 39
+max  = 40 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.019
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.02
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 40
+rob3	set size = 36
+rob4	set size = 40
+max  = 40 min = 36
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.017
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 39
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.01
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.002
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 37
+rob3	set size = 40
+rob4	set size = 40
+max  = 40 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.019
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.011
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 37
+rob3	set size = 40
+rob4	set size = 41
+max  = 41 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.018
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.016
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 40
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.004
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 38
+rob3	set size = 39
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.005
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 38
+rob3	set size = 40
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.017
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 40
+rob3	set size = 35
+rob4	set size = 41
+max  = 41 min = 35
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.009
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 39
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.018
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.166
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 39
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.107
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 40
+rob3	set size = 39
+rob4	set size = 38
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.005
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 39
+rob4	set size = 39
+max  = 39 min = 39
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.021
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.277
+rob0	set size = 39
+rob1	set size = 38
+rob2	set size = 37
+rob3	set size = 40
+rob4	set size = 41
+max  = 41 min = 37
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.024
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.022
+rob0	set size = 39
+rob1	set size = 39
+rob2	set size = 39
+rob3	set size = 38
+rob4	set size = 40
+max  = 40 min = 38
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true
+total time = 0.025
+rob0	set size = 39
+rob1	set size = 40
+rob2	set size = 41
+rob3	set size = 39
+rob4	set size = 36
+max  = 41 min = 36
+allNumSize = 195
+0	rob true
+1	rob true
+2	rob true
+3	rob true
+4	rob true

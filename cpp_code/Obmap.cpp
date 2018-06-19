@@ -197,8 +197,7 @@ namespace pl
 	void Obmap::addObPnt(bex::DPoint const & pnt)
 	{
 		GridIndex sInd = this->pnt2Index(pnt, graphType::span);
-		if ((sInd.first == 10) && (sInd.second == 1))
-			cout << "bug" << endl;
+		//cout << "sind.x = " << sInd.first << " sind.y = " << sInd.second << endl;
 		if (sInd.first == -1)
 			return;
 		auto vInd = this->getTgraphGridInd(sInd);
@@ -701,11 +700,11 @@ namespace pl
 		initIndex.first = 0;
 		initIndex.second = 0;
 
-		double _min_x = (*gridPtr)[initIndex].pnt.x() - _gridStep/2;
-		double _min_y = (*gridPtr)[initIndex].pnt.y() - _gridStep/2;
+		double _min_x = this->mWsPoint1.x() - _gridStep/2;
+		double _min_y = this->mWsPoint1.y() - _gridStep/2;
 
-		double _i_x = (*gridPtr)[initIndex].pnt.x();
-		double _i_y = (*gridPtr)[initIndex].pnt.y();
+		double _i_x = this->mWsPoint1.x();
+		double _i_y = this->mWsPoint1.y();
 
 		
 		if (pnt.y()<_min_y)
@@ -716,17 +715,23 @@ namespace pl
 		{
 			return rindex;
 		}
+		//cout << "pnt.x " << pnt.x() << "pnt.y" << pnt.y() << endl;
+		//cout << "min_x  " << _min_x << " min_y " << _min_y << endl;
+		//cout << "gridStep = " << gridStep << endl;
 		auto bais_x = pnt.x() - _min_x;
 		auto bais_y = pnt.y() - _min_y;
 		auto p_col = floor(bais_x / gridStep);
 		auto p_row = floor(bais_y / gridStep);
 
+//		cout << " :" << this->m_MaxCol << endl;
 		if (p_col>m_MaxCol)
 		{
+//			cout << "dayu" << endl;
 			return rindex;
 		}
 		if (p_row>this->m_MaxRow)
 		{
+//			cout << "dayu" << endl;
 			return rindex;
 		}
 		rindex.first = p_col;
@@ -735,22 +740,26 @@ namespace pl
 	}
 	bool Obmap::allConnected(vector<bex::VertexDescriptor> const & v_vd) 
 	{
+		if (v_vd.size() == 1)
+			return true;
 		using CGraph = boost::adjacency_list<bt::vecS, bt::vecS, bt::undirectedS>;
 		CGraph cg;
 		for (size_t i = 0; i < v_vd.size(); i++)
 		{
-			for (size_t j =  0; j < v_vd.size(); j++)
+			for (size_t j =  i; j < v_vd.size(); j++)
 			{
 				if (IsConnected(v_vd[i], v_vd[j],pl::graphType::span))
 				{
 					bt::add_edge(i, j, cg);
-		//			cout << "t = " << i << " s = " << j << endl;
+//					cout << "t = " << i << " s = " << j << endl;
 				}
 			}
 		}
 		vector<int> component(bt::num_vertices(cg));
+		if (component.size() < v_vd.size())
+			return false;
 		int num = bt::connected_components(cg, &component[0]);
-		//cout << "num = " << num << endl;
+//		cout << "num = " << num << endl;
 		//for (size_t i = 0; i != component.size(); ++i)
 		//	cout << "Vertex " << i << " is in component " << component[i] << endl;
 		if (num == 1) return true;

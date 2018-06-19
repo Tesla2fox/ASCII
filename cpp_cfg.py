@@ -20,12 +20,12 @@ class CPP_Cfg:
         self.range_y = []
     
 
-#random.seed(10)
+random.seed(100)
 
 if __name__ == '__main__':
     cpp_cfg = CPP_Cfg()
-    cpp_cfg.range_x = [0,305,305,0]
-    cpp_cfg.range_y = [0,0,305,305]
+    cpp_cfg.range_x = [0,325,325,0]
+    cpp_cfg.range_y = [0,0,325,325]
     max_range_x = max(cpp_cfg.range_x)
     max_range_y = max(cpp_cfg.range_y)
 
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     
     print(max_range_x_grid)
     print(max_range_y_grid)
-    robNum = 10
+    robNum = 5
     start_x = []
     start_y = []
 
@@ -81,10 +81,18 @@ if __name__ == '__main__':
     ob_x = []
     ob_y = []
     
-    obNum = -1
-    while  len(ob_x)<=obNum:
-        u_obx = randint(0,max_range_x-5)
-        u_oby = randint(0,max_range_y-5)
+    for i in range(0,130,10):
+        ob_x.append(i)
+        ob_y.append(140)
+    
+    for i in range(140,310,10):
+        ob_x.append(130)
+        ob_y.append(i)
+    
+    obNum = 80
+    while  len(ob_x)<obNum:
+        u_obx = randint(0,max_range_x-20)
+        u_oby = randint(0,max_range_y-20)
         ob_ind0  = math.floor((u_obx+5)/20)
         ob_ind1  = math.floor((u_oby+5)/20)
         print(ob_ind0,ob_ind1)
@@ -107,6 +115,7 @@ if __name__ == '__main__':
     conFileCfg = conFileDir + str(robNum)+'_'+str(max_range_x_grid)+'_'+str(max_range_y_grid)+'_'+str(obNum)+'CPP_Cfg.txt'
     f_con = open(conFileCfg , 'w')
     
+    print(conFileCfg)
     #write time 
     f_con.write('time '+ datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")+'\n')
     
@@ -142,13 +151,7 @@ if __name__ == '__main__':
                 
     
     
-#    for i in range(0,130,10):
-#        ob_x.append(i)
-#        ob_y.append(140)
-#    
-#    for i in range(140,310,10):
-#        ob_x.append(130)
-#        ob_y.append(i)
+
     
     
     f_con.write('obPnt_x ')

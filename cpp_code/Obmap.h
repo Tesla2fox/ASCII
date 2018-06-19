@@ -32,6 +32,16 @@ namespace pl
 			mWsPoint3.x(*std::max_element(vx.begin(), vx.end()));
 			mWsPoint3.y(*std::max_element(vy.begin(), vy.end()));
 
+			auto bais_x = this->mWsPoint3.x() - this->mWsPoint1.x();
+			auto bais_y = this->mWsPoint3.y() - this->mWsPoint1.y();
+
+			//the max col and the max row
+			this->m_MaxCol = floor(bais_x / this->_gridStep);
+			this->m_MaxRow = floor(bais_y / this->_gridStep);
+
+			//the max col and the max row
+			this->m_sMaxCol = floor(bais_x / this->_gridStep / 2);
+			this->m_sMaxRow = floor(bais_y / this->_gridStep / 2);
 		}
 		~Obmap();
 
@@ -85,6 +95,8 @@ namespace pl
 		std::vector<bex::VertexDescriptor> getSearchVerticalNeighbor(bex::VertexDescriptor const &cvd, size_t const &gridType);
 
 		set<GridIndex> getsObSet() { return _sObSet; }
+
+		bool IsConnected(bex::VertexDescriptor const &vd0, bex::VertexDescriptor const &vd1, size_t const &gridType);
 	private:
 
 		//tgrid and the tgraph means the based grid
@@ -132,6 +144,5 @@ namespace pl
 		//获取4个邻居节点
 		std::vector<GridIndex> getSearchVerticalNeighbor(GridIndex const &cen_index, size_t const &gridType);
 
-		bool IsConnected(bex::VertexDescriptor const &vd0, bex::VertexDescriptor const &vd1, size_t const &gridType);
 	};
 }

@@ -8,8 +8,10 @@ int main(int argc, char * argv[])
 	//char * conFileName = "D:\\py_code\\\ASCII\\data\\5_15_15CPP_Cfg.txt";
 	//char * conFileName = "D:\\py_code\\\ASCII\\data\\20_50_50CPP_Cfg.txt";
 	//char * conFileName = "D:\\py_code\\\ASCII\\data\\5_15_15_-1CPP_Cfg.txt";
-	char * conFileName = "D:\\py_code\\\ASCII\\data\\80_50_50_-1CPP_Cfg.txt";
+	char * conFileName = "D:\\py_code\\\ASCII\\data\\test1_5_16_16_50CPP_Cfg.txt";
+	//char * conFileName = "D:\\py_code\\\ASCII\\data\\1_7_8_15CPP_Cfg.txt";	
 	//char * conFileName = "D:\\py_code\\\ASCII\\data\\10_15_15_-1CPP_Cfg.txt";
+	//char * conFileName = "D:\\py_code\\\ASCII\\data\\80_50_50_400CPP_Cfg.txt";
 
 	//char * conFileName
 
@@ -19,15 +21,23 @@ int main(int argc, char * argv[])
 	}
 	cfg::ReadConfig readCfg(conFileName);
 	readCfg.read();
+	std::ofstream e_deg;
+	e_deg.open("D:\\py_code\\ASCII\\data\\tutorial.txt", std::ios::trunc);
 
+	clock_t start, finish;
+	start = clock();
 	pl::Obmap 	demonMap(readCfg._RangePtr, readCfg._gridStep);
-	demonMap.writeRange();
+	//demonMap.writeRange();
 	std::cout << "obNum = " << readCfg._vObPntPtr->size();
 	for (size_t i = 0; i < readCfg._vObPntPtr->size(); i++)
 	{
 		demonMap.addObPnt(readCfg._vObPntPtr->at(i));
+		//e_deg << " x = " << readCfg._vObPntPtr->at(i).x() << "	y = " << readCfg._vObPntPtr->at(i).y() << endl;
+		//cout << "size = " << i << endl;
 	}
-	cout << "Ob" << demonMap.obNum() << endl;
+	e_deg << "Ob  = " << demonMap.obNum() << endl;
+
+	cout << "Ob  = " << demonMap.obNum() << endl;
 
 	demonMap.map2sGrid();
 	demonMap.map2tGrid();
@@ -39,14 +49,53 @@ int main(int argc, char * argv[])
 	}
 	demonMap.writeGraph(pl::graphType::base);
 	demonMap.writeGraph(pl::graphType::span);
-	//	obmap.spanningTree();
-	demonMap.saveGraphSvg(pl::graphType::base);
-	demonMap.saveGraphSvg(pl::graphType::span);
-	demonMap.saveSvg();
-
+	//demonMap.saveGraphSvg(pl::graphType::base);
+	//demonMap.saveGraphSvg(pl::graphType::span);
+	//demonMap.saveSvg();
+	//_sleep(10000);
 	pl::MultiPlan demonPlan(demonMap, *readCfg._vStartPntPtr);
-	//demonPlan.cenPathPlanning();
-	demonPlan.disPathPlanning();
+	//demonPlan.disPathPlanning();
+	//demonPlan.drawRobSet(false);
+	//demonPlan.drawGraph(pl::graphType::base, false);
+	//demonPlan.drawGraph(pl::graphType::span, false);
+	//demonPlan.drawStartLocation();
+	//demonPlan.drawPath();
+	//demonPlan.savePic();
+	//demonPlan.writeSgsTree();
+	//return 1;
+	vector<vector<size_t>> vvRobSetNum(readCfg._vStartPntPtr->size());
+	vector<size_t> vMakeSpan;
+	for (size_t i = 0; i < 200; i++)
+	{
+		demonPlan.setRandomSeed(i);
+		demonPlan.disPathPlanning();
+		auto vRobSetNum = demonPlan.getSetNum();
+		for (size_t j = 0; j < readCfg._vStartPntPtr->size(); j++)
+		{
+			vvRobSetNum[j].push_back(vRobSetNum[j]);
+		}
+		vMakeSpan.push_back(*std::max_element(vRobSetNum.begin(), vRobSetNum.end()));
+	}
+	for (size_t i = 0; i < readCfg._vStartPntPtr->size(); i++)
+	{
+		e_deg << "set" << std::to_string(i);
+		for (auto & it : vvRobSetNum[i])
+		{
+			e_deg << " " << it;
+		}
+		e_deg << endl;
+	}
+	e_deg << "makespan" ;
+	for (auto & it : vMakeSpan)
+	{
+		e_deg << " " << it;
+	}
+	e_deg << endl;
+
+	finish = clock();
+	double totaltime = (double)(finish - start) / CLOCKS_PER_SEC;
+	e_deg << "total time = " << totaltime << endl;
+	return 1;
 	demonPlan.drawRobSet(false);
 	demonPlan.drawGraph(pl::graphType::base, false);
 	demonPlan.drawGraph(pl::graphType::span, false);
@@ -56,7 +105,6 @@ int main(int argc, char * argv[])
 	demonPlan.drawPath();
 	demonPlan.savePic();
 	demonPlan.writeSgsTree();
-
 	return 1;
 
 	pl::Obmap obmap(readCfg._RangePtr, 3);

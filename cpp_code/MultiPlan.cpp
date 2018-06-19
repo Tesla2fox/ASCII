@@ -4,7 +4,7 @@ namespace pl {
 
 	void MultiPlan::drawGraph(size_t const & type, bool const & b_edge)
 	{
-		bex::Graph *graphPtr;
+		bex::Graph *graphPtr; 
 		double gridStep;
 		switch (type)
 		{
@@ -214,7 +214,7 @@ namespace pl {
 	{
 		double gridStep = _mainMap.getGridStep();
 		auto &graph = _ob_sGraph;
-		vector<map<size_t, size_t>> &_vRobSet(*_vRobSetPtr);
+		vector<set<size_t>> &_vRobSet(*_vRobSetPtr);
 
 		//		svg::Color color(1);
 		//		svg::Fill  file();
@@ -222,23 +222,20 @@ namespace pl {
 		for (auto &it : _vRobSet) {
 			for (auto itSet = it.begin(); itSet != it.end(); ++itSet)
 			{
-				const bex::VertexDescriptor &vd = (*itSet).first;
+				const bex::VertexDescriptor &vd = (*itSet);
 				bex::VertexProperty &vp = graph[vd];
 				double px = vp.pnt.x();
 				double py = vp.pnt.y();
 
-
-				svg::Polyline PloyTreeEdge(svg::Stroke(.4, svg::Color::Red));
-				bex::VertexDescriptor &tVertd = (*itSet).second;
-				bex::VertexProperty &tVert = graph[tVertd];
-				double tpx = tVert.pnt.x();
-				double tpy = tVert.pnt.y();
-
-				svg::Point spnt(px, py);
-				svg::Point tpnt(tpx, tpy);
-				PloyTreeEdge << spnt << tpnt;
-				doc << PloyTreeEdge;
-
+				//svg::Polyline PloyTreeEdge(svg::Stroke(.4, svg::Color::Red));
+				//bex::VertexDescriptor &tVertd = (*itSet).second;
+				//bex::VertexProperty &tVert = graph[tVertd];
+				//double tpx = tVert.pnt.x();
+				//double tpy = tVert.pnt.y();
+				//svg::Point spnt(px, py);
+				//svg::Point tpnt(tpx, tpy);
+				//PloyTreeEdge << spnt << tpnt;
+				//doc << PloyTreeEdge;
 				svg::Point pnt(px - gridStep / 2, py + gridStep / 2);
 				doc << svg::Text(pnt, std::to_string(robID), svg::Color::Blue, svg::Font(3));
 
@@ -261,34 +258,43 @@ namespace pl {
 						break;
 					}
 					default:
-						doc << svg::Rectangle(pnt, gridStep, gridStep, svg::Fill(svg::Color::Yellow), svg::Stroke(0.1, svg::Color::Yellow));
+						doc << svg::Rectangle(pnt, gridStep, gridStep, svg::Fill(svg::Color::Yellow), svg::Stroke(0.3, svg::Color::Yellow));
 						break;
 					}
 				}
 			}
 			if (neibool)
 			{
-				for (auto itSet = _vRobNeiSetPtr->at(robID).begin(); itSet != _vRobNeiSetPtr->at(robID).end(); ++itSet)
+				for (auto itSet = _vRobNghSetPtr->at(robID).begin(); itSet != _vRobNghSetPtr->at(robID).end(); ++itSet)
 				{
-
-					const bex::VertexDescriptor &vd = (*itSet).first;
+					const bex::VertexDescriptor &vd = *itSet;
 					bex::VertexProperty &vp = graph[vd];
 					double px = vp.pnt.x();
 					double py = vp.pnt.y();
 					svg::Point pnt(px, py);
-
-					svg::Polyline PloyTreeEdge(svg::Stroke(.25, svg::Color::Green));
-					bex::VertexDescriptor &tVertd = (*itSet).second;
-					bex::VertexProperty &tVert = graph[tVertd];
-					double tpx = tVert.pnt.x();
-					double tpy = tVert.pnt.y();
-
-					svg::Point spnt(px, py);
-					svg::Point tpnt(tpx, tpy);
-					PloyTreeEdge << spnt << tpnt;
-					doc << PloyTreeEdge;
 					doc << svg::Circle(pnt, gridStep, svg::Fill(), svg::Stroke(0.2, svg::Color::Green));
 				}
+				//for (auto itSet = _vRobNeiSetPtr->at(robID).begin(); itSet != _vRobNeiSetPtr->at(robID).end(); ++itSet)
+				//{
+
+				//	const bex::VertexDescriptor &vd = (*itSet).first;
+				//	bex::VertexProperty &vp = graph[vd];
+				//	double px = vp.pnt.x();
+				//	double py = vp.pnt.y();
+				//	svg::Point pnt(px, py);
+
+				//	svg::Polyline PloyTreeEdge(svg::Stroke(.25, svg::Color::Green));
+				//	bex::VertexDescriptor &tVertd = (*itSet).second;
+				//	bex::VertexProperty &tVert = graph[tVertd];
+				//	double tpx = tVert.pnt.x();
+				//	double tpy = tVert.pnt.y();
+
+				//	svg::Point spnt(px, py);
+				//	svg::Point tpnt(tpx, tpy);
+				//	PloyTreeEdge << spnt << tpnt;
+				//	doc << PloyTreeEdge;
+				//	doc << svg::Circle(pnt, gridStep, svg::Fill(), svg::Stroke(0.2, svg::Color::Green));
+				//}
 			}
 			robID++;
 		}
@@ -450,8 +456,8 @@ namespace pl {
 
 	void MultiPlan::disPathPlanning()
 	{
-		//		cenAuction();
 		auction();
+		//return;
 		this->_vTreeSgs.clear();
 		this->_vTreeSgs.resize(_robNum);
 		getSpanningTreeSgs();
@@ -473,12 +479,14 @@ namespace pl {
 	void MultiPlan::auction()
 	{
 		
-		_vRobSetPtr = make_shared<vector<map<size_t, size_t>>>(_robNum);
+		_vRobSetPtr = make_shared<vector<set<size_t>>>(_robNum);
 		_vRobNeiSetPtr = make_shared<vector<map<size_t, size_t>>>(_robNum);
+		_vRobNghSetPtr = make_shared<vector<set<size_t>>>(_robNum);
 		_notBidSetPtr = make_shared<set<size_t>>();
 		_vRobSleepPtr = make_shared<vector<bool>>(_robNum, false);
-		vector<map<size_t, size_t>> &_vRobSet(*_vRobSetPtr);
+		vector<set<size_t>> &_vRobSet(*_vRobSetPtr);
 		vector<map<size_t, size_t>> &_vRobNeiSet(*_vRobNeiSetPtr);
+		vector<set<size_t>> &_vRobNghSet(*_vRobNghSetPtr);
 
 		vector<bool> allAucEd(bt::num_vertices(_ob_sGraph), false);
 
@@ -500,13 +508,15 @@ namespace pl {
 			//vector<pair<size_t, size_t>> &robSpanTree = _vRobSpanTree[i];
 			GridIndex robGridInd = _mainMap.pnt2Index(_vStartPnt[i], pl::graphType::span);
 			//c_deg<<"start"
-			c_deg << "index 0 - " << robGridInd.first << " index 1 - " << robGridInd.second << endl;
+			//c_deg << "index 0 - " << robGridInd.first << " index 1 - " << robGridInd.second << endl;
 			bex::VertexDescriptor robVd = _ob_smap2graph[robGridInd];
-			_vRobSet[i].insert(pair<size_t, size_t>(robVd, robVd));
+			//_vRobSet[i].insert(pair<size_t, size_t>(robVd, robVd));
+			_vRobSet[i].insert(robVd);
 			auto neighborsIter = bt::adjacent_vertices(robVd, _ob_sGraph);
 			for (auto ni = neighborsIter.first; ni != neighborsIter.second; ++ni)
 			{
 				_vRobNeiSet[i].insert(pair<size_t, size_t>(*ni, robVd));
+				_vRobNghSet[i].insert(*ni);
 			}
 			_notBidSetPtr->insert(robVd);
 			allAucEd[robVd] = true;
@@ -514,32 +524,23 @@ namespace pl {
 
 		//vector<set<size_t>> _vRobNei;
 		size_t circleTime = 0;
-
+		size_t maxcircleTime = _mainMap.vertNum() * 2;
+		
 		std::default_random_engine eng;
-		eng.seed(2);
+		eng.seed(randomSeed);
 		std::uniform_int_distribution<int> dis(0, _robNum - 1);
-		cout << "_robNum = " << _robNum << endl;
+		//cout << "_robNum = " << _robNum << endl;
 		//return;
 		clock_t start, finish;
 		start = clock();
+		size_t aucNeerC = 0;
 		do
 		{
 
+			//size_t aucNeer = (aucNeerC++) % _robNum;
 			size_t aucNeer = dis(eng);
-
 			if (aucNeer == _robNum) aucNeer = _robNum - 1;
 			//size_t aucNeer = 1;
-			if ((circleTime > 3660)&&(aucNeer== 54))
-			{
-				cout << "me" << endl;
-			}
-			//if (circleTime == 2825 )
-			//{
-			//					cout << "me" << endl;
-			//}
-
-
-//			c_deg << "aucNeer  = " << aucNeer << endl;
 			bex::VertexDescriptor aucInd;
 			auto &robSet = _vRobSet[aucNeer];
 
@@ -549,12 +550,12 @@ namespace pl {
 			bool allCovered = getMinLeaf(aucNeer, aucInd);
 			//bool allCovered = getAuctionInd(aucInd);
 			
-			c_deg << " times  = " << circleTime;
-			for (size_t i = 0; i < _robNum; i++)
-			{
-				c_deg << "	" << _vRobSleepPtr->at(i);
-			}
-			c_deg << endl;
+			//c_deg << " times  = " << circleTime;
+			//for (size_t i = 0; i < _robNum; i++)
+			//{
+			//	c_deg << "	" << _vRobSleepPtr->at(i);
+			//}
+			//c_deg << endl;
 
 			//cout << "bug 0-0 " << endl;
 			if (_vRobSleepPtr->at(aucNeer))
@@ -568,6 +569,7 @@ namespace pl {
 			
 			if (allCovered)
 			{
+
 				updateSetWithErase(successBidRobID, aucInd);
 				//if (successBidRobID == aucNeer) {
 				//	drawRobSet(false);
@@ -579,38 +581,58 @@ namespace pl {
 				updateSet(successBidRobID, aucInd);
 			}
 
-
+			
 			allAucEd[aucInd] = true;
 			circleTime++;
 			//cout << "circleTime  =" << circleTime << endl;
-			if (circleTime == 19700)
+			//if (circleTime == 30000)
+			//{
+			//	cout << "bug" << endl;
+			//	drawGraph(pl::graphType::base, false);
+			//	drawGraph(pl::graphType::span, false);
+			//	drawRobSet(true);
+			//	// demonPlan.cenPathPlanning();
+			//	//	multi_plan.disPathPlanning();
+			//	drawStartLocation();
+			//	savePic();
+			//	//break;
+			//}
+			if (circleTime>maxcircleTime)
 			{
-				cout << "bug" << endl;
-				drawGraph(pl::graphType::base, false);
-				drawGraph(pl::graphType::span, false);
-				drawRobSet(false);
-				// demonPlan.cenPathPlanning();
-				//	multi_plan.disPathPlanning();
-				drawStartLocation();
-				savePic();
 				break;
 			}
-			if (circleTime > 80000)
-			{
-				cout<<"times is "<<351<<endl;
-				break;
-			}
-			if (!(circleTime % 20))
-			{
-				c_deg << circleTime << "fitnees = " << calSolutionFitNess() << endl;
-			}
-			if (circleTime == 220)
-				cout << "bug" << endl;
+			//if (!(circleTime % 20))
+			//{
+			//	c_deg << circleTime << "fitnees = " << calSolutionFitNess() << endl;
+			//}
+			//if (circleTime == 220)
+			//	cout << "bug" << endl;
 
 			//if (aucCompleted(*_vRobSleepPtr))
 			//{
 			//	c_deg << "bug is here" << endl;
 			//	break;
+			//}
+			//for (size_t i = 0; i < _robNum; i++)
+			//{
+			//	vector<size_t> vvd;
+			//	for (auto &it : _vRobSetPtr->at(i))
+			//		vvd.push_back(it);
+			//	if (!_mainMap.allConnected(vvd))
+			//	{
+			//		//					c_deg << i << "	rob true" << endl;
+			//		c_deg << "aucInd = " << aucInd << endl;
+			//		c_deg << "successBidRobID = " << successBidRobID << endl;
+			//		c_deg << i << "	rob false" << endl;
+			//		drawGraph(pl::graphType::base, false);
+			//		drawRobSet(true);
+			//		drawGraph(pl::graphType::span, false);
+			//		// demonPlan.cenPathPlanning();
+			//		//	multi_plan.disPathPlanning();
+			//		drawStartLocation();
+			//		savePic();
+			//		return;
+			//	}
 			//}
 		} while (!aucCompleted(*_vRobSleepPtr));
 
@@ -632,118 +654,179 @@ namespace pl {
 
 		c_deg << "max  = " << maxSize << " min = " << minSize << endl;
 		c_deg << "allNumSize = " << allNumSize << endl;
+
+		//debug msg 
+
+		for (size_t i = 0; i < _robNum; i++)
+		{
+			vector<size_t> vvd;
+			for (auto &it : _vRobSetPtr->at(i))
+				vvd.push_back(it);
+			if (_mainMap.allConnected(vvd))
+				c_deg << i << "	rob true" << endl;
+			else
+				c_deg << i << "	rob false" << endl;
+		}
+		drawGraph(pl::graphType::base, false);
+		drawRobSet(true);
+		drawGraph(pl::graphType::span, false);
+		// demonPlan.cenPathPlanning();
+		//	multi_plan.disPathPlanning();
+		drawStartLocation();
+		savePic();
 		cout << "auction end" << endl;
 	}
 
 	void MultiPlan::cenAuction()
 	{
 
-		_vRobSetPtr = make_shared<vector<map<size_t, size_t>>>(_robNum);
-		_vRobNeiSetPtr = make_shared<vector<map<size_t, size_t>>>(_robNum);
-		_notBidSetPtr = make_shared<set<size_t>>();
-		vector<map<size_t, size_t>> &_vRobSet(*_vRobSetPtr);
-		vector<map<size_t, size_t>> &_vRobNeiSet(*_vRobNeiSetPtr);
+		//_vRobSetPtr = make_shared<vector<map<size_t, size_t>>>(_robNum);
+		//_vRobNeiSetPtr = make_shared<vector<map<size_t, size_t>>>(_robNum);
+		//_notBidSetPtr = make_shared<set<size_t>>();
+		//vector<map<size_t, size_t>> &_vRobSet(*_vRobSetPtr);
+		//vector<map<size_t, size_t>> &_vRobNeiSet(*_vRobNeiSetPtr);
 
-		vector<bool> allAucEd(bt::num_vertices(_ob_sGraph), false);
+		//vector<bool> allAucEd(bt::num_vertices(_ob_sGraph), false);
 
-		auto sObSet = _mainMap.getsObSet();
-		for (auto &it : sObSet) {
-			allAucEd[_ob_smap2graph[it]] = true;
-		}
-
-
-		auto aucCompleted = [](vector<bool> const &vb) {
-			auto iter = std::find(vb.begin(), vb.end(), false);
-			if (iter == vb.end()) return true;
-			return false;
-		};
+		//auto sObSet = _mainMap.getsObSet();
+		//for (auto &it : sObSet) {
+		//	allAucEd[_ob_smap2graph[it]] = true;
+		//}
 
 
-		for (size_t i = 0; i < this->_vStartPnt.size(); i++)
-		{
-
-			//vector<pair<size_t, size_t>> &robSpanTree = _vRobSpanTree[i];
-			GridIndex robGridInd = _mainMap.pnt2Index(_vStartPnt[i], pl::graphType::span);
-			bex::VertexDescriptor robVd = _ob_smap2graph[robGridInd];
-			_vRobSet[i].insert(pair<size_t, size_t>(robVd, robVd));
-			auto neighborsIter = bt::adjacent_vertices(robVd, _ob_sGraph);
-			for (auto ni = neighborsIter.first; ni != neighborsIter.second; ++ni)
-			{
-				_vRobNeiSet[i].insert(pair<size_t, size_t>(*ni, robVd));
-			}
-			_notBidSetPtr->insert(robVd);
-			allAucEd[robVd] = true;
-		}
-
-		//vector<set<size_t>> _vRobNei;
-		size_t circleTime = 0;
-
-		std::default_random_engine eng;
-		eng.seed(2);
-		std::uniform_int_distribution<int> dis(0, _robNum);
-		//return;
-		do
-		{
-
-			size_t aucNeer = dis(eng);
-
-			if (aucNeer == _robNum) aucNeer = _robNum - 1;
-			//size_t aucNeer = 1;
-
-		//	c_deg << "aucNeer  = " << aucNeer << endl;
-			bex::VertexDescriptor aucInd;
-			auto &robSet = _vRobSet[aucNeer];
-
-			//bool allCovered = getMinLeaf(aucNeer, aucInd);
-			bool allCovered = getAuctionInd(aucInd);
+		//auto aucCompleted = [](vector<bool> const &vb) {
+		//	auto iter = std::find(vb.begin(), vb.end(), false);
+		//	if (iter == vb.end()) return true;
+		//	return false;
+		//};
 
 
-			size_t successBidRobID = minBidRob(aucNeer, aucInd);
+		//for (size_t i = 0; i < this->_vStartPnt.size(); i++)
+		//{
 
-			if (allCovered)
-			{
-				updateSetWithErase(successBidRobID, aucInd);
-				//if (successBidRobID == aucNeer) {
-				//	drawRobSet(false);
-				//	savePic();
-				//	cout << "stop" << endl;
-				//}				
-			}
-			else {
-				updateSet(successBidRobID, aucInd);
-			}
+		//	//vector<pair<size_t, size_t>> &robSpanTree = _vRobSpanTree[i];
+		//	GridIndex robGridInd = _mainMap.pnt2Index(_vStartPnt[i], pl::graphType::span);
+		//	bex::VertexDescriptor robVd = _ob_smap2graph[robGridInd];
+		//	_vRobSet[i].insert(pair<size_t, size_t>(robVd, robVd));
+		//	auto neighborsIter = bt::adjacent_vertices(robVd, _ob_sGraph);
+		//	for (auto ni = neighborsIter.first; ni != neighborsIter.second; ++ni)
+		//	{
+		//		_vRobNeiSet[i].insert(pair<size_t, size_t>(*ni, robVd));
+		//	}
+		//	_notBidSetPtr->insert(robVd);
+		//	allAucEd[robVd] = true;
+		//}
+
+		////vector<set<size_t>> _vRobNei;
+		//size_t circleTime = 0;
+
+		//std::default_random_engine eng;
+		//eng.seed(2);
+		//std::uniform_int_distribution<int> dis(0, _robNum);
+		////return;
+		//do
+		//{
+
+		//	size_t aucNeer = dis(eng);
+
+		//	if (aucNeer == _robNum) aucNeer = _robNum - 1;
+		//	//size_t aucNeer = 1;
+
+		////	c_deg << "aucNeer  = " << aucNeer << endl;
+		//	bex::VertexDescriptor aucInd;
+		//	auto &robSet = _vRobSet[aucNeer];
+
+		//	//bool allCovered = getMinLeaf(aucNeer, aucInd);
+		//	bool allCovered = getAuctionInd(aucInd);
 
 
-			allAucEd[aucInd] = true;
-			circleTime++;
-			cout << "circleTime  =" << circleTime << endl;
-			if (circleTime > 320)
-			{
-				break;
-			}
-		} while (!aucCompleted(allAucEd));
+		//	size_t successBidRobID = minBidRob(aucNeer, aucInd);
 
-		for (size_t i = 0; i < _robNum; i++)
-		{
-			cout << "rob" << i << "	set size = " << _vRobSetPtr->at(i).size() << endl;
-		}
+		//	if (allCovered)
+		//	{
+		//		updateSetWithErase(successBidRobID, aucInd);
+		//		//if (successBidRobID == aucNeer) {
+		//		//	drawRobSet(false);
+		//		//	savePic();
+		//		//	cout << "stop" << endl;
+		//		//}				
+		//	}
+		//	else {
+		//		updateSet(successBidRobID, aucInd);
+		//	}
 
-		cout << "auction end" << endl;
+
+		//	allAucEd[aucInd] = true;
+		//	circleTime++;
+		//	cout << "circleTime  =" << circleTime << endl;
+		//	if (circleTime > 320)
+		//	{
+		//		break;
+		//	}
+		//} while (!aucCompleted(allAucEd));
+
+		//for (size_t i = 0; i < _robNum; i++)
+		//{
+		//	cout << "rob" << i << "	set size = " << _vRobSetPtr->at(i).size() << endl;
+		//}
+
+		//cout << "auction end" << endl;
 	}
 
 	void MultiPlan::getSpanningTreeSgs()
 	{
+
+
+		typedef bt::adjacency_list < bt::vecS, bt::vecS, bt::undirectedS,
+			bt::property<bt::vertex_distance_t, int>, bt::property < bt::edge_weight_t, int > > SGraph;
+		typedef std::pair < int, int >SE;
 		auto &graph = _ob_sGraph;
-		for (size_t i = 0; i < _robNum; i++)
+		for (size_t robID = 0; robID < _robNum; robID++)
 		{
-			cout << "rob is = " << i << endl;
-			for (auto &it : _vRobSetPtr->at(i))
+			cout << "rob is = " << robID << endl;
+			//auto &graph = _mainMap.getGraph(graphType::span);
+			//const int num_nodes = bt::num_vertices(graph);
+			const int num_nodes = this->_vRobSetPtr->at(robID).size();
+
+			vector<size_t> vSvd, vTvd;
+			vector<bex::VertexDescriptor> vvd;
+			for (auto &it :this->_vRobSetPtr->at(robID) )
 			{
-				if (it.first == it.second) continue;
-				auto sg = bex::DSegment(graph[it.first].pnt, graph[it.second].pnt);
-				_vTreeSgs[i].push_back(sg);
+				vvd.push_back(it);
 			}
-			
+			for (size_t i = 0; i < vvd.size(); i++)
+			{
+				for (size_t j = i; j < vvd.size(); j++)
+				{
+					if (_mainMap.IsConnected(vvd[i], vvd[j], pl::graphType::span))
+					{
+						vSvd.push_back(i);
+						vTvd.push_back(j);
+					}
+				}
+			}
+			const int edgeNum = vSvd.size();
+			SE * edgesPtr = new SE[edgeNum];
+			int * weightPtr = new int[edgeNum];
+			for (size_t i = 0; i < vSvd.size(); i++)
+			{
+				//cout << "index = " << i << endl;
+				edgesPtr[i] = SE(vSvd[i], vTvd[i]);
+				weightPtr[i] = 1;
+			}
+
+
+			SGraph g(edgesPtr, edgesPtr + edgeNum, weightPtr, num_nodes);
+
+			std::vector < bt::graph_traits < SGraph >::vertex_descriptor >
+				p(num_vertices(g));
+			bt::prim_minimum_spanning_tree(g, &p[0]);
+			for (std::size_t i = 0; i != p.size(); ++i)
+			{
+				//cout << i << " vvd[i]" << vvd[i] << " vvd[p[i]]" << vvd[p[i]] << endl;
+				auto sg = bex::DSegment(_ob_sGraph[vvd[i]].pnt, _ob_sGraph[vvd[p[i]]].pnt);
+				_vTreeSgs[robID].push_back(sg);
+			}			
 		}
 	}
 
@@ -762,7 +845,7 @@ namespace pl {
 			bex::VertexDescriptor localVd = 0;
 			for (auto &it : robSet)
 			{
-				bex::VertexDescriptor svd = it.first;
+				bex::VertexDescriptor svd = it;
 				auto vvd = _mainMap.getTgraphVd(svd);
 				for (auto &vd : vvd)
 				{
@@ -1027,39 +1110,40 @@ namespace pl {
 		auto &graph = _ob_sGraph;
 		auto &robSet = (*_vRobSetPtr)[robID];
 		auto &robNeiSet = (*_vRobNeiSetPtr)[robID];
+		auto &robNghSet = (*_vRobNghSetPtr)[robID];
 
- 		if (robNeiSet.empty())
+		if (robNghSet.empty())
 		{
 			(*_vRobSleepPtr)[robID] = true;
 			return false;
 		}
 		vector<pair<size_t,size_t>> robOpNeiSet;
 		vector<size_t> robOpCandi;
-		for (auto it = robNeiSet.begin(); it != robNeiSet.end(); it++)
+		for (auto it = robNghSet.begin(); it != robNghSet.end(); it++)
 		{
 			bool inOtherSet = false;
 			for (size_t i = 0; i < _robNum; i++)
 			{
 				if (i == robID) continue;
-				if (_vRobSetPtr->at(i).count(it->first) == 1)
+				if (_vRobSetPtr->at(i).count(*it) == 1)
 				{
 					inOtherSet = true;
-					if (_notBidSetPtr->count(it->first) == 1)
+					if (_notBidSetPtr->count(*it) == 1)
 						break;
 					robOpCandi.push_back(_vRobSetPtr->at(i).size());
 //					cout << "index = " << i << endl;
-					robOpNeiSet.push_back(pair<size_t,size_t>(it->first,_vRobSetPtr->at(i).size()));
+					robOpNeiSet.push_back(pair<size_t,size_t>(*it,_vRobSetPtr->at(i).size()));
 					break;
 				}
 			}
 			if (!inOtherSet) {
-				 double fit = -this->calFitNess(robID, it->first);
+				 double fit = -this->calFitNess(robID, *it);
 				// need optimal
 				//double dis = bg::distance(graph[it->first].pnt, graph[it->second].pnt);
 				if (fit < UnCoverMinFit)
 				{
 					UnCoverMinFit = fit;
-					UnCoverResVd = it->first;
+					UnCoverResVd = *it;
 					allCovered = false;
 				}
 			}
@@ -1238,7 +1322,7 @@ namespace pl {
 			if (i == robID) continue;
 			for (auto it = robSet.begin(); it != robSet.end(); it++)
 			{
-				double dis = bg::distance(graph[it->first].pnt, graph[megaBoxVd].pnt);
+				double dis = bg::distance(graph[*it].pnt, graph[megaBoxVd].pnt);
 				fitNess += dis;
 			}
 		}
@@ -1262,19 +1346,20 @@ namespace pl {
 
 		for (auto it = robNeiSet.begin(); it != robNeiSet.end(); it++)
 		{
-			if (megaBoxVd == it->first) continue;
-			v_vd.push_back(it->first);
+			if (megaBoxVd == *it) continue;
+			v_vd.push_back(*it);
 		}
 		//all connect can bid
 		if (_mainMap.allConnected(v_vd)) {
 			auto &robSet = (*_vRobSetPtr)[robID];
 			auto &graph = _ob_sGraph;
 			double fitNess = 0;
-			for (auto it = robSet.begin(); it != robSet.end(); it++)
-			{
-				double dis = bg::distance(graph[it->first].pnt, graph[megaBoxVd].pnt);
-				fitNess += dis;
-			}
+			return fitNess;
+			//for (auto it = robSet.begin(); it != robSet.end(); it++)
+			//{
+			//	double dis = bg::distance(graph[it->first].pnt, graph[megaBoxVd].pnt);
+			//	fitNess += dis;
+			//}
 			return fitNess;
 		}
 		return std::numeric_limits<double>::max();
@@ -1297,7 +1382,7 @@ namespace pl {
 			}
 			else
 			{
-				if (_vRobNeiSetPtr->at(i).count(megaBoxID) == 1)
+				if (_vRobNghSetPtr->at(i).count(megaBoxID) == 1)
 				{
 					size_t bid = _vRobSetPtr->at(i).size();
 					if (bid < minBid) {
@@ -1311,8 +1396,9 @@ namespace pl {
 					vector<bex::VertexDescriptor> v_vd;
 					for (auto it = robSet.begin(); it != robSet.end(); it++)
 					{
-						if (megaBoxID == it->first) continue;
-						v_vd.push_back(it->first);
+						if (megaBoxID == *it) 
+							continue;
+						v_vd.push_back(*it);
 					}
 					//all connect can bid
 					if (_mainMap.allConnected(v_vd)) {
@@ -1324,6 +1410,12 @@ namespace pl {
 					}
 					else
 					{
+						c_deg << "connected " << i;
+						for (auto &itt:v_vd)
+						{
+							c_deg << itt;
+						}
+						c_deg << endl;
 						minBid = 0;
 						successBidID = i;
 						//_notBidSetPtr->insert(megaBoxID);
@@ -1338,20 +1430,22 @@ namespace pl {
 	{
 
 			auto &robSet = _vRobSetPtr->at(succBidID);
-			auto &robNeiSet = _vRobNeiSetPtr->at(succBidID);
-			robSet.insert(TreeEdge(megaBoxVd, robNeiSet[megaBoxVd]));
+			auto &robNghSet = _vRobNghSetPtr->at(succBidID);
+			//robSet.insert(TreeEdge(megaBoxVd, robNeiSet[megaBoxVd]));
 			//auto &robNeiSet = (*_vRobNeiSetPtr)[succBidID];
-			robNeiSet.clear();
+			robSet.insert(megaBoxVd);
+			robNghSet.clear();
+			//robNeiSet.clear();
 
 			for (auto it = robSet.begin(); it != robSet.end(); it++)
 			{
-				auto &cenInd = it->first;
+				auto &cenInd = *it;
 				auto neighborsIter = bt::adjacent_vertices(cenInd, _ob_sGraph);
 				for (auto ni = neighborsIter.first; ni != neighborsIter.second; ++ni)
 				{
 					if (robSet.count(*ni) == 0)
 					{
-						robNeiSet.insert(TreeEdge(*ni,cenInd));
+						robNghSet.insert(*ni);
 					}
 				}
 			}
@@ -1359,6 +1453,15 @@ namespace pl {
 
 	void MultiPlan::updateSetWithErase(size_t const & succBidID, bex::VertexDescriptor const & megaBoxVd)
 	{
+
+		auto &robSet = _vRobSetPtr->at(succBidID);
+		auto &robNghSet = _vRobNghSetPtr->at(succBidID);
+		//robSet.insert(TreeEdge(megaBoxVd, robNeiSet[megaBoxVd]));
+		//auto &robNeiSet = (*_vRobNeiSetPtr)[succBidID];
+		if (robSet.count(megaBoxVd) == 1)
+			return;
+
+
 		size_t eraseID;
 		for (size_t i = 0; i < _robNum; i++)
 		{
@@ -1366,56 +1469,47 @@ namespace pl {
 			{
 				eraseID = i;
 				// do not need update
-				if (succBidID == eraseID) return;
+				if (succBidID == eraseID)
+					return;
 				_vRobSetPtr->at(i).erase(megaBoxVd);
 				auto &eraseRobSet = _vRobSetPtr->at(i);
-				vector< bex::VertexDescriptor> vEvd;
-				for (auto &it: eraseRobSet)
+
+				auto &eraseRobNghSet = _vRobNghSetPtr->at(i);
+				eraseRobNghSet.clear();
+
+				for (auto it = eraseRobSet.begin(); it != eraseRobSet.end(); it++)
 				{
-					if (megaBoxVd == it.second)
-					{
-						vEvd.push_back(it.first);
-					}
-				}
-				for (auto &it: vEvd)
-				{
-					eraseRobSet.erase(it);
-					auto neighborsIter = boost::adjacent_vertices(it, _ob_sGraph);
+					auto &cenInd = *it;
+					auto neighborsIter = bt::adjacent_vertices(cenInd, _ob_sGraph);
 					for (auto ni = neighborsIter.first; ni != neighborsIter.second; ++ni)
 					{
-						if (eraseRobSet.count(*ni) == 1)
+						if (eraseRobSet.count(*ni) == 0)
 						{
-							cout << "it  = " << it << " *ni  = " << *ni << endl;
-							eraseRobSet.insert(TreeEdge(it, *ni));
-							break;
+							eraseRobNghSet.insert(*ni);
 						}
 					}
 				}
-				//
-				//_notBidSetPtr->insert(megaBoxVd);
+				//return;
 				break;
 			}
 		}
 
-		auto &robSet = _vRobSetPtr->at(succBidID);
-		auto &robNeiSet = _vRobNeiSetPtr->at(succBidID);
-		robSet.insert(TreeEdge(megaBoxVd, robNeiSet[megaBoxVd]));
-		//auto &robNeiSet = (*_vRobNeiSetPtr)[succBidID];
-		robNeiSet.clear();
+		robSet.insert(megaBoxVd);
+		robNghSet.clear();
+		//robNeiSet.clear();
 
 		for (auto it = robSet.begin(); it != robSet.end(); it++)
 		{
-			auto &cenInd = it->first;
+			auto &cenInd = *it;
 			auto neighborsIter = bt::adjacent_vertices(cenInd, _ob_sGraph);
 			for (auto ni = neighborsIter.first; ni != neighborsIter.second; ++ni)
 			{
 				if (robSet.count(*ni) == 0)
 				{
-					robNeiSet.insert(TreeEdge(*ni, cenInd));
+					robNghSet.insert(*ni);
 				}
 			}
 		}
-		
 
 
 	}

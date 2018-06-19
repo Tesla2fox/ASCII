@@ -1,0 +1,16 @@
+EnvironmentGrid[1][7] = 2;
+EnvironmentGrid[3][2] = 1;
+EnvironmentGrid[4][5] = 1;
+EnvironmentGrid[4][4] = 1;
+EnvironmentGrid[3][6] = 1;
+EnvironmentGrid[5][1] = 1;
+EnvironmentGrid[3][1] = 1;
+EnvironmentGrid[0][6] = 1;
+EnvironmentGrid[1][0] = 1;
+EnvironmentGrid[4][2] = 1;
+EnvironmentGrid[2][3] = 1;
+EnvironmentGrid[2][2] = 1;
+EnvironmentGrid[6][2] = 1;
+EnvironmentGrid[1][2] = 1;
+EnvironmentGrid[5][4] = 1;
+EnvironmentGrid[2][5] = 1;

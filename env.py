@@ -80,6 +80,7 @@ def frange(start,stop, step=1.0):
     while start < stop:
         yield start
         start +=step
+
 def randColor():
     strcolor = 'rgba('
     strcolor = strcolor + str(random.randint(1,255))+','
@@ -217,7 +218,7 @@ class Env:
                                 mode ='markers',
                                 marker = dict(symbol = 'cross-dot',
                                               size = 15),
-                                name = 'Robot-' + str(i+1))
+                                name = 'Robot_' + str(i+1))
             self.drawData.append(rangeLst)
     def addSpanningTree(self):
         robotCfg =  './/data//' + 'planDebug.txt'
@@ -281,8 +282,21 @@ class Env:
                                             width = 4),
                                 name = 'Path_'+str(i+1))
             self.drawData.append(pathTrace)
-        
-            
+    def addSet(self):
+        robotCfg = './/data//'+'tutorial.txt'
+        robCfg = Read_Cfg(robotCfg)
+        for i in range(5):
+            _set = []
+            robCfg.get('set'+str(i),_set)
+            setTrace = go.Box(x=_set, name = 'Robot_'+str(i+1))
+            self.drawData.append(setTrace)
+        _set = []
+        robCfg.get('makespan',_set)
+        setTrace = go.Box(x=_set, name = 'makespan')
+        self.drawData.append(setTrace)
+
+        fig = dict(data = self.drawData)
+#        plotly.offline.plot(fig,filename = 'test_decision')
     def drawPic(self,name ='env',fileType = True):
         
         layout = dict()
@@ -296,7 +310,7 @@ class Env:
         showline=False,
         autotick=True,
         ticks='',
-        showticklabels=False)
+        showticklabels = True)
         layout['yaxis'] = dict(
         scaleanchor = "x",
         autorange=True,
@@ -305,7 +319,7 @@ class Env:
         showline=False,
         autotick=True,
         ticks='',
-        showticklabels=False)
+        showticklabels = False)
         layout['font'] = dict(
             family='sans-serif',
             size=25,
@@ -372,25 +386,25 @@ class Env:
                 rectDic['fillcolor'] = 'rgba(152 245 255,0.6)'
             self.shapeLst.append(copy.deepcopy(rectDic))
         layout['shapes'] = self.shapeLst
-        layout['xaxis'] = {'range':[0,self.range_x]}
-        layout['yaxis'] = {'range':[0,self.range_y]}
-        layout['xaxis'] = dict(
-        autorange=True,
-        showgrid=False,
-        zeroline=False,
-        showline=False,
-        autotick=True,
-        ticks='',
-        showticklabels=False)
-        layout['yaxis'] = dict(
-        scaleanchor = "x",
-        autorange=True,
-        showgrid=False,
-        zeroline=False,
-        showline=False,
-        autotick=True,
-        ticks='',
-        showticklabels=False)
+#        layout['xaxis'] = {'range':[0,self.range_x]}
+#        layout['yaxis'] = {'range':[0,self.range_y]}
+#        layout['xaxis'] = dict(
+#        autorange=True,
+#        showgrid=False,
+#        zeroline=False,
+#        showline=False,
+#        autotick=True,
+#        ticks='',
+#        showticklabels=False)
+#        layout['yaxis'] = dict(
+#        scaleanchor = "x",
+#        autorange=True,
+#        showgrid=False,
+#        zeroline=False,
+#        showline=False,
+#        autotick=True,
+#        ticks='',
+#        showticklabels=False)
         layout['autosize'] = False
         layout['height'] = 1000
         layout['width']= 1000
@@ -455,7 +469,7 @@ if __name__ == '__main__':
     path_x_0 = list()
     path_y_0 = list()
 
-    plNameCfg = conFileDir + 'planDebug.txt'
+    plNameCfg = conFileDir + 'draw2_planDebug.txt'
     plCfg = Read_Cfg(plNameCfg)
 
     plCfg.get('path_x_0',path_x_0)
@@ -498,17 +512,26 @@ if __name__ == '__main__':
 #    case 1
 #    env.addGrid()
 #    env.addRobotStartPnt()
-#    env.drawPic(name = 'c_env',fileType = False)
+#    env.drawPic(name = '2_env_test',fileType = False)
 #     case 2
-    env.addGrid()
-    env.addSpanningTree()    
-    env.drawPic(name = 'c_spanning-tree',fileType = True)
+#    env.shapeLst.clear()
+#    env.drawData.clear()
+##    env.addGrid()
+#    env.addSpanningTree()    
+#    env.drawPic(name = '2_spanning-tree_test',fileType = False)
 #     case 3
+#    env.shapeLst.clear()
+#    env.drawData.clear()
 #    env.addGrid()
 #    env.addPath()
 #    env.addRobotStartPnt()
-#    env.drawPic('c_path',fileType = True)
-
+#    env.drawPic('2_path_test',fileType = False)
+# case 4
+    env.shapeLst.clear()
+    env.drawData.clear()
+    env.addSet()
+    env.drawPic('1_set_test',fileType = False)
+#     
     
 #    env.drawGrid()
 #    env.drawFunc()
