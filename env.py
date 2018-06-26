@@ -8,10 +8,13 @@ Created on Fri May 25 15:19:12 2018
 import plotly.plotly as py
 import plotly.graph_objs as go
 import plotly
+#from plotly import *
 from read_cfg import Read_Cfg
 import copy
 import random
 
+
+#init_notebook_mode(connected=True)
 
 py.sign_in('tesla_fox', 'HOTRQ3nIOdYUUszDIfgN')
 
@@ -283,21 +286,27 @@ class Env:
                                 name = 'Path_'+str(i+1))
             self.drawData.append(pathTrace)
     def addSet(self):
-        robotCfg = './/data//'+'tutorial.txt'
+        robotCfg = './/data//'+'test2_tutorial.txt'
         robCfg = Read_Cfg(robotCfg)
         for i in range(5):
             _set = []
             robCfg.get('set'+str(i),_set)
-            setTrace = go.Box(x=_set, name = 'Robot_'+str(i+1))
+            setTrace = go.Box(y=_set, name =
+                              '$    G_'+str(i+1)+'$')
             self.drawData.append(setTrace)
+    def addMakeSpan(self):        
+        robotCfg = './/data//'+'test1_tutorial.txt'
+        robCfg = Read_Cfg(robotCfg)
         _set = []
         robCfg.get('makespan',_set)
-        setTrace = go.Box(x=_set, name = 'makespan')
+        for i in range(len(_set)):
+            _set[i] =  _set[i]*4
+        setTrace = go.Box(y=_set, name = 'Makespan')
         self.drawData.append(setTrace)
 
-        fig = dict(data = self.drawData)
+#        fig = dict(data = self.drawData)
 #        plotly.offline.plot(fig,filename = 'test_decision')
-    def drawPic(self,name ='env',fileType = True):
+    def drawPic(self,name ='env',fileType = True, showLabel = False):
         
         layout = dict()
         layout['shapes'] = self.shapeLst
@@ -307,7 +316,65 @@ class Env:
         autorange=True,
         showgrid=False,
         zeroline=False,
-        showline=False,
+        showline=True,
+        autotick=True,
+        ticks='',
+        showticklabels = showLabel)
+        layout['yaxis'] = dict(
+        scaleanchor = "x",
+        autorange=True,
+        showgrid=False,
+        zeroline=False,
+        showline=True,
+        autotick=True,
+        ticks='',
+        title ='Time(s)',
+        showticklabels = showLabel)
+        layout['font'] = dict(
+            family='sans-serif',
+            size=25,
+            color='#000'
+        )
+        layout['autosize'] = False
+        layout['height'] = 1000
+        layout['width']= 300   
+#        print(layout)
+        fig = dict(data = self.drawData ,layout = layout)
+        if(fileType):
+#            plotly.offline.plot(fig,filename = name)
+            py.plot(fig,filename = name)
+            #latex only in the online version.
+        else:
+            py.image.save_as(fig,filename = name+'.jpeg')
+    
+    def drawSubPlot(self, name = 'subplot'):
+#        fig = plotly.tools.make_subplots(rows = 2,cols = 1)
+#        fig.append_trace(trace)
+        
+        figData = []
+        robotCfg = './/data//'+'test2_tutorial.txt'
+        robCfg = Read_Cfg(robotCfg)
+        for i in range(5):
+            _set = []
+            robCfg.get('set'+str(i),_set)
+            setTrace = go.Box(y=_set, 
+                              name ='$    G_'+str(i+1)+'$')
+            figData.append(setTrace)
+        
+        _set = []
+        robCfg.get('makespan',_set)
+        for i in range(len(_set)):
+            _set[i] =  _set[i]*4
+        setTrace = go.Box(y=_set, name = 'Makespan',xaxis ='x2',yaxis ='y2')
+        figData.append(setTrace)
+        
+        layout = dict()
+        layout['xaxis'] = dict(
+                domain = [0,0.8],
+        autorange=True,
+        showgrid=False,
+        zeroline=False,
+        showline=True,
         autotick=True,
         ticks='',
         showticklabels = True)
@@ -316,10 +383,33 @@ class Env:
         autorange=True,
         showgrid=False,
         zeroline=False,
-        showline=False,
+        showline=True,
         autotick=True,
         ticks='',
-        showticklabels = False)
+        title ='$|G| \\text{mega vertexes}$',
+        
+        showticklabels = True)
+        
+        layout['xaxis2'] = dict(
+        domain = [0.9,1],
+        autorange=True,
+        showgrid=False,
+        zeroline=False,
+        showline=True,
+        autotick=True,
+        ticks='',
+        showticklabels = True)
+        layout['yaxis2'] = dict(
+        scaleanchor = "x",
+        autorange=True,
+        showgrid=False,
+        zeroline=False,
+        showline=True,
+        autotick=True,
+        ticks='',
+        title ='Time(s)',
+        anchor = 'x2',
+        showticklabels = True)
         layout['font'] = dict(
             family='sans-serif',
             size=25,
@@ -327,17 +417,13 @@ class Env:
         )
         layout['autosize'] = False
         layout['height'] = 1000
-        layout['width']= 1000   
-#        print(layout)
-        fig = dict(data = self.drawData ,layout = layout)
-        if(fileType):
-            plotly.offline.plot(fig,filename = name)
-        else:
-            py.image.save_as(fig,filename = name+'.jpeg')
-    
+        layout['width']= 1800   
+        
+        fig = go.Figure(data = figData , layout = layout)
+        
+        py.image.save_as(fig,filename = name+'.jpeg')
 
         
- 
     def drawGrid(self):
         layout = dict()
         self.shapeLst = list()
@@ -527,10 +613,21 @@ if __name__ == '__main__':
 #    env.addRobotStartPnt()
 #    env.drawPic('2_path_test',fileType = False)
 # case 4
+#    env.shapeLst.clear()
+#    env.drawData.clear()
+#    env.addSet()
+#    env.drawPic('2_set_test',fileType = False, showLabel =True )
+#case 5
+#    env.shapeLst.clear()
+#    env.drawData.clear()
+#    env.addMakeSpan()
+#    env.drawPic('1_make_test',fileType = False, showLabel =True )
+#case 6
+
     env.shapeLst.clear()
     env.drawData.clear()
-    env.addSet()
-    env.drawPic('1_set_test',fileType = False)
+    env.drawSubPlot( name = 'testsubplot2')
+
 #     
     
 #    env.drawGrid()
