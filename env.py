@@ -386,7 +386,7 @@ class Env:
         showline=True,
         autotick=True,
         ticks='',
-        title ='$|G| \\text{mega vertexes}$',
+        title ='The number of mega vertexes',
         
         showticklabels = True)
         
@@ -417,7 +417,8 @@ class Env:
         )
         layout['autosize'] = False
         layout['height'] = 1000
-        layout['width']= 1800   
+        layout['width']= 1800
+        layout['showlegend'] = False
         
         fig = go.Figure(data = figData , layout = layout)
         
@@ -623,7 +624,6 @@ if __name__ == '__main__':
 #    env.addMakeSpan()
 #    env.drawPic('1_make_test',fileType = False, showLabel =True )
 #case 6
-
     env.shapeLst.clear()
     env.drawData.clear()
     env.drawSubPlot( name = 'testsubplot2')
